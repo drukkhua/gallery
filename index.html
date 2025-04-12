@@ -28,7 +28,7 @@
 				padding: 2rem;
 			}
 
-			@media (min-width: 400px) {
+			@media (min-width: 380px) {
 				.masonry {
 					column-count: 2;
 				}
@@ -771,6 +771,7 @@
 						class="w-full video-element"
 						muted
 						loop
+						autoplay
 						preload="auto">
 						<source
 							src="druk_video_ready.mov"
@@ -892,6 +893,7 @@
 						class="w-full video-element"
 						muted
 						loop
+						autoplay
 						preload="auto">
 						<source
 							src="druk_thank_you.mp4"
@@ -934,6 +936,7 @@
 						class="w-full video-element"
 						muted
 						loop
+						autoplay
 						preload="auto">
 						<source
 							src="CheBar.mov"
@@ -962,6 +965,7 @@
 						class="w-full video-element"
 						muted
 						loop
+						autoplay
 						preload="auto">
 						<source
 							src="druk_video_02.mp4"
@@ -1042,6 +1046,7 @@
 						class="w-full video-element"
 						muted
 						loop
+						autoplay
 						preload="auto">
 						<source
 							src="druk_video_01.mp4"
@@ -1320,33 +1325,33 @@
 				});
 
 				// Video autoplay on hover
-				const videoItems = document.querySelectorAll('.video-element');
-				videoItems.forEach((video) => {
-					// Play video on mouseenter
-					video.parentElement.parentElement.addEventListener(
-						'mouseenter',
-						() => {
-							video.play();
-							gsap.to(video, {
-								scale: 1.05,
-								duration: 0.5,
-								ease: 'power2.out',
-							});
-						}
-					);
+				// const videoItems = document.querySelectorAll('.video-element');
+				// videoItems.forEach((video) => {
+				// 	// Play video on mouseenter
+				// 	video.parentElement.parentElement.addEventListener(
+				// 		'mouseenter',
+				// 		() => {
+				// 			video.play();
+				// 			gsap.to(video, {
+				// 				scale: 1.05,
+				// 				duration: 0.5,
+				// 				ease: 'power2.out',
+				// 			});
+				// 		}
+				// 	);
 
-					// Pause and reset video on mouseleave
-					video.parentElement.parentElement.addEventListener(
-						'mouseleave',
-						() => {
-							video.pause();
-							if (!video.classList.contains('lightbox-active')) {
-								video.currentTime = 0;
-							}
-							gsap.to(video, { scale: 1, duration: 0.5, ease: 'power2.out' });
-						}
-					);
-				});
+				// 	// Pause and reset video on mouseleave
+				// 	video.parentElement.parentElement.addEventListener(
+				// 		'mouseleave',
+				// 		() => {
+				// 			video.pause();
+				// 			if (!video.classList.contains('lightbox-active')) {
+				// 				video.currentTime = 0;
+				// 			}
+				// 			gsap.to(video, { scale: 1, duration: 0.5, ease: 'power2.out' });
+				// 		}
+				// 	);
+				// });
 
 				// Lightbox functionality
 				const lightbox = document.querySelector('.lightbox');
