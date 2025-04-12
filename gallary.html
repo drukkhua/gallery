@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Masonry Gallery</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			.masonry {
+				column-count: 1;
+				column-gap: 1rem;
+			}
+
+			@media (min-width: 640px) {
+				.masonry {
+					column-count: 2;
+				}
+			}
+
+			@media (min-width: 1024px) {
+				.masonry {
+					column-count: 3;
+				}
+			}
+			@media (min-width: 1600px) {
+				.masonry {
+					column-count: 4;
+				}
+			}
+
+			.item {
+				position: relative;
+				break-inside: avoid;
+				margin-bottom: 1rem;
+				overflow: hidden;
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+
+			.item:hover {
+				transform: scale(1.04);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+			}
+
+			video {
+				width: 100%;
+				height: auto;
+				/* display: block; */
+				/* border-radius: 1rem; */
+			}
+		</style>
+	</head>
+	<body class="bg-gray-100">
+		<section class="relative w-full h-[1200px] md:h-[700px] overflow-hidden">
+			<video
+				autoplay
+				muted
+				loop
+				playsinline
+				class="absolute inset-0 w-full h-full object-cover object-center"
+				poster="druk_preview.jpg">
+				<source
+					src="druk_video_01.mp4"
+					type="video/mp4" />
+			</video>
+
+			<div class="absolute inset-0 bg-black bg-opacity-20"></div>
+
+			<div
+				class="relative z-10 flex items-center justify-center h-full text-white text-center px-3">
+				<div>
+					<h1 class="text-4xl font-bold mb-4">
+						Більше 20 років робимо поліграфію
+					</h1>
+					<p class="text-lg">Портфоліо наших робіт</p>
+				</div>
+			</div>
+		</section>
+		<!-- <section class="relative w-full h-[1200px] md:h-[700px] overflow-hidden">
+			<video
+				autoplay
+				muted
+				loop
+				playsinline
+				class="absolute inset-0 w-full h-full object-cover object-center"
+				poster="druk_preview.jpg">
+				<source
+					src="druk_video_02.mp4"
+					type="video/mp4" />
+			</video>
+
+			<div class="absolute inset-0 bg-black bg-opacity-20"></div>
+
+		</section> -->
+		<!-- <h1 class="text-3xl font-bold text-center mb-6">Галерея</h1> -->
+
+		<div class="masonry">
+			<!-- Фотография -->
+			<div class="item bg-white p-4 relative">
+				<img
+					src="sertificat_02.jpg"
+					alt="Сертификат"
+					class="w-full" />
+
+				<!-- Текст -->
+				<!-- Текст -->
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					350 gsm Сoated paper + digital CMYK + SoftTouch lamination + Gold foil
+				</div>
+			</div>
+			<div class="item group border border-gray-200 overflow-hidden">
+				<div class="grid grid-cols-2 gap-1">
+					<img
+						src="druk_01_.jpg"
+						alt="Пример 1"
+						class="w-full object-cover aspect-[3/4]" />
+					<img
+						src="druk_02_.jpg"
+						alt="Пример 2"
+						class="w-full object-cover aspect-[3/4]" />
+					<img
+						src="druk_03_.jpg"
+						alt="Пример 3"
+						class="col-span-2 w-full object-cover aspect-[6/4]" />
+				</div>
+				<div class="p-2 text-sm text-gray-700">
+					Серія: <strong>Брендовані пакети</strong><br />
+					Повнокольоровий друк, крафт, дизайнерський картон
+				</div>
+			</div>
+			<div class="item group relative border border-gray-200 overflow-hidden">
+				<!-- Grid-сетка -->
+				<div class="grid grid-cols-2 gap-1 transition-all duration-500">
+					<!-- Фото 1 -->
+					<div
+						class="relative overflow-hidden group-hover:absolute group-hover:inset-0 group-hover:z-20 group-hover:col-span-2 group-hover:row-span-2 transition-all duration-500">
+						<img
+							src="druk_01_.jpg"
+							alt="Пример 1"
+							class="w-full h-full object-cover aspect-[3/4] transition-all duration-500 group-hover:aspect-auto group-hover:w-full group-hover:h-full" />
+					</div>
+
+					<!-- Фото 2 -->
+					<div
+						class="relative overflow-hidden transition-all duration-500 group-hover:opacity-0 group-hover:scale-90">
+						<img
+							src="druk_02_.jpg"
+							alt="Пример 2"
+							class="w-full object-cover aspect-[3/4]" />
+					</div>
+
+					<!-- Фото 3 -->
+					<div
+						class="col-span-2 relative overflow-hidden transition-all duration-500 group-hover:opacity-0 group-hover:scale-90">
+						<img
+							src="druk_03_.jpg"
+							alt="Пример 3"
+							class="w-full object-cover aspect-[6/4]" />
+					</div>
+				</div>
+
+				<!-- Подпись -->
+				<div
+					class="p-2 text-sm text-gray-700 transition-opacity duration-300 group-hover:opacity-0">
+					Серія: <strong>Брендовані пакети</strong><br />
+					Повнокольоровий друк, крафт, дизайнерський картон
+				</div>
+			</div>
+
+			<!-- Фотографии Яскравий друк визитки -->
+			<div class="item bg-white p-4 relative">
+				<img
+					src="druk_01_.jpg"
+					alt="Визитка Яскравий друк"
+					class="w-full" />
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					330 gsm Black Plike + digital White + digital CMYK + Silver foil
+				</div>
+			</div>
+			<div class="item bg-white p-4 relative">
+				<img
+					src="druk_02_.jpg"
+					alt="Визитка Яскравий друк"
+					class="w-full" />
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					330 gsm Black Plike + digital White + digital CMYK + Silver foil
+				</div>
+			</div>
+			<div class="item bg-white p-4 relative">
+				<img
+					src="druk_03_.jpg"
+					alt="Визитка Яскравий друк"
+					class="w-full" />
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					330 gsm Black Plike + digital White + digital CMYK + Silver foil
+				</div>
+			</div>
+			<div class="item bg-white p-4 relative">
+				<img
+					src="druk_04_.jpg"
+					alt="Визитка Яскравий друк"
+					class="w-full" />
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					330 gsm Black Plike + digital White + digital CMYK + Silver foil
+				</div>
+			</div>
+			<div class="item bg-white p-4">
+				<video
+					muted
+					loop
+					preload="auto"
+					onmouseenter="this.play()"
+					onmouseleave="this.pause(); this.currentTime=0;">
+					<source
+						src="druk_video_ready.mov"
+						type="video/mp4" />
+					Ваш браузер не поддерживает видео.
+				</video>
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					Black Plike + White + CMYK + Silver
+				</div>
+			</div>
+			<div class="item bg-white p-4 relative">
+				<img
+					src="druk_05.jpg"
+					alt="Визитка Яскравий друк"
+					class="w-full" />
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					Black Plike + White + CMYK + Silver
+				</div>
+			</div>
+			<div class="item bg-white p-4 relative">
+				<img
+					src="druk_06.jpg"
+					alt="Визитка Яскравий друк"
+					class="w-full" />
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					Black Plike + White + CMYK + Silver
+				</div>
+			</div>
+
+			<!-- Фотография -->
+			<div class="item bg-white p-4">
+				<img
+					src="druk_photo_01.jpg"
+					alt="Фото" />
+			</div>
+			<div class="item bg-white p-4">
+				<img
+					src="druk_photo_04.jpg"
+					alt="Фото" />
+			</div>
+			<div class="item bg-white p-4">
+				<img
+					src="druk_photo_03.jpg"
+					alt="Фото" />
+			</div>
+			<!-- Видео -->
+			<div class="item bg-white p-4">
+				<video
+					muted
+					loop
+					preload="auto"
+					onmouseenter="this.play()"
+					onmouseleave="this.pause(); this.currentTime=0;">
+					<source
+						src="druk_thank_you.mp4"
+						type="video/mp4" />
+					Ваш браузер не поддерживает видео.
+				</video>
+			</div>
+			<div class="item bg-white p-4">
+				<img
+					src="vizitka_chebar_01.jpg"
+					alt="Фото" />
+			</div>
+			<div class="item bg-white p-4">
+				<video
+					muted
+					loop
+					preload="auto"
+					onmouseenter="this.play()"
+					onmouseleave="this.pause(); this.currentTime=0;">
+					<source
+						src="CheBar.mov"
+						type="video/mp4" />
+					Ваш браузер не поддерживает видео.
+				</video>
+				<div
+					class="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1">
+					Black Plike + White + CMYK + Silver
+				</div>
+			</div>
+			<!-- Ещё видео -->
+			<div class="item bg-white p-4">
+				<video
+					muted
+					loop
+					preload="auto"
+					onmouseenter="this.play()"
+					onmouseleave="this.pause(); this.currentTime=0;">
+					<source
+						src="druk_video_02.mp4"
+						type="video/mp4" />
+					Ваш браузер не поддерживает видео.
+				</video>
+			</div>
+
+			<div class="item bg-white p-4">
+				<img
+					src="beauty.jpg"
+					alt="Фото" />
+			</div>
+
+			<!-- Ещё фото -->
+			<div class="item bg-white p-4">
+				<img
+					src="druk_photo_03.jpg"
+					alt="Фото" />
+			</div>
+
+			<div class="item bg-white p-4">
+				<img
+					src="new_year.jpg"
+					alt="Фото" />
+			</div>
+
+			<!-- Ещё видео -->
+			<div class="item bg-white p-4">
+				<video
+					muted
+					loop
+					preload="auto"
+					onmouseenter="this.play()"
+					onmouseleave="this.pause(); this.currentTime=0;">
+					<source
+						src="druk_video_01.mp4"
+						type="video/mp4" />
+					Ваш браузер не поддерживает видео.
+				</video>
+			</div>
+			<!-- Ещё видео -->
+
+			<!-- Добавляй сколько хочешь элементов -->
+		</div>
+	</body>
+</html>
