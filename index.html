@@ -31,6 +31,8 @@
 			@media (min-width: 380px) {
 				.masonry {
 					column-count: 2;
+					column-gap: 0.75rem;
+					padding: 0.75rem;
 				}
 			}
 
@@ -580,7 +582,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="sertificat_02.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="sertificat_02.jpg"
 						alt="Сертификат"
@@ -678,7 +680,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="druk_01_.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_01_.jpg"
 						alt="Визитка Яскравий друк"
@@ -694,13 +696,37 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- Ещё видео -->
+			<div
+				class="item"
+				data-category="video"
+				data-type="video"
+				data-src="druk_video_01.mp4">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="druk_video_01.mp4"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
+						<p>Подивіться на якість нашої роботи</p>
+					</div>
+				</div>
+			</div>
 			<div
 				class="item"
 				data-category="business-cards"
 				data-type="image"
 				data-src="druk_02_.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_02_.jpg"
 						alt="Визитка Яскравий друк"
@@ -722,7 +748,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="druk_03_.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_03_.jpg"
 						alt="Визитка Яскравий друк"
@@ -744,7 +770,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="druk_04_.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_04_.jpg"
 						alt="Визитка Яскравий друк"
@@ -766,7 +792,7 @@
 				data-category="video,business-cards"
 				data-type="video"
 				data-src="druk_video_ready.mov">
-				<div class="p-4 relative color-filter">
+				<div class="p-0 md:p-4 relative color-filter">
 					<video
 						class="w-full video-element"
 						muted
@@ -792,7 +818,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="druk_05.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_05.jpg"
 						alt="Визитка Яскравий друк"
@@ -812,7 +838,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="druk_06.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_06.jpg"
 						alt="Визитка Яскравий друк"
@@ -833,7 +859,7 @@
 				data-category="packaging"
 				data-type="image"
 				data-src="druk_photo_01.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_photo_01.jpg"
 						alt="Фото"
@@ -851,7 +877,7 @@
 				data-category="packaging"
 				data-type="image"
 				data-src="druk_photo_04.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_photo_04.jpg"
 						alt="Фото"
@@ -869,7 +895,7 @@
 				data-category="packaging"
 				data-type="image"
 				data-src="druk_photo_03.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_photo_03.jpg"
 						alt="Фото"
@@ -888,7 +914,7 @@
 				data-category="video"
 				data-type="video"
 				data-src="druk_thank_you.mp4">
-				<div class="p-4 relative color-filter">
+				<div class="p-0 md:p-4 relative color-filter">
 					<video
 						class="w-full video-element"
 						muted
@@ -913,7 +939,7 @@
 				data-category="business-cards"
 				data-type="image"
 				data-src="vizitka_chebar_01.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="vizitka_chebar_01.jpg"
 						alt="Фото"
@@ -931,7 +957,7 @@
 				data-category="video,business-cards"
 				data-type="video"
 				data-src="CheBar.mov">
-				<div class="p-4 relative color-filter">
+				<div class="p-0 md:p-4 relative color-filter">
 					<video
 						class="w-full video-element"
 						muted
@@ -960,7 +986,7 @@
 				data-category="video"
 				data-type="video"
 				data-src="druk_video_02.mp4">
-				<div class="p-4 relative color-filter">
+				<div class="p-0 md:p-4 relative color-filter">
 					<video
 						class="w-full video-element"
 						muted
@@ -985,7 +1011,7 @@
 				data-category="packaging"
 				data-type="image"
 				data-src="beauty.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="beauty.jpg"
 						alt="Фото"
@@ -1004,7 +1030,7 @@
 				data-category="packaging"
 				data-type="image"
 				data-src="druk_photo_03.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="druk_photo_03.jpg"
 						alt="Фото"
@@ -1022,7 +1048,7 @@
 				data-category="packaging"
 				data-type="image"
 				data-src="new_year.jpg">
-				<div class="item-zoom-effect p-4 relative color-filter">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
 					<img
 						src="new_year.jpg"
 						alt="Фото"
@@ -1041,7 +1067,7 @@
 				data-category="video"
 				data-type="video"
 				data-src="druk_video_01.mp4">
-				<div class="p-4 relative color-filter">
+				<div class="p-0 md:p-4 relative color-filter">
 					<video
 						class="w-full video-element"
 						muted
@@ -1198,7 +1224,12 @@
 				// Initialize scroll animations for gallery items
 				function initScrollAnimations() {
 					const items = document.querySelectorAll('.item');
-
+					const windowHeight = window.innerHeight;
+					const offsetPercentage = Math.min(
+						Math.max(windowHeight * 0.2, 100),
+						200
+					);
+					console.log('offsetPercentage', offsetPercentage);
 					// Set initial state for all items
 					gsap.set(items, { opacity: 0, y: 50 });
 
@@ -1211,7 +1242,7 @@
 							ease: 'power2.out', // Меняем на более плавную кривую анимации
 							scrollTrigger: {
 								trigger: item,
-								start: 'top bottom-=200', // Начинаем анимацию раньше
+								start: `top bottom-=${offsetPercentage}`,
 								end: 'top center', // Добавляем конечную точку
 								scrub: 0.5, // Добавляем эффект "scrub" для более плавного появления при прокрутке
 								toggleClass: 'is-visible',
