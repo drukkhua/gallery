@@ -67,7 +67,7 @@
 			}
 
 			.item:hover {
-				transform: scale(1.04);
+				transform: scale(1.1);
 				box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
 				z-index: 10;
 			}
@@ -83,7 +83,7 @@
 
 			.item:hover img,
 			.item:hover video {
-				transform: scale(1.05);
+				transform: scale(1.1);
 			}
 
 			.item-caption {
@@ -144,7 +144,7 @@
 			}
 
 			.video-hover-zoom:hover {
-				transform: scale(1.05);
+				transform: scale(1.1);
 			}
 
 			.grid-item {
@@ -1295,7 +1295,7 @@
 									opacity: 1,
 									y: 0,
 									scale: 1,
-									duration: 0.4,
+									duration: 0.8,
 									delay: Math.random() * 0.2,
 									onStart: () => {
 										item.style.display = 'block';
@@ -1305,8 +1305,8 @@
 								gsap.to(item, {
 									opacity: 0,
 									y: 20,
-									scale: 0.95,
-									duration: 0.4,
+									scale: 0.6,
+									duration: 0.8,
 									onComplete: () => {
 										item.style.display = 'none';
 									},
@@ -1424,7 +1424,7 @@
 						video.controls = true;
 						video.autoplay = true;
 						video.loop = true;
-						video.muted = false;
+						video.muted = true;
 						video.classList.add('lightbox-active');
 						lightboxContent.appendChild(video);
 					}
