@@ -521,8 +521,9 @@
 				muted
 				loop
 				playsinline
-				class="absolute inset-0 w-full h-full object-cover object-center scale-105 parallax-bg"
-				poster="druk_preview.jpg">
+				class="absolute inset-0 w-full h-full object-cover object-center parallax-bg"
+				poster="druk_preview.jpg"
+				style="object-position: 35% center">
 				<source
 					src="druk_video_01.mp4"
 					type="video/mp4" />
@@ -569,6 +570,11 @@
 			</button>
 			<button
 				class="filter-btn"
+				data-filter="sertificat">
+				Сертифікати
+			</button>
+			<button
+				class="filter-btn"
 				data-filter="video">
 				Відео
 			</button>
@@ -576,10 +582,10 @@
 
 		<!-- Gallery -->
 		<div class="masonry">
-			<!-- Фотография -->
+			<!-- Фотография Сертификат -->
 			<div
 				class="item"
-				data-category="business-cards"
+				data-category="sertificat"
 				data-type="image"
 				data-src="sertificat_02.jpg">
 				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
@@ -599,77 +605,535 @@
 					</div>
 				</div>
 			</div>
-
 			<div
 				class="item"
-				data-category="packaging"
+				data-category="sertificat"
 				data-type="image"
-				data-src="druk_03_.jpg">
-				<div class="group border border-gray-200 overflow-hidden">
-					<div class="grid grid-cols-2 gap-1">
-						<img
-							src="druk_01_.jpg"
-							alt="Пример 1"
-							class="w-full object-cover aspect-[3/4]" />
-						<img
-							src="druk_02_.jpg"
-							alt="Пример 2"
-							class="w-full object-cover aspect-[3/4]" />
-						<img
-							src="druk_03_.jpg"
-							alt="Пример 3"
-							class="col-span-2 w-full object-cover aspect-[6/4]" />
+				data-src="sertificat_03.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="sertificat_03.jpg"
+						alt="Сертификат"
+						class="w-full" />
+
+					<div class="item-caption">
+						<div class="tag">Сертифікат</div>
+						<div class="tag">Преміум</div>
+						<h3 class="text-lg font-semibold mb-1">Елегантний сертифікат</h3>
+						<p>
+							350 gsm Сoated paper + digital CMYK + SoftTouch lamination + Gold
+							foil
+						</p>
 					</div>
-					<div class="p-4 text-sm text-gray-700">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-bold mb-1">Брендовані пакети</h3>
-						<p>Повнокольоровий друк, крафт, дизайнерський картон</p>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="sertificat"
+				data-type="image"
+				data-src="sertificat_05.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="sertificat_05.jpg"
+						alt="Сертификат"
+						class="w-full" />
+
+					<div class="item-caption">
+						<div class="tag">Сертифікат</div>
+						<div class="tag">Преміум</div>
+						<h3 class="text-lg font-semibold mb-1">Елегантний сертифікат</h3>
+						<p>
+							350 gsm Сoated paper + digital CMYK + SoftTouch lamination + Gold
+							foil
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Ещё видео -->
+			<div
+				class="item"
+				data-category="video,sertificat"
+				data-type="video"
+				data-src="sertificat_video.mp4">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="sertificat_video.mp4"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Gold foil</p>
 					</div>
 				</div>
 			</div>
 
+			<!-- Фотографии Lash Romm визитки -->
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="lash_room_01.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="lash_room_01.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Gold foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="lash_room_02.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="lash_room_02.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Gold foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="lash_room_03.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="lash_room_03.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Gold foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Ещё видео -->
+			<div
+				class="item"
+				data-category="video,business-cards"
+				data-type="video"
+				data-src="lash_room_video.mov">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="lash_room_video.mov"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Gold foil</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Фотографии Beauty визитки -->
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="_beauty_13.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="_beauty_13.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+						<p>350 gsm + Gold and White foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="_beauty_09.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="_beauty_09.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+						<p>350 gsm + Gold and White foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="_beauty_05.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="_beauty_05.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+						<p>350 gsm + Gold and White foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="_beauty_03.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="_beauty_03.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+						<p>350 gsm + Gold and White foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Ещё видео -->
+			<div
+				class="item"
+				data-category="video,business-cards"
+				data-type="video"
+				data-src="_beauty_video.mp4">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="_beauty_video.mp4"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+						<p>350 gsm + Gold and White foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Фотографии Vitruoz визитки -->
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitka_virtuoz_02.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitka_virtuoz_02.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitka_virtuoz_03.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitka_virtuoz_03.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitka_virtuoz_06.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitka_virtuoz_06.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitka_virtuoz_09.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitka_virtuoz_09.jpg"
+						alt="Визитка Яскравий друк"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Ещё видео -->
+			<div
+				class="item"
+				data-category="video,business-cards"
+				data-type="video"
+				data-src="virtuoz_video.mov">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="virtuoz_video.mov"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Фотографии Bank визитки -->
 			<div
 				class="item"
 				data-category="packaging"
 				data-type="image"
-				data-src="druk_01_.jpg">
-				<div class="group relative border border-gray-200 overflow-hidden">
-					<!-- Grid-сетка -->
-					<div class="grid grid-cols-2 gap-1 transition-all duration-500">
-						<!-- Фото 1 -->
-						<div
-							class="relative overflow-hidden group-hover:absolute group-hover:inset-0 group-hover:z-20 group-hover:col-span-2 group-hover:row-span-2 transition-all duration-500">
-							<img
-								src="druk_01_.jpg"
-								alt="Пример 1"
-								class="w-full h-full object-cover aspect-[3/4] transition-all duration-500 group-hover:aspect-auto group-hover:w-full group-hover:h-full" />
-						</div>
-
-						<!-- Фото 2 -->
-						<div
-							class="relative overflow-hidden transition-all duration-500 group-hover:opacity-0 group-hover:scale-90">
-							<img
-								src="druk_02_.jpg"
-								alt="Пример 2"
-								class="w-full object-cover aspect-[3/4]" />
-						</div>
-
-						<!-- Фото 3 -->
-						<div
-							class="col-span-2 relative overflow-hidden transition-all duration-500 group-hover:opacity-0 group-hover:scale-90">
-							<img
-								src="druk_03_.jpg"
-								alt="Пример 3"
-								class="w-full object-cover aspect-[6/4]" />
-						</div>
+				data-src="white_01.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="white_01.jpg"
+						alt="Бирка"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Бирка</div>
+						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+						<p>350 gsm + Digital White</p>
 					</div>
-
-					<!-- Подпись -->
-					<div
-						class="p-4 text-sm text-gray-700 transition-opacity duration-300 group-hover:opacity-0">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-bold mb-1">Брендовані пакети</h3>
-						<p>Повнокольоровий друк, крафт, дизайнерський картон</p>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="packaging"
+				data-type="image"
+				data-src="white_02.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="white_02.jpg"
+						alt="Бирка"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Бирка</div>
+						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+						<p>350 gsm + Digital White</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="packaging"
+				data-type="image"
+				data-src="white_06.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="white_06.jpg"
+						alt="Бирка"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Бирка</div>
+						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+						<p>350 gsm + Digital White</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="packaging"
+				data-type="image"
+				data-src="white_07.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="white_07.jpg"
+						alt="Бирка"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Бирка</div>
+						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+						<p>350 gsm + Digital White</p>
+					</div>
+				</div>
+			</div>
+			<!-- Фотографии Transfer визитки -->
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitka_transfer_02.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitka_transfer_02.jpg"
+						alt="Визитка Your Transfer"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitka_transfer_04.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitka_transfer_04.jpg"
+						alt="Визитка Your Transfer"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Ещё видео -->
+			<div
+				class="item"
+				data-category="video,business-cards"
+				data-type="video"
+				data-src="video_transfer_01.MOV">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="video_transfer_01.MOV"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+						<p>350 gsm + Digital CMYK + Silver foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Фотографии Advokat визитки -->
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitki_advokat_02.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitki_advokat_02.jpg"
+						alt="Визитка Your Transfer"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
+						<p>Black plike 330 gsm + Digital White + Gold foil</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="item"
+				data-category="business-cards"
+				data-type="image"
+				data-src="vizitki_advokat_07.jpg">
+				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+					<img
+						src="vizitki_advokat_07.jpg"
+						alt="Визитка Your Transfer"
+						class="w-full" />
+					<div class="item-caption">
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
+						<p>Black plike 330 gsm + Digital White + Gold foil</p>
+					</div>
+				</div>
+			</div>
+			<!-- Видео Advokat -->
+			<div
+				class="item"
+				data-category="video,business-cards"
+				data-type="video"
+				data-src="advokat_video.mov">
+				<div class="p-0 md:p-4 relative color-filter">
+					<video
+						class="w-full video-element"
+						muted
+						loop
+						autoplay
+						preload="auto">
+						<source
+							src="advokat_video.mov"
+							type="video/mp4" />
+						Ваш браузер не поддерживает видео.
+					</video>
+					<div class="item-caption">
+						<div class="tag">Відео</div>
+						<div class="tag">Візитка</div>
+						<h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
+						<p>Black plike 330 gsm + Digital White + Gold foil</p>
 					</div>
 				</div>
 			</div>
