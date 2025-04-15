@@ -1,1984 +1,2088 @@
 <!DOCTYPE html>
 <html lang="ru">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0" />
-		<title>Masonry Gallery</title>
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
-		<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
-		<style>
-			:root {
-				--primary-color: #1a1a1a;
-				--secondary-color: #fff;
-				--accent-color: #42bc0e;
-			}
-
-			body {
-				overflow-x: hidden;
-			}
-
-			.masonry {
-				column-count: 1;
-				column-gap: 1.5rem;
-				width: 100%;
-				padding: 2rem;
-			}
-
-			@media (min-width: 380px) {
-				.masonry {
-					column-count: 2;
-					column-gap: 0.75rem;
-					padding: 0.75rem;
-				}
-			}
-
-			@media (min-width: 1024px) {
-				.masonry {
-					column-count: 3;
-				}
-			}
-			@media (min-width: 1600px) {
-				.masonry {
-					column-count: 4;
-				}
-			}
-
-			.item {
-				position: relative;
-				break-inside: avoid;
-				margin-bottom: 1.5rem;
-				overflow: hidden;
-				transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-					box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-				/* border-radius: 0.75rem; */
-				opacity: 0;
-				transform: translateY(50px);
-				background: #fff;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-				will-change: transform, opacity;
-				cursor: pointer;
-			}
-
-			.item.is-visible {
-				opacity: 1;
-				transform: translateY(0);
-			}
-
-			.item:hover {
-				transform: scale(1.1);
-				box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-				z-index: 10;
-			}
-
-			.item img,
-			.item video {
-				width: 100%;
-				height: auto;
-				display: block;
-				transition: transform 0.7s ease;
-				transform-origin: center center;
-			}
-
-			.item:hover img,
-			.item:hover video {
-				transform: scale(1.1);
-			}
-
-			.item-caption {
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				background: rgba(0, 0, 0, 0.7);
-				color: white;
-				padding: 1rem;
-				transform: translateY(100%);
-				transition: transform 0.3s ease;
-				backdrop-filter: blur(5px);
-			}
-
-			.item:hover .item-caption {
-				transform: translateY(0);
-			}
-
-			.tag {
-				display: inline-block;
-				padding: 0.25rem 0.75rem;
-				/* border-radius: 2rem; */
-				font-size: 0.75rem;
-				margin-right: 0.5rem;
-				margin-bottom: 0.5rem;
-				background: var(--accent-color);
-				color: white;
-				transform: translateY(20px);
-				opacity: 0;
-				transition: all 0.3s ease 0.1s;
-			}
-
-			.item:hover .tag {
-				transform: translateY(0);
-				opacity: 1;
-			}
-
-			.hero-text h1 {
-				overflow: hidden;
-			}
-
-			.hero-text h1 span {
-				display: inline-block;
-				transform: translateY(100%);
-				opacity: 0;
-			}
-
-			.hero-text p span {
-				display: inline-block;
-				transform: translateY(20px);
-				opacity: 0;
-			}
-
-			.video-hover-zoom {
-				transition: transform 0.5s ease;
-				overflow: hidden;
-			}
-
-			.video-hover-zoom:hover {
-				transform: scale(1.1);
-			}
-
-			.grid-item {
-				transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
-
-			.grid-item-hover {
-				transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
-
-			.color-filter::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: linear-gradient(
-					45deg,
-					rgba(50, 50, 50, 0.2),
-					rgba(50, 50, 50, 0.2)
-				);
-				mix-blend-mode: overlay;
-				opacity: 0;
-				transition: opacity 0.5s ease;
-				z-index: 1;
-			}
-
-			.item:hover .color-filter::before {
-				opacity: 1;
-			}
-
-			.loader {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: #fff;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				z-index: 9999;
-			}
-
-			.loader-circle {
-				width: 60px;
-				height: 60px;
-				border: 5px solid rgba(49, 130, 206, 0.2);
-				border-top-color: var(--accent-color);
-				border-radius: 50%;
-				animation: loader-spin 1s infinite linear;
-			}
-
-			@keyframes loader-spin {
-				100% {
-					transform: rotate(360deg);
-				}
-			}
-
-			.cursor {
-				position: fixed;
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
-				background: rgba(255, 255, 255, 0.2);
-				border: 2px solid white;
-				transform: translate(-50%, -50%);
-				pointer-events: none;
-				z-index: 9999;
-				mix-blend-mode: difference;
-				transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
-			}
-
-			.cursor-hover {
-				width: 80px;
-				height: 80px;
-				background: rgba(255, 255, 255, 0.1);
-				mix-blend-mode: difference;
-			}
-
-			.cursor-text {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				font-size: 0.8rem;
-				color: white;
-				opacity: 0;
-				transition: opacity 0.3s ease;
-			}
-
-			.cursor-hover .cursor-text {
-				opacity: 1;
-			}
-
-			.scroll-indicator {
-				position: fixed;
-				bottom: 30px;
-				left: 50%;
-				transform: translateX(-50%);
-				width: 30px;
-				height: 50px;
-				border: 2px solid white;
-				border-radius: 15px;
-				display: flex;
-				justify-content: center;
-				pointer-events: none;
-				z-index: 100;
-				opacity: 0.7;
-			}
-
-			.scroll-indicator::before {
-				content: '';
-				width: 6px;
-				height: 6px;
-				background: white;
-				border-radius: 50%;
-				margin-top: 8px;
-				animation: scroll-indicator 2s infinite;
-			}
-
-			@keyframes scroll-indicator {
-				0% {
-					transform: translateY(0);
-					opacity: 1;
-				}
-				100% {
-					transform: translateY(20px);
-					opacity: 0;
-				}
-			}
-
-			.category-filter {
-				display: flex;
-				justify-content: center;
-				flex-wrap: wrap;
-				margin: 2rem 0;
-				gap: 0.5rem;
-			}
-
-			.filter-btn {
-				padding: 0.5rem 1.5rem;
-				background: transparent;
-				border: 2px solid var(--accent-color);
-				color: var(--accent-color);
-				/* border-radius: 2rem; */
-				font-weight: 500;
-				cursor: pointer;
-				transition: all 0.3s ease;
-			}
-
-			.filter-btn:hover,
-			.filter-btn.active {
-				background: var(--accent-color);
-				color: white;
-			}
-
-			.parallax-bg {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 120%;
-				z-index: -1;
-			}
-
-			.item-zoom-effect {
-				overflow: hidden;
-			}
-
-			.item-zoom-effect img,
-			.item-zoom-effect video {
-				transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-			}
-
-			.item-zoom-effect:hover img,
-			.item-zoom-effect:hover video {
-				transform: scale(1.1);
-			}
-
-			.text-reveal {
-				overflow: hidden;
-				position: relative;
-			}
-
-			.text-reveal::after {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: var(--accent-color);
-				transform: translateX(-100%);
-				z-index: 1;
-			}
-
-			/* Floating animation for certain items */
-			.floating {
-				animation: floating 3s ease-in-out infinite;
-			}
-
-			@keyframes floating {
-				0% {
-					transform: translateY(0px);
-				}
-				50% {
-					transform: translateY(-15px);
-				}
-				100% {
-					transform: translateY(0px);
-				}
-			}
-
-			/* Custom scrollbar */
-			::-webkit-scrollbar {
-				width: 10px;
-			}
-
-			::-webkit-scrollbar-track {
-				background: #f1f1f1;
-			}
-
-			::-webkit-scrollbar-thumb {
-				background: var(--accent-color);
-				border-radius: 5px;
-			}
-
-			::-webkit-scrollbar-thumb:hover {
-				background: #2563eb;
-			}
-
-			/* Lightbox styles */
-			.lightbox {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: rgba(0, 0, 0, 0.9);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				z-index: 9999;
-				opacity: 0;
-				pointer-events: none;
-				transition: opacity 0.3s ease;
-			}
-
-			.lightbox.active {
-				opacity: 1;
-				pointer-events: auto;
-			}
-
-			.lightbox-content {
-				max-width: 90%;
-				max-height: 90%;
-				transform: scale(0.9);
-				transition: transform 0.3s ease;
-				position: relative;
-			}
-
-			.lightbox.active .lightbox-content {
-				transform: scale(1);
-			}
-
-			.lightbox-close {
-				position: absolute;
-				top: 20px;
-				right: 20px;
-				background: transparent;
-				border: none;
-				color: white;
-				font-size: 2rem;
-				cursor: pointer;
-				z-index: 10000;
-			}
-
-			.lightbox-nav {
-				position: absolute;
-				top: 50%;
-				width: 100%;
-				display: flex;
-				justify-content: space-between;
-				padding: 0 20px;
-				transform: translateY(-50%);
-				z-index: 10000;
-			}
-
-			.lightbox-nav button {
-				background: rgba(255, 255, 255, 0.2);
-				border: none;
-				color: white;
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				cursor: pointer;
-				transition: background 0.3s ease;
-			}
-
-			.lightbox-nav button:hover {
-				background: rgba(255, 255, 255, 0.4);
-			}
-
-			.lightbox-image,
-			.lightbox-video {
-				max-width: 100%;
-				max-height: 90vh;
-				/* border-radius: 4px; */
-				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-			}
-		</style>
-	</head>
-	<body class="bg-gray-50">
-		<!-- Preloader -->
-		<div class="loader">
-			<div class="loader-circle"></div>
-		</div>
-
-		<!-- Custom cursor -->
-		<div class="cursor hidden md:block">
-			<div class="cursor-text">View</div>
-		</div>
-
-		<!-- Lightbox -->
-		<div class="lightbox">
-			<button class="lightbox-close">&times;</button>
-			<div class="lightbox-nav">
-				<button class="lightbox-prev">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round">
-						<path d="M15 18l-6-6 6-6" />
-					</svg>
-				</button>
-				<button class="lightbox-next">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round">
-						<path d="M9 18l6-6-6-6" />
-					</svg>
-				</button>
-			</div>
-			<div class="lightbox-content"></div>
-		</div>
-
-		<!-- Scroll indicator -->
-		<div class="scroll-indicator"></div>
-
-		<!-- Hero Section -->
-		<section class="relative w-full h-[100vh] overflow-hidden">
-			<video
-				autoplay
-				muted
-				loop
-				playsinline
-				class="absolute inset-0 w-full h-full object-cover object-center parallax-bg"
-				poster="images/druk/druk_preview.jpg"
-				style="object-position: 35% center">
-				<source
-					src="images/druk/druk_video_01.mp4"
-					type="video/mp4" />
-			</video>
-
-			<div class="absolute inset-0 bg-black bg-opacity-40"></div>
-
-			<div
-				class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 hero-text">
-				<h1 class="text-5xl sm:text-6xl font-bold mb-6 overflow-hidden">
-					<span>Більше 20 років</span>
-					<br />
-					<span>робимо поліграфію</span>
-				</h1>
-				<p class="text-xl mb-8 overflow-hidden">
-					<span>Портфоліо наших робіт</span>
-				</p>
-				<a
-					href="#gallery"
-					class="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105 opacity-0"
-					>Переглянути галерею</a
-				>
-			</div>
-		</section>
-
-		<!-- Filter buttons -->
-		<div
-			class="category-filter opacity-0"
-			id="gallery">
-			<button
-				class="filter-btn active"
-				data-filter="all">
-				Всі роботи
-			</button>
-			<button
-				class="filter-btn"
-				data-filter="business-cards">
-				Візитки
-			</button>
-			<button
-				class="filter-btn"
-				data-filter="packaging">
-				Пакування
-			</button>
-			<button
-				class="filter-btn"
-				data-filter="sertificat">
-				Сертифікати
-			</button>
-			<button
-				class="filter-btn"
-				data-filter="video">
-				Відео
-			</button>
-		</div>
-
-		<!-- Gallery -->
-		<div class="masonry">
-			<!-- Фотография Сертификат -->
-			<div
-				class="item"
-				data-category="sertificat"
-				data-type="image"
-				data-src="images/sertificat/sertificat_02.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/sertificat/sertificat_02.jpg"
-						alt="Сертификат"
-						class="w-full" />
-
-					<div class="item-caption">
-						<div class="tag">Сертифікат</div>
-						<div class="tag">Преміум</div>
-						<h3 class="text-lg font-semibold mb-1">Елегантний сертифікат</h3>
-						<p>
-							350 gsm Сoated paper + digital CMYK + SoftTouch lamination + Gold
-							foil
-						</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="sertificat"
-				data-type="image"
-				data-src="images/sertificat/sertificat_03.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/sertificat/sertificat_03.jpg"
-						alt="Сертификат"
-						class="w-full" />
-
-					<div class="item-caption">
-						<div class="tag">Сертифікат</div>
-						<div class="tag">Преміум</div>
-						<h3 class="text-lg font-semibold mb-1">Елегантний сертифікат</h3>
-						<p>
-							350 gsm Сoated paper + digital CMYK + SoftTouch lamination + Gold
-							foil
-						</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="sertificat"
-				data-type="image"
-				data-src="images/sertificat/sertificat_05.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/sertificat/sertificat_05.jpg"
-						alt="Сертификат"
-						class="w-full" />
-
-					<div class="item-caption">
-						<div class="tag">Сертифікат</div>
-						<div class="tag">Преміум</div>
-						<h3 class="text-lg font-semibold mb-1">Елегантний сертифікат</h3>
-						<p>
-							350 gsm Сoated paper + digital CMYK + SoftTouch lamination + Gold
-							foil
-						</p>
-					</div>
-				</div>
-			</div>
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video,sertificat"
-				data-type="video"
-				data-src="images/sertificat/sertificat_video.mp4">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/sertificat/sertificat_video.mp4"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Gold foil</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Фотографии Lash Romm визитки -->
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/lash_room_01.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/lash_room_01.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Gold foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/lash_room_02.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/lash_room_02.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Gold foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/lash_room_03.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/lash_room_03.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Gold foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/cards/lash_room_video.mov">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/cards/lash_room_video.mov"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Gold foil</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Фотографии Beauty визитки -->
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/beauty_13.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/beauty_13.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-						<p>350 gsm + Gold and White foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/beauty_09.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/beauty_09.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-						<p>350 gsm + Gold and White foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/beauty_05.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/beauty_05.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-						<p>350 gsm + Gold and White foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/beauty_03.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/beauty_03.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-						<p>350 gsm + Gold and White foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/cards/beauty_video.mp4">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/cards/beauty_video.mp4"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-						<p>350 gsm + Gold and White foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Фотографии Vitruoz визитки -->
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_virtuoz_02.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_virtuoz_02.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_virtuoz_03.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_virtuoz_03.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_virtuoz_06.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_virtuoz_06.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_virtuoz_09.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_virtuoz_09.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/cards/virtuoz_video.mov">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/cards/virtuoz_video.mov"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Фотографии Bank визитки -->
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/packaging/white_01.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/packaging/white_01.jpg"
-						alt="Бирка"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Бирка</div>
-						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-						<p>350 gsm + Digital White</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/packaging/white_02.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/packaging/white_02.jpg"
-						alt="Бирка"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Бирка</div>
-						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-						<p>350 gsm + Digital White</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/packaging/white_06.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/packaging/white_06.jpg"
-						alt="Бирка"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Бирка</div>
-						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-						<p>350 gsm + Digital White</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/packaging/white_07.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/packaging/white_07.jpg"
-						alt="Бирка"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Бирка</div>
-						<h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-						<p>350 gsm + Digital White</p>
-					</div>
-				</div>
-			</div>
-			<!-- Фотографии Transfer визитки -->
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_transfer_02.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_transfer_02.jpg"
-						alt="Визитка Your Transfer"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_transfer_04.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_transfer_04.jpg"
-						alt="Визитка Your Transfer"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/cards/video_transfer_01.MOV">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/cards/video_transfer_01.MOV"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-						<p>350 gsm + Digital CMYK + Silver foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Фотографии Advokat визитки -->
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitki_advokat_02.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitki_advokat_02.jpg"
-						alt="Визитка Your Transfer"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
-						<p>Black plike 330 gsm + Digital White + Gold foil</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitki_advokat_07.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitki_advokat_07.jpg"
-						alt="Визитка Your Transfer"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
-						<p>Black plike 330 gsm + Digital White + Gold foil</p>
-					</div>
-				</div>
-			</div>
-			<!-- Видео Advokat -->
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/cards/advokat_video.mov">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/cards/advokat_video.mov"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
-						<p>Black plike 330 gsm + Digital White + Gold foil</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Фотографии Яскравий друк визитки -->
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/druk/druk_01_.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_01_.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">
-							Чорна візитка з фольгуванням
-						</h3>
-						<p>
-							330 gsm Black Plike + digital White + digital CMYK + Silver foil
-						</p>
-					</div>
-				</div>
-			</div>
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video"
-				data-type="video"
-				data-src="images/druk/druk_video_01.mp4">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/druk/druk_video_01.mp4"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
-						<p>Подивіться на якість нашої роботи</p>
-					</div>
-				</div>
-			</div>
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/druk/druk_02_.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_02_.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">
-							Чорна візитка з фольгуванням
-						</h3>
-						<p>
-							330 gsm Black Plike + digital White + digital CMYK + Silver foil
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/druk/druk_03_.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_03_.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">
-							Чорна візитка з фольгуванням
-						</h3>
-						<p>
-							330 gsm Black Plike + digital White + digital CMYK + Silver foil
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/druk/druk_04_.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_04_.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">
-							Чорна візитка з фольгуванням
-						</h3>
-						<p>
-							330 gsm Black Plike + digital White + digital CMYK + Silver foil
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/druk/druk_video_ready.mov">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/druk/druk_video_ready.mov"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<div class="tag">Відео</div>
-						<h3 class="text-lg font-semibold mb-1">Візитка з фольгуванням</h3>
-						<p>Black Plike + White + CMYK + Silver</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/druk/druk_05.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_05.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">
-							Чорна візитка з фольгуванням
-						</h3>
-						<p>Black Plike + White + CMYK + Silver</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/druk/druk_06.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_06.jpg"
-						alt="Визитка Яскравий друк"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">
-							Чорна візитка з фольгуванням
-						</h3>
-						<p>Black Plike + White + CMYK + Silver</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Фотография -->
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/druk/druk_photo_01.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_photo_01.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-semibold mb-1">Преміум пакування</h3>
-						<p>Дизайнерський картон, фольгування</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/druk/druk_photo_04.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_photo_04.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-semibold mb-1">Елегантне пакування</h3>
-						<p>Дизайнерський картон, УФ-друк</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/druk/druk_photo_03.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_photo_03.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-semibold mb-1">Стильне пакування</h3>
-						<p>Дизайнерський картон, тиснення</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Видео -->
-			<div
-				class="item"
-				data-category="video"
-				data-type="video"
-				data-src="images/druk/druk_thank_you.mp4">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/druk/druk_thank_you.mp4"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<h3 class="text-lg font-semibold mb-1">Thank You Card</h3>
-						<p>Особливе доповнення до вашого замовлення</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="business-cards"
-				data-type="image"
-				data-src="images/cards/vizitka_chebar_01.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/vizitka_chebar_01.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<h3 class="text-lg font-semibold mb-1">CheBar - Преміум візитка</h3>
-						<p>Дизайнерський картон, фольгування</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="video,business-cards"
-				data-type="video"
-				data-src="images/cards/CheBar.mov">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/cards/CheBar.mov"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Візитка</div>
-						<div class="tag">Відео</div>
-						<h3 class="text-lg font-semibold mb-1">
-							CheBar - Елегантна візитка
-						</h3>
-						<p>Black Plike + White + CMYK + Silver</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video"
-				data-type="video"
-				data-src="images/druk/druk_video_02.mp4">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/druk/druk_video_02.mp4"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<h3 class="text-lg font-semibold mb-1">Процес виготовлення</h3>
-						<p>Зазирніть за лаштунки нашого виробництва</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/cards/beauty.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/cards/beauty.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-semibold mb-1">Beauty Packaging</h3>
-						<p>Елегантне пакування для косметики</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Ещё фото -->
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/druk/druk_photo_03.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/druk/druk_photo_03.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-semibold mb-1">Преміум пакування</h3>
-						<p>Дизайнерські матеріали, тиснення золотом</p>
-					</div>
-				</div>
-			</div>
-
-			<div
-				class="item"
-				data-category="packaging"
-				data-type="image"
-				data-src="images/gifts/new_year.jpg">
-				<div class="item-zoom-effect p-0 md:p-4 relative color-filter">
-					<img
-						src="images/gifts/new_year.jpg"
-						alt="Фото"
-						class="w-full" />
-					<div class="item-caption">
-						<div class="tag">Пакування</div>
-						<h3 class="text-lg font-semibold mb-1">Новорічне пакування</h3>
-						<p>Спеціальне святкове оформлення</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Ещё видео -->
-			<div
-				class="item"
-				data-category="video"
-				data-type="video"
-				data-src="images/druk/druk_video_01.mp4">
-				<div class="p-0 md:p-4 relative color-filter">
-					<video
-						class="w-full video-element"
-						muted
-						loop
-						autoplay
-						preload="auto">
-						<source
-							src="images/druk/druk_video_01.mp4"
-							type="video/mp4" />
-						Ваш браузер не поддерживает видео.
-					</video>
-					<div class="item-caption">
-						<div class="tag">Відео</div>
-						<h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
-						<p>Подивіться на якість нашої роботи</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Back to top button -->
-		<button
-			id="back-to-top"
-			class="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50 opacity-0 transition-opacity duration-300">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor">
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M5 10l7-7m0 0l7 7m-7-7v18" />
-			</svg>
-		</button>
-
-		<!-- Footer -->
-		<footer class="bg-gray-900 text-white py-12 mt-16">
-			<div class="container mx-auto px-4">
-				<div class="flex flex-col md:flex-row justify-between items-center">
-					<div class="mb-6 md:mb-0">
-						<h2 class="text-2xl font-bold">Яскравий друк</h2>
-						<p class="mt-2 text-gray-400">Більше 20 років якісної поліграфії</p>
-					</div>
-					<div class="flex space-x-4">
-						<a
-							href="#"
-							class="hover:text-blue-400 transition-colors"
-							>Instagram</a
-						>
-						<a
-							href="#"
-							class="hover:text-blue-400 transition-colors"
-							>Facebook</a
-						>
-						<a
-							href="#"
-							class="hover:text-blue-400 transition-colors"
-							>Telegram</a
-						>
-					</div>
-				</div>
-				<div
-					class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-					<p>&copy; 2025 Яскравий друк. Всі права захищені.</p>
-				</div>
-			</div>
-		</footer>
-
-		<script>
-			// Initialize GSAP and ScrollTrigger
-			gsap.registerPlugin(ScrollTrigger);
-
-			// Wait for images to load before initializing animations
-			document.addEventListener('DOMContentLoaded', function () {
-				// Preloader
-				window.addEventListener('load', function () {
-					const loader = document.querySelector('.loader');
-					gsap.to(loader, {
-						opacity: 0,
-						duration: 0.8,
-						onComplete: () => {
-							loader.style.display = 'none';
-							// Start hero animations after preloader is gone
-							animateHero();
-						},
-					});
-				});
-
-				// Hero section animation
-				function animateHero() {
-					const heroTimeline = gsap.timeline();
-
-					// Animate hero text
-					heroTimeline
-						.to('.hero-text h1 span', {
-							y: 0,
-							opacity: 1,
-							duration: 1.2,
-							stagger: 0.2,
-							ease: 'power4.out',
-						})
-						.to(
-							'.hero-text p span',
-							{
-								y: 0,
-								opacity: 1,
-								duration: 0.8,
-								ease: 'power3.out',
-							},
-							'-=0.5'
-						)
-						.to(
-							'.hero-text a',
-							{
-								opacity: 1,
-								duration: 0.8,
-								ease: 'power3.out',
-							},
-							'-=0.3'
-						)
-						.to(
-							'.category-filter',
-							{
-								opacity: 1,
-								duration: 0.8,
-								ease: 'power3.out',
-							},
-							'-=0.3'
-						)
-						.to(
-							'.scroll-indicator',
-							{
-								opacity: 1,
-								duration: 0.5,
-							},
-							'-=0.5'
-						);
-
-					// Parallax effect for hero background
-					gsap.to('.parallax-bg', {
-						y: 100,
-						scrollTrigger: {
-							trigger: 'section',
-							start: 'top top',
-							end: 'bottom top',
-							scrub: true,
-						},
-					});
-				}
-
-				// Initialize scroll animations for gallery items
-				function initScrollAnimations() {
-					const items = document.querySelectorAll('.item');
-					const windowHeight = window.innerHeight;
-					const offsetPercentage = Math.min(
-						Math.max(windowHeight * 0.2, 100),
-						200
-					);
-					console.log('offsetPercentage', offsetPercentage);
-					// Set initial state for all items
-					gsap.set(items, { opacity: 0, y: 50 });
-
-					// Create scroll triggers for each item
-					items.forEach((item, index) => {
-						gsap.to(item, {
-							opacity: 1,
-							y: 0,
-							duration: 1.8, // Увеличиваем с 0.8 до 1.2 для большей плавности
-							ease: 'power2.out', // Меняем на более плавную кривую анимации
-							scrollTrigger: {
-								trigger: item,
-								start: `top bottom-=${offsetPercentage}`,
-								end: 'top center', // Добавляем конечную точку
-								scrub: 0.5, // Добавляем эффект "scrub" для более плавного появления при прокрутке
-								toggleClass: 'is-visible',
-							},
-							delay: (index % 4) * 0.15, // Увеличиваем задержку между элементами
-						});
-					});
-				}
-
-				// Apply animations after images are loaded
-				imagesLoaded(document.querySelector('.masonry'), function () {
-					initScrollAnimations();
-				});
-
-				// Custom cursor
-				const cursor = document.querySelector('.cursor');
-				const cursorText = document.querySelector('.cursor-text');
-				const items = document.querySelectorAll('.item');
-
-				if (cursor) {
-					document.addEventListener('mousemove', function (e) {
-						gsap.to(cursor, {
-							x: e.clientX,
-							y: e.clientY,
-							duration: 0.1,
-						});
-					});
-
-					// Add hover effect for items
-					items.forEach((item) => {
-						item.addEventListener('mouseenter', function () {
-							cursor.classList.add('cursor-hover');
-							cursorText.textContent =
-								this.dataset.type === 'video' ? 'Play' : 'View';
-						});
-
-						item.addEventListener('mouseleave', function () {
-							cursor.classList.remove('cursor-hover');
-						});
-					});
-				}
-
-				// Back to top button
-				const backToTopButton = document.getElementById('back-to-top');
-
-				window.addEventListener('scroll', function () {
-					if (window.pageYOffset > 500) {
-						gsap.to(backToTopButton, { opacity: 1, duration: 0.3 });
-					} else {
-						gsap.to(backToTopButton, { opacity: 0, duration: 0.3 });
-					}
-				});
-
-				backToTopButton.addEventListener('click', function () {
-					window.scrollTo({
-						top: 0,
-						behavior: 'smooth',
-					});
-				});
-
-				// Category filter functionality
-				const filterButtons = document.querySelectorAll('.filter-btn');
-
-				filterButtons.forEach((button) => {
-					button.addEventListener('click', function () {
-						// Remove active class from all buttons
-						filterButtons.forEach((btn) => btn.classList.remove('active'));
-
-						// Add active class to clicked button
-						this.classList.add('active');
-
-						const filterValue = this.getAttribute('data-filter');
-						const items = document.querySelectorAll('.item');
-
-						// Show/hide items based on category
-						items.forEach((item) => {
-							const categories = item.getAttribute('data-category').split(',');
-
-							if (filterValue === 'all' || categories.includes(filterValue)) {
-								gsap.to(item, {
-									opacity: 1,
-									y: 0,
-									scale: 1,
-									duration: 0.8,
-									delay: Math.random() * 0.2,
-									onStart: () => {
-										item.style.display = 'block';
-									},
-								});
-							} else {
-								gsap.to(item, {
-									opacity: 0,
-									y: 20,
-									scale: 0.6,
-									duration: 0.8,
-									onComplete: () => {
-										item.style.display = 'none';
-									},
-								});
-							}
-						});
-					});
-				});
-
-				// Hide scroll indicator when user scrolls down
-				window.addEventListener('scroll', function () {
-					const scrollIndicator = document.querySelector('.scroll-indicator');
-					if (window.pageYOffset > 300 && scrollIndicator) {
-						gsap.to(scrollIndicator, { opacity: 0, duration: 0.3 });
-					}
-				});
-
-				// Video autoplay on hover
-				// const videoItems = document.querySelectorAll('.video-element');
-				// videoItems.forEach((video) => {
-				// 	// Play video on mouseenter
-				// 	video.parentElement.parentElement.addEventListener(
-				// 		'mouseenter',
-				// 		() => {
-				// 			video.play();
-				// 			gsap.to(video, {
-				// 				scale: 1.05,
-				// 				duration: 0.5,
-				// 				ease: 'power2.out',
-				// 			});
-				// 		}
-				// 	);
-
-				// 	// Pause and reset video on mouseleave
-				// 	video.parentElement.parentElement.addEventListener(
-				// 		'mouseleave',
-				// 		() => {
-				// 			video.pause();
-				// 			if (!video.classList.contains('lightbox-active')) {
-				// 				video.currentTime = 0;
-				// 			}
-				// 			gsap.to(video, { scale: 1, duration: 0.5, ease: 'power2.out' });
-				// 		}
-				// 	);
-				// });
-
-				// Lightbox functionality
-				const lightbox = document.querySelector('.lightbox');
-				const lightboxContent = document.querySelector('.lightbox-content');
-				const lightboxClose = document.querySelector('.lightbox-close');
-				const lightboxPrev = document.querySelector('.lightbox-prev');
-				const lightboxNext = document.querySelector('.lightbox-next');
-				let currentIndex = 0;
-				const itemsArray = Array.from(document.querySelectorAll('.item'));
-
-				// Open lightbox when clicking on an item
-				itemsArray.forEach((item, index) => {
-					item.addEventListener('click', function () {
-						currentIndex = index;
-						openLightbox(this);
-					});
-				});
-
-				// Close lightbox
-				lightboxClose.addEventListener('click', closeLightbox);
-				lightbox.addEventListener('click', function (e) {
-					if (e.target === lightbox) {
-						closeLightbox();
-					}
-				});
-
-				// Navigate through items
-				lightboxPrev.addEventListener('click', function (e) {
-					e.stopPropagation();
-					navigate(-1);
-				});
-
-				lightboxNext.addEventListener('click', function (e) {
-					e.stopPropagation();
-					navigate(1);
-				});
-
-				// Keyboard navigation
-				document.addEventListener('keydown', function (e) {
-					if (!lightbox.classList.contains('active')) return;
-
-					if (e.key === 'Escape') {
-						closeLightbox();
-					} else if (e.key === 'ArrowLeft') {
-						navigate(-1);
-					} else if (e.key === 'ArrowRight') {
-						navigate(1);
-					}
-				});
-
-				// Open lightbox
-				function openLightbox(item) {
-					const src = item.getAttribute('data-src');
-					const type = item.getAttribute('data-type');
-
-					// Clear previous content
-					lightboxContent.innerHTML = '';
-
-					if (type === 'image') {
-						// Create image element
-						const img = document.createElement('img');
-						img.src = src;
-						img.className = 'lightbox-image';
-						lightboxContent.appendChild(img);
-					} else if (type === 'video') {
-						// Create video element
-						const video = document.createElement('video');
-						video.src = src;
-						video.className = 'lightbox-video';
-						video.controls = true;
-						video.autoplay = true;
-						video.loop = true;
-						video.muted = true;
-						video.classList.add('lightbox-active');
-						lightboxContent.appendChild(video);
-					}
-
-					// Show lightbox
-					lightbox.classList.add('active');
-					document.body.style.overflow = 'hidden';
-				}
-
-				// Close lightbox
-				function closeLightbox() {
-					const video = lightboxContent.querySelector('video');
-					if (video) {
-						video.pause();
-						video.classList.remove('lightbox-active');
-					}
-
-					lightbox.classList.remove('active');
-					document.body.style.overflow = '';
-				}
-
-				// Navigate between items
-				function navigate(direction) {
-					currentIndex =
-						(currentIndex + direction + itemsArray.length) % itemsArray.length;
-					openLightbox(itemsArray[currentIndex]);
-				}
-
-				// Smooth scroll for anchor links
-				document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-					anchor.addEventListener('click', function (e) {
-						e.preventDefault();
-
-						const targetId = this.getAttribute('href');
-						const targetElement = document.querySelector(targetId);
-
-						if (targetElement) {
-							window.scrollTo({
-								top: targetElement.offsetTop,
-								behavior: 'smooth',
-							});
-						}
-					});
-				});
-
-				// Random floating animation for some items
-				const applyFloatingAnimation = () => {
-					const items = document.querySelectorAll('.item');
-					const randomItems = Array.from(items)
-						.sort(() => 0.5 - Math.random())
-						.slice(0, Math.floor(items.length / 5));
-
-					randomItems.forEach((item) => {
-						item.classList.add('floating');
-					});
-				};
-
-				setTimeout(applyFloatingAnimation, 2000);
-			});
-		</script>
-	</body>
+<head>
+    <meta charset="UTF-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"/>
+    <title>Masonry Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <style>
+      :root {
+        --primary-color: #1a1a1a;
+        --secondary-color: #fff;
+        --accent-color: #42bc0e;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .masonry {
+        column-count: 1;
+        column-gap: 1.5rem;
+        width: 100%;
+        padding: 2rem;
+      }
+
+      @media (min-width: 500px) {
+        .masonry {
+          column-count: 2;
+          column-gap: 0.75rem;
+          padding: 0.75rem;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .masonry {
+          column-count: 3;
+        }
+      }
+
+      @media (min-width: 1600px) {
+        .masonry {
+          column-count: 4;
+        }
+      }
+
+      .item {
+        position: relative;
+        break-inside: avoid;
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        /* border-radius: 0.75rem; */
+        opacity: 0;
+        transform: translateY(50px);
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        will-change: transform, opacity;
+        cursor: pointer;
+      }
+
+      .item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .item:hover {
+        transform: scale(1.1);
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+      }
+
+      .item img,
+      .item video {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.7s ease;
+        transform-origin: center center;
+      }
+
+      .item:hover img,
+      .item:hover video {
+        transform: scale(1.1);
+      }
+
+      .item-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 1rem;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      .item-caption h3 {
+        font-size: 1.20rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .item-caption p {
+        font-size: 0.75rem;
+      }
+
+      .item:hover .item-caption {
+        transform: translateY(0);
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        /* border-radius: 2rem; */
+        font-size: 0.75rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        background: var(--accent-color);
+        color: white;
+      }
+
+      .item:hover .tag {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      @media (max-width: 700px) {
+        /* 2 cols */
+        .tag {
+          transform: none !important;
+          opacity: 1 !important;
+          transition: none;
+          padding: 0.2rem 0.5rem;
+          font-size: 0.7rem;
+        }
+
+        .item-caption h3 {
+          font-size: 1rem;
+        }
+
+        .item-caption p {
+          font-size: 0.7rem;
+        }
+
+        /* Переопределяем правило при наведении */
+        .item:hover .tag {
+          transform: none !important;
+          opacity: 1 !important;
+        }
+
+        /* Дополнительно для item-caption */
+        .item-caption {
+          color: var(--primary-color);
+          position: relative;
+          transform: translateY(0);
+          background: white;
+          padding: 0.65rem;
+        }
+
+        .item:hover .item-caption {
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 500px) {
+        /* 1 column */
+        .tag {
+          font-size: 0.9rem;
+          padding: 0.2rem 0.5rem;
+        }
+
+        .item-caption {
+          padding: 1rem;
+        }
+
+        .item-caption h3 {
+          font-size: 1.25rem;
+        }
+
+        .item-caption p {
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (min-width: 701px) {
+        /* 2 columns */
+        .tag {
+          transform: translateY(20px);
+          opacity: 0;
+          transition: all 0.3s ease 0.1s;
+        }
+
+        .item:hover .tag {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        .item-caption {
+          position: absolute;
+          bottom: 0;
+          transform: translateY(100%);
+          background: rgba(0, 0, 0, 0.7);
+        }
+
+        .item-caption h3 {
+          font-size: 1.1rem;
+
+        }
+
+        .item-caption p {
+          font-size: 0.7rem;
+        }
+
+        .item:hover .item-caption {
+          transform: translateY(0);
+        }
+      }
+
+
+      .hero-text h1 {
+        overflow: hidden;
+      }
+
+      .hero-text h1 span {
+        display: inline-block;
+        transform: translateY(100%);
+        opacity: 0;
+      }
+
+      .hero-text p span {
+        display: inline-block;
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      .video-hover-zoom {
+        transition: transform 0.5s ease;
+        overflow: hidden;
+      }
+
+      .video-hover-zoom:hover {
+        transform: scale(1.1);
+      }
+
+      .grid-item {
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .grid-item-hover {
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .color-filter::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+                45deg,
+                rgba(50, 50, 50, 0.2),
+                rgba(50, 50, 50, 0.2)
+        );
+        mix-blend-mode: overlay;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 1;
+      }
+
+      .item:hover .color-filter::before {
+        opacity: 1;
+      }
+
+      .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loader-circle {
+        width: 60px;
+        height: 60px;
+        border: 5px solid rgba(49, 130, 206, 0.2);
+        border-top-color: var(--accent-color);
+        border-radius: 50%;
+        animation: loader-spin 1s infinite linear;
+      }
+
+      @keyframes loader-spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .cursor {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid white;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 9999;
+        mix-blend-mode: difference;
+        transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+      }
+
+      .cursor-hover {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.1);
+        mix-blend-mode: difference;
+      }
+
+      .cursor-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.8rem;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .cursor-hover .cursor-text {
+        opacity: 1;
+      }
+
+      .scroll-indicator {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 50px;
+        border: 2px solid white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 100;
+        opacity: 0.7;
+      }
+
+      .scroll-indicator::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        margin-top: 8px;
+        animation: scroll-indicator 2s infinite;
+      }
+
+      @keyframes scroll-indicator {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+      }
+
+      .category-filter {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 2rem 0;
+        gap: 0.5rem;
+      }
+
+      .filter-btn {
+        padding: 0.5rem 1.5rem;
+        background: transparent;
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        /* border-radius: 2rem; */
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--accent-color);
+        color: white;
+      }
+
+      .parallax-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 120%;
+        z-index: -1;
+      }
+
+      .item-zoom-effect {
+        overflow: hidden;
+      }
+
+      .item-zoom-effect img,
+      .item-zoom-effect video {
+        transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .item-zoom-effect:hover img,
+      .item-zoom-effect:hover video {
+        transform: scale(1.1);
+      }
+
+      .text-reveal {
+        overflow: hidden;
+        position: relative;
+      }
+
+      .text-reveal::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--accent-color);
+        transform: translateX(-100%);
+        z-index: 1;
+      }
+
+      /* Floating animation for certain items */
+      .floating {
+        animation: floating 3s ease-in-out infinite;
+      }
+
+      @keyframes floating {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent-color);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+      }
+
+      /* Lightbox styles */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+
+      .lightbox.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+
+      .lightbox.active .lightbox-content {
+        transform: scale(1);
+      }
+
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: transparent;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 10000;
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        transform: translateY(-50%);
+        z-index: 10000;
+      }
+
+      .lightbox-nav button {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .lightbox-nav button:hover {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      .lightbox-image,
+      .lightbox-video {
+        max-width: 100%;
+        max-height: 90vh;
+        /* border-radius: 4px; */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+</head>
+<body class="bg-gray-50">
+<!-- Preloader -->
+<div class="loader">
+    <div class="loader-circle"></div>
+</div>
+
+<!-- Custom cursor -->
+<div class="cursor hidden md:block">
+    <div class="cursor-text">View</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox">
+    <button class="lightbox-close">&times;</button>
+    <div class="lightbox-nav">
+        <button class="lightbox-prev">
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+        </button>
+        <button class="lightbox-next">
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6"/>
+            </svg>
+        </button>
+    </div>
+    <div class="lightbox-content"></div>
+</div>
+
+<!-- Scroll indicator -->
+<div class="scroll-indicator"></div>
+
+<!-- Hero Section -->
+<section class="relative w-full h-[100vh] overflow-hidden">
+    <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="absolute inset-0 w-full h-full object-cover object-center parallax-bg"
+            poster="images/druk/druk_04_.jpg"
+            style="object-position: 35% center">
+        <source
+                src="images/druk/druk_video_01.mp4"
+                type="video/mp4"/>
+    </video>
+
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+
+    <div
+            class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 hero-text">
+        <h1 class="text-6xl sm:text-8xl font-bold mb-6 overflow-hidden">
+            <span>Более 20 лет</span>
+            <br/>
+            <span>делаем полиграфию</span>
+        </h1>
+        <p class="text-xl mb-8 overflow-hidden">
+            <span>Портфолио наших работ</span>
+        </p>
+        <a
+                href="#gallery"
+                class="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-opacity-30 transition-all transform hover:scale-125 opacity-50"
+        >Посмотреть</a
+        >
+    </div>
+</section>
+
+<!-- Filter buttons -->
+<div
+        class="category-filter opacity-0"
+        id="gallery">
+    <button
+            class="filter-btn active"
+            data-filter="all">
+        Все работы
+    </button>
+    <button
+            class="filter-btn"
+            data-filter="business-cards">
+        Визитки
+    </button>
+    <button
+            class="filter-btn"
+            data-filter="packaging">
+        Упаковка
+    </button>
+    <button
+            class="filter-btn"
+            data-filter="foil">
+        Тиснение
+    </button>
+    <button
+            class="filter-btn"
+            data-filter="sertificat">
+        Сертификаты
+    </button>
+    <button
+            class="filter-btn"
+            data-filter="video">
+        Видео
+    </button>
+</div>
+
+<!-- Gallery-->
+<div class="masonry">
+    <!-- Фотография Сертификат -->
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video,sertificat,foil"
+            data-type="video"
+            data-src="images/sertificat/sertificat_video.mp4">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/sertificat/sertificat_video.mp4"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Видео</div>
+                <div class="tag">Сертификат</div>
+                <div class="tag">Тиснение</div>
+                <h3>Сертификат А6</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="sertificat,foil"
+            data-type="image"
+            data-src="images/sertificat/sertificat_02.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/sertificat/sertificat_02.jpg"
+                    alt="Сертификат"
+                    class="w-full"/>
+
+            <div class="item-caption">
+                <div class="tag">Сертификат</div>
+                <div class="tag">Тиснение</div>
+                <h3>Сертификат А6</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="sertificat,foil"
+            data-type="image"
+            data-src="images/sertificat/sertificat_03.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/sertificat/sertificat_03.jpg"
+                    alt="Сертификат"
+                    class="w-full"/>
+
+            <div class="item-caption">
+                <div class="tag">Сертифікат</div>
+                <div class="tag">Тиснение</div>
+                <h3>Сертификат А6</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="sertificat,foil"
+            data-type="image"
+            data-src="images/sertificat/sertificat_05.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/sertificat/sertificat_05.jpg"
+                    alt="Сертификат"
+                    class="w-full"/>
+
+            <div class="item-caption">
+                <div class="tag">Сертифікат</div>
+                <div class="tag">Преміум</div>
+                <h3>Сертификат А6</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Фотографии Lash Romm визитки -->
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/lash_room_01.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/lash_room_01.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Gold foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/lash_room_02.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/lash_room_02.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Gold foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/lash_room_03.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/lash_room_03.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Gold foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/cards/lash_room_video.mov">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/cards/lash_room_video.mov"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Gold foil</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фотографии Beauty визитки -->
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/beauty_13.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/beauty_13.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+                <p>350 gsm + Gold and White foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/beauty_09.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/beauty_09.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+                <p>350 gsm + Gold and White foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/beauty_05.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/beauty_05.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+                <p>350 gsm + Gold and White foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/beauty_03.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/beauty_03.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+                <p>350 gsm + Gold and White foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/cards/beauty_video.mp4">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/cards/beauty_video.mp4"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
+                <p>350 gsm + Gold and White foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Фотографии Vitruoz визитки -->
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_virtuoz_02.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_virtuoz_02.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_virtuoz_03.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_virtuoz_03.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_virtuoz_06.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_virtuoz_06.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_virtuoz_09.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_virtuoz_09.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/cards/virtuoz_video.mov">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/cards/virtuoz_video.mov"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фотографии Bank визитки -->
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/packaging/white_01.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/packaging/white_01.jpg"
+                    alt="Бирка"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Бирка</div>
+                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+                <p>350 gsm + Digital White</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/packaging/white_02.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/packaging/white_02.jpg"
+                    alt="Бирка"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Бирка</div>
+                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+                <p>350 gsm + Digital White</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/packaging/white_06.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/packaging/white_06.jpg"
+                    alt="Бирка"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Бирка</div>
+                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+                <p>350 gsm + Digital White</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/packaging/white_07.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/packaging/white_07.jpg"
+                    alt="Бирка"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Бирка</div>
+                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
+                <p>350 gsm + Digital White</p>
+            </div>
+        </div>
+    </div>
+    <!-- Фотографии Transfer визитки -->
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_transfer_02.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_transfer_02.jpg"
+                    alt="Визитка Your Transfer"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_transfer_04.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_transfer_04.jpg"
+                    alt="Визитка Your Transfer"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/cards/video_transfer_01.MOV">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/cards/video_transfer_01.MOV"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
+                <p>350 gsm + Digital CMYK + Silver foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Фотографии Advokat визитки -->
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitki_advokat_02.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitki_advokat_02.jpg"
+                    alt="Визитка Your Transfer"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
+                <p>Black plike 330 gsm + Digital White + Gold foil</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitki_advokat_07.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitki_advokat_07.jpg"
+                    alt="Визитка Your Transfer"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
+                <p>Black plike 330 gsm + Digital White + Gold foil</p>
+            </div>
+        </div>
+    </div>
+    <!-- Видео Advokat -->
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/cards/advokat_video.mov">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/cards/advokat_video.mov"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
+                <p>Black plike 330 gsm + Digital White + Gold foil</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фотографии Яскравий друк визитки -->
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/druk/druk_01_.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_01_.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    Чорна візитка з фольгуванням
+                </h3>
+                <p>
+                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video"
+            data-type="video"
+            data-src="images/druk/druk_video_01.mp4">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/druk/druk_video_01.mp4"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
+                <p>Подивіться на якість нашої роботи</p>
+            </div>
+        </div>
+    </div>
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/druk/druk_02_.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_02_.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    Чорна візитка з фольгуванням
+                </h3>
+                <p>
+                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/druk/druk_03_.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_03_.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    Чорна візитка з фольгуванням
+                </h3>
+                <p>
+                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/druk/druk_04_.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_04_.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    Чорна візитка з фольгуванням
+                </h3>
+                <p>
+                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/druk/druk_video_ready.mov">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/druk/druk_video_ready.mov"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <div class="tag">Відео</div>
+                <h3 class="text-lg font-semibold mb-1">Візитка з фольгуванням</h3>
+                <p>Black Plike + White + CMYK + Silver</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/druk/druk_05.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_05.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    Чорна візитка з фольгуванням
+                </h3>
+                <p>Black Plike + White + CMYK + Silver</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/druk/druk_06.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_06.jpg"
+                    alt="Визитка Яскравий друк"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    Чорна візитка з фольгуванням
+                </h3>
+                <p>Black Plike + White + CMYK + Silver</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Фотография -->
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/druk/druk_photo_01.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_photo_01.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Пакування</div>
+                <h3 class="text-lg font-semibold mb-1">Преміум пакування</h3>
+                <p>Дизайнерський картон, фольгування</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/druk/druk_photo_04.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_photo_04.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Пакування</div>
+                <h3 class="text-lg font-semibold mb-1">Елегантне пакування</h3>
+                <p>Дизайнерський картон, УФ-друк</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/druk/druk_photo_03.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_photo_03.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Пакування</div>
+                <h3 class="text-lg font-semibold mb-1">Стильне пакування</h3>
+                <p>Дизайнерський картон, тиснення</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Видео -->
+    <div
+            class="item"
+            data-category="video"
+            data-type="video"
+            data-src="images/druk/druk_thank_you.mp4">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/druk/druk_thank_you.mp4"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <h3 class="text-lg font-semibold mb-1">Thank You Card</h3>
+                <p>Особливе доповнення до вашого замовлення</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="business-cards"
+            data-type="image"
+            data-src="images/cards/vizitka_chebar_01.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/vizitka_chebar_01.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <h3 class="text-lg font-semibold mb-1">CheBar - Преміум візитка</h3>
+                <p>Дизайнерський картон, фольгування</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="video,business-cards"
+            data-type="video"
+            data-src="images/cards/CheBar.mov">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/cards/CheBar.mov"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Візитка</div>
+                <div class="tag">Відео</div>
+                <h3 class="text-lg font-semibold mb-1">
+                    CheBar - Елегантна візитка
+                </h3>
+                <p>Black Plike + White + CMYK + Silver</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video"
+            data-type="video"
+            data-src="images/druk/druk_video_02.mp4">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/druk/druk_video_02.mp4"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <h3 class="text-lg font-semibold mb-1">Процес виготовлення</h3>
+                <p>Зазирніть за лаштунки нашого виробництва</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/cards/beauty.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/cards/beauty.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Пакування</div>
+                <h3 class="text-lg font-semibold mb-1">Beauty Packaging</h3>
+                <p>Елегантне пакування для косметики</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ещё фото -->
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/druk/druk_photo_03.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/druk/druk_photo_03.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Пакування</div>
+                <h3 class="text-lg font-semibold mb-1">Преміум пакування</h3>
+                <p>Дизайнерські матеріали, тиснення золотом</p>
+            </div>
+        </div>
+    </div>
+
+    <div
+            class="item"
+            data-category="packaging"
+            data-type="image"
+            data-src="images/gifts/new_year.jpg">
+        <div class="item-zoom-effect p-0 md:p-4 relative color-filter">
+            <img
+                    src="images/gifts/new_year.jpg"
+                    alt="Фото"
+                    class="w-full"/>
+            <div class="item-caption">
+                <div class="tag">Пакування</div>
+                <h3 class="text-lg font-semibold mb-1">Новорічне пакування</h3>
+                <p>Спеціальне святкове оформлення</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ещё видео -->
+    <div
+            class="item"
+            data-category="video"
+            data-type="video"
+            data-src="images/druk/druk_video_01.mp4">
+        <div class="p-0 md:p-4 relative color-filter">
+            <video
+                    class="w-full video-element"
+                    muted
+                    loop
+                    autoplay
+                    preload="auto">
+                <source
+                        src="images/druk/druk_video_01.mp4"
+                        type="video/mp4"/>
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="item-caption">
+                <div class="tag">Відео</div>
+                <h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
+                <p>Подивіться на якість нашої роботи</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Back to top button -->
+<button
+        id="back-to-top"
+        class="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50 opacity-0 transition-opacity duration-300">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+        <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+    </svg>
+</button>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12 mt-16">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <h2 class="text-2xl font-bold">Яскравий друк</h2>
+                <p class="mt-2 text-gray-400">Більше 20 років якісної поліграфії</p>
+            </div>
+            <div class="flex space-x-4">
+                <a
+                        href="#"
+                        class="hover:text-blue-400 transition-colors"
+                >Instagram</a
+                >
+                <a
+                        href="#"
+                        class="hover:text-blue-400 transition-colors"
+                >Facebook</a
+                >
+                <a
+                        href="#"
+                        class="hover:text-blue-400 transition-colors"
+                >Telegram</a
+                >
+            </div>
+        </div>
+        <div
+                class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+            <p>&copy; 2025 Яскравий друк. Всі права захищені.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Initialize GSAP and ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Wait for images to load before initializing animations
+    document.addEventListener('DOMContentLoaded', function () {
+        // Preloader
+        window.addEventListener('load', function () {
+            const loader = document.querySelector('.loader');
+            gsap.to(loader, {
+                opacity: 0,
+                duration: 0.8,
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    // Start hero animations after preloader is gone
+                    animateHero();
+                },
+            });
+        });
+
+        // Hero section animation
+        function animateHero() {
+            const heroTimeline = gsap.timeline();
+
+            // Animate hero text
+            heroTimeline
+                .to('.hero-text h1 span', {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    stagger: 0.2,
+                    ease: 'power4.out',
+                })
+                .to(
+                    '.hero-text p span',
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'power3.out',
+                    },
+                    '-=0.5'
+                )
+                .to(
+                    '.hero-text a',
+                    {
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'power3.out',
+                    },
+                    '-=0.3'
+                )
+                .to(
+                    '.category-filter',
+                    {
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'power3.out',
+                    },
+                    '-=0.3'
+                )
+                .to(
+                    '.scroll-indicator',
+                    {
+                        opacity: 1,
+                        duration: 0.5,
+                    },
+                    '-=0.5'
+                );
+
+            // Parallax effect for hero background
+            gsap.to('.parallax-bg', {
+                y: 100,
+                scrollTrigger: {
+                    trigger: 'section',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
+        }
+
+        // Initialize scroll animations for gallery items
+        function initScrollAnimations() {
+            const items = document.querySelectorAll('.item');
+            const windowHeight = window.innerHeight;
+            const offsetPercentage = Math.min(
+                Math.max(windowHeight * 0.2, 100),
+                200
+            );
+            console.log('offsetPercentage', offsetPercentage);
+            // Set initial state for all items
+            gsap.set(items, {opacity: 0, y: 50});
+
+            // Create scroll triggers for each item
+            items.forEach((item, index) => {
+                gsap.to(item, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.8, // Увеличиваем с 0.8 до 1.2 для большей плавности
+                    ease: 'power2.out', // Меняем на более плавную кривую анимации
+                    scrollTrigger: {
+                        trigger: item,
+                        start: `top bottom-=${offsetPercentage}`,
+                        end: 'top center', // Добавляем конечную точку
+                        scrub: 0.5, // Добавляем эффект "scrub" для более плавного появления при прокрутке
+                        toggleClass: 'is-visible',
+                    },
+                    delay: (index % 4) * 0.15, // Увеличиваем задержку между элементами
+                });
+            });
+        }
+
+        // Apply animations after images are loaded
+        imagesLoaded(document.querySelector('.masonry'), function () {
+            initScrollAnimations();
+        });
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorText = document.querySelector('.cursor-text');
+        const items = document.querySelectorAll('.item');
+
+        if (cursor) {
+            document.addEventListener('mousemove', function (e) {
+                gsap.to(cursor, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.1,
+                });
+            });
+
+            // Add hover effect for items
+            items.forEach((item) => {
+                item.addEventListener('mouseenter', function () {
+                    cursor.classList.add('cursor-hover');
+                    cursorText.textContent =
+                        this.dataset.type === 'video' ? 'Play' : 'View';
+                });
+
+                item.addEventListener('mouseleave', function () {
+                    cursor.classList.remove('cursor-hover');
+                });
+            });
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 500) {
+                gsap.to(backToTopButton, {opacity: 1, duration: 0.3});
+            } else {
+                gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
+            }
+        });
+
+        backToTopButton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        });
+
+        // Category filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        filterButtons.forEach((button) => {
+            button.addEventListener('click', function () {
+                // Remove active class from all buttons
+                filterButtons.forEach((btn) => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const filterValue = this.getAttribute('data-filter');
+                const items = document.querySelectorAll('.item');
+
+                // Show/hide items based on category
+                items.forEach((item) => {
+                    const categories = item.getAttribute('data-category').split(',');
+
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        gsap.to(item, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.8,
+                            delay: Math.random() * 0.2,
+                            onStart: () => {
+                                item.style.display = 'block';
+                            },
+                        });
+                    } else {
+                        gsap.to(item, {
+                            opacity: 0,
+                            y: 20,
+                            scale: 0.6,
+                            duration: 0.8,
+                            onComplete: () => {
+                                item.style.display = 'none';
+                            },
+                        });
+                    }
+                });
+            });
+        });
+
+        // Hide scroll indicator when user scrolls down
+        window.addEventListener('scroll', function () {
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (window.pageYOffset > 300 && scrollIndicator) {
+                gsap.to(scrollIndicator, {opacity: 0, duration: 0.3});
+            }
+        });
+
+        // Video autoplay on hover
+        // const videoItems = document.querySelectorAll('.video-element');
+        // videoItems.forEach((video) => {
+        // 	// Play video on mouseenter
+        // 	video.parentElement.parentElement.addEventListener(
+        // 		'mouseenter',
+        // 		() => {
+        // 			video.play();
+        // 			gsap.to(video, {
+        // 				scale: 1.05,
+        // 				duration: 0.5,
+        // 				ease: 'power2.out',
+        // 			});
+        // 		}
+        // 	);
+
+        // 	// Pause and reset video on mouseleave
+        // 	video.parentElement.parentElement.addEventListener(
+        // 		'mouseleave',
+        // 		() => {
+        // 			video.pause();
+        // 			if (!video.classList.contains('lightbox-active')) {
+        // 				video.currentTime = 0;
+        // 			}
+        // 			gsap.to(video, { scale: 1, duration: 0.5, ease: 'power2.out' });
+        // 		}
+        // 	);
+        // });
+
+        // Lightbox functionality
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxContent = document.querySelector('.lightbox-content');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        const lightboxPrev = document.querySelector('.lightbox-prev');
+        const lightboxNext = document.querySelector('.lightbox-next');
+        let currentIndex = 0;
+        const itemsArray = Array.from(document.querySelectorAll('.item'));
+
+        // Open lightbox when clicking on an item
+        itemsArray.forEach((item, index) => {
+            item.addEventListener('click', function () {
+                currentIndex = index;
+                openLightbox(this);
+            });
+        });
+
+        // Close lightbox
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Navigate through items
+        lightboxPrev.addEventListener('click', function (e) {
+            e.stopPropagation();
+            navigate(-1);
+        });
+
+        lightboxNext.addEventListener('click', function (e) {
+            e.stopPropagation();
+            navigate(1);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (!lightbox.classList.contains('active')) return;
+
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigate(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigate(1);
+            }
+        });
+
+        // Open lightbox
+        function openLightbox(item) {
+            const src = item.getAttribute('data-src');
+            const type = item.getAttribute('data-type');
+
+            // Clear previous content
+            lightboxContent.innerHTML = '';
+
+            if (type === 'image') {
+                // Create image element
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'lightbox-image';
+                lightboxContent.appendChild(img);
+            } else if (type === 'video') {
+                // Create video element
+                const video = document.createElement('video');
+                video.src = src;
+                video.className = 'lightbox-video';
+                video.controls = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.muted = true;
+                video.classList.add('lightbox-active');
+                lightboxContent.appendChild(video);
+            }
+
+            // Show lightbox
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close lightbox
+        function closeLightbox() {
+            const video = lightboxContent.querySelector('video');
+            if (video) {
+                video.pause();
+                video.classList.remove('lightbox-active');
+            }
+
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Navigate between items
+        function navigate(direction) {
+            currentIndex =
+                (currentIndex + direction + itemsArray.length) % itemsArray.length;
+            openLightbox(itemsArray[currentIndex]);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth',
+                    });
+                }
+            });
+        });
+
+        // Random floating animation for some items
+        const applyFloatingAnimation = () => {
+            if (window.innerWidth < 760) return;
+            const items = document.querySelectorAll('.item');
+            const randomItems = Array.from(items)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, Math.floor(items.length / 5));
+
+            randomItems.forEach((item) => {
+                item.classList.add('floating');
+            });
+        };
+
+        setTimeout(applyFloatingAnimation, 2000);
+    });
+</script>
+</body>
 </html>
