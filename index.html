@@ -55,13 +55,11 @@
         overflow: hidden;
         transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
         box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        /* border-radius: 0.75rem; */
         opacity: 0;
         transform: translateY(50px);
         background: #fff;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         will-change: transform, opacity;
-        cursor: pointer;
       }
 
       .item.is-visible {
@@ -82,6 +80,7 @@
         display: block;
         transition: transform 0.7s ease;
         transform-origin: center center;
+        cursor: pointer;
       }
 
       .item:hover img,
@@ -119,12 +118,12 @@
       .tag {
         display: inline-block;
         padding: 0.25rem 0.75rem;
-        /* border-radius: 2rem; */
         font-size: 0.75rem;
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
         background: var(--accent-color);
         color: white;
+        cursor: pointer;
       }
 
       .item:hover .tag {
@@ -150,13 +149,11 @@
           font-size: 0.7rem;
         }
 
-        /* Переопределяем правило при наведении */
         .item:hover .tag {
           transform: none !important;
           opacity: 1 !important;
         }
 
-        /* Дополнительно для item-caption */
         .item-caption {
           color: var(--primary-color);
           position: relative;
@@ -708,9 +705,9 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Видео</div>
-                <div class="tag">Сертификат</div>
-                <div class="tag">Тиснение</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -729,8 +726,8 @@
                     class="w-full"/>
 
             <div class="item-caption">
-                <div class="tag">Сертификат</div>
-                <div class="tag">Тиснение</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -749,8 +746,8 @@
                     class="w-full"/>
 
             <div class="item-caption">
-                <div class="tag">Сертифікат</div>
-                <div class="tag">Тиснение</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -769,8 +766,8 @@
                     class="w-full"/>
 
             <div class="item-caption">
-                <div class="tag">Сертифікат</div>
-                <div class="tag">Преміум</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -1710,6 +1707,38 @@
     // Initialize GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
+    function filterItems(filterValue) {
+        const items = document.querySelectorAll('.item');
+
+        // Show/hide items based on category
+        items.forEach((item) => {
+            const categories = item.getAttribute('data-category').split(',');
+
+            if (filterValue === 'all' || categories.includes(filterValue)) {
+                gsap.to(item, {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    delay: Math.random() * 0.2,
+                    onStart: () => {
+                        item.style.display = 'block';
+                    },
+                });
+            } else {
+                gsap.to(item, {
+                    opacity: 0,
+                    y: 20,
+                    scale: 0.6,
+                    duration: 0.8,
+                    onComplete: () => {
+                        item.style.display = 'none';
+                    },
+                });
+            }
+        });
+    }
+
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         // Preloader
@@ -1838,16 +1867,32 @@
                 });
             });
 
-            // Add hover effect for items
+            // Улучшенная обработка наведения для изображений и видео
             items.forEach((item) => {
-                item.addEventListener('mouseenter', function () {
-                    cursor.classList.add('cursor-hover');
-                    cursorText.textContent =
-                        this.dataset.type === 'video' ? 'Play' : 'View';
-                });
+                const mediaElement = item.querySelector('img, video');
+                const itemType = item.dataset.type;
 
-                item.addEventListener('mouseleave', function () {
-                    cursor.classList.remove('cursor-hover');
+                // Наведение только на медиа-элементы (изображения или видео)
+                if (mediaElement) {
+                    mediaElement.addEventListener('mouseenter', function () {
+                        cursor.classList.add('cursor-hover');
+                        cursorText.textContent = itemType === 'video' ? 'Play' : 'View';
+                    });
+
+                    mediaElement.addEventListener('mouseleave', function () {
+                        cursor.classList.remove('cursor-hover');
+                        cursorText.textContent = '';
+                    });
+                }
+
+                // Обработка клика на изображение или видео (открытие лайтбокса)
+                mediaElement.addEventListener('click', function (e) {
+                    // Проверяем, что клик не на теге
+                    if (!e.target.closest('.tag')) {
+                        // Здесь ваш код для открытия лайтбокса
+                        console.log("Открываем лайтбокс для:", item.dataset.src);
+                        // openLightbox(item);
+                    }
                 });
             });
         }
@@ -1882,35 +1927,32 @@
                 this.classList.add('active');
 
                 const filterValue = this.getAttribute('data-filter');
-                const items = document.querySelectorAll('.item');
+                filterItems(filterValue);
+            });
+        });
 
-                // Show/hide items based on category
-                items.forEach((item) => {
-                    const categories = item.getAttribute('data-category').split(',');
-
-                    if (filterValue === 'all' || categories.includes(filterValue)) {
-                        gsap.to(item, {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            duration: 0.8,
-                            delay: Math.random() * 0.2,
-                            onStart: () => {
-                                item.style.display = 'block';
-                            },
-                        });
-                    } else {
-                        gsap.to(item, {
-                            opacity: 0,
-                            y: 20,
-                            scale: 0.6,
-                            duration: 0.8,
-                            onComplete: () => {
-                                item.style.display = 'none';
-                            },
-                        });
+        // Обработка кликов на теги для фильтрации
+        document.querySelectorAll('.tag').forEach((tag) => {
+            tag.addEventListener('click', function (e) {
+                e.stopPropagation(); // Предотвращаем всплытие события
+                const filterValue = this.getAttribute('data-filter');
+                if (filterValue) {
+                    console.log("Фильтрация по:", filterValue);
+                    // Снимаем активный класс со всех кнопок фильтра
+                    filterButtons.forEach((btn) => btn.classList.remove('active'));
+                    // Если есть кнопка с таким же фильтром, делаем её активной
+                    const matchingButton = Array.from(filterButtons).find(
+                        btn => btn.getAttribute('data-filter').toLowerCase() === filterValue
+                    );
+                    if (matchingButton) {
+                        matchingButton.classList.add('active');
                     }
-                });
+                    filterItems(filterValue);
+                } else {
+                    return
+                }
+
+
             });
         });
 
