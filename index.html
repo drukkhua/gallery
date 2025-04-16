@@ -1572,7 +1572,7 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag" data-filter="business-cards">Упаковка</div>
+                <div class="tag" data-filter="packaging">Упаковка</div>
                 <div class="tag" data-filter="video">Видео</div>
                 <h3>Комплект "Thank you"</h3>
                 <p>▫️ Конверт, листовка, визитка</p>
@@ -2235,6 +2235,19 @@
     // Initialize GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
+    function scrollToGallery() {
+        const gallery = document.querySelector('#gallery');
+        // Если галерея найдена, прокручиваем к ней
+        if (gallery) {
+            const galleryPosition = gallery.offsetTop;
+
+            window.scrollTo({
+                top: galleryPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+
     function filterItems(filterValue) {
         const items = document.querySelectorAll('.item');
 
@@ -2265,6 +2278,7 @@
                 });
             }
         });
+        scrollToGallery();
     }
 
     // Wait for images to load before initializing animations
