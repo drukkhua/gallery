@@ -55,13 +55,12 @@
         overflow: hidden;
         transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
         box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        /* border-radius: 0.75rem; */
         opacity: 0;
         transform: translateY(50px);
         background: #fff;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         will-change: transform, opacity;
-        cursor: pointer;
+        z-index: 10;
       }
 
       .item.is-visible {
@@ -82,6 +81,8 @@
         display: block;
         transition: transform 0.7s ease;
         transform-origin: center center;
+        cursor: pointer;
+        pointer-events: auto;
       }
 
       .item:hover img,
@@ -119,12 +120,13 @@
       .tag {
         display: inline-block;
         padding: 0.25rem 0.75rem;
-        /* border-radius: 2rem; */
         font-size: 0.75rem;
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
         background: var(--accent-color);
         color: white;
+        cursor: pointer;
+        pointer-events: auto;
       }
 
       .item:hover .tag {
@@ -150,19 +152,22 @@
           font-size: 0.7rem;
         }
 
-        /* Переопределяем правило при наведении */
         .item:hover .tag {
           transform: none !important;
           opacity: 1 !important;
         }
 
-        /* Дополнительно для item-caption */
         .item-caption {
           color: var(--primary-color);
           position: relative;
           transform: translateY(0);
           background: white;
           padding: 0.65rem;
+          pointer-events: none;
+        }
+
+        .item-caption .tag {
+          pointer-events: auto;
         }
 
         .item:hover .item-caption {
@@ -179,6 +184,7 @@
 
         .item-caption {
           padding: 1rem;
+
         }
 
         .item-caption h3 {
@@ -196,6 +202,7 @@
           transform: translateY(20px);
           opacity: 0;
           transition: all 0.3s ease 0.1s;
+          pointer-events: auto !important;
         }
 
         .item:hover .tag {
@@ -274,6 +281,7 @@
         opacity: 0;
         transition: opacity 0.5s ease;
         z-index: 1;
+        pointer-events: none;
       }
 
       .item:hover .color-filter::before {
@@ -708,9 +716,9 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Видео</div>
-                <div class="tag">Сертификат</div>
-                <div class="tag">Тиснение</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -729,8 +737,8 @@
                     class="w-full"/>
 
             <div class="item-caption">
-                <div class="tag">Сертификат</div>
-                <div class="tag">Тиснение</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -747,10 +755,9 @@
                     src="images/sertificat/sertificat_03.jpg"
                     alt="Сертификат"
                     class="w-full"/>
-
             <div class="item-caption">
-                <div class="tag">Сертифікат</div>
-                <div class="tag">Тиснение</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -769,8 +776,8 @@
                     class="w-full"/>
 
             <div class="item-caption">
-                <div class="tag">Сертифікат</div>
-                <div class="tag">Преміум</div>
+                <div class="tag" data-filter="sertificat">Сертификат</div>
+                <div class="tag" data-filter="foil">Тиснение</div>
                 <h3>Сертификат А6</h3>
                 <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
                 <p>▫️ SoftTouch ламинация + тиснение золото</p>
@@ -791,9 +798,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Gold foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -808,9 +816,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Gold foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -825,9 +834,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Gold foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -850,10 +860,11 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Відео</div>
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Gold foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ SoftTouch ламинация + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -870,9 +881,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-                <p>350 gsm + Gold and White foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Stardream anthracite 285 г/м </p>
+                <p>▫️ тиснение серебро + белая фольга</p>
             </div>
         </div>
     </div>
@@ -887,9 +899,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-                <p>350 gsm + Gold and White foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Stardream anthracite 285 г/м </p>
+                <p>▫️ тиснение серебро + белая фольга</p>
             </div>
         </div>
     </div>
@@ -904,9 +917,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-                <p>350 gsm + Gold and White foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Stardream anthracite 285 г/м </p>
+                <p>▫️ тиснение серебро + белая фольга</p>
             </div>
         </div>
     </div>
@@ -921,9 +935,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-                <p>350 gsm + Gold and White foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Stardream anthracite 285 г/м </p>
+                <p>▫️ тиснение серебро + белая фольга</p>
             </div>
         </div>
     </div>
@@ -946,10 +961,11 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Відео</div>
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Тиснення фольгою</h3>
-                <p>350 gsm + Gold and White foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Stardream anthracite 285 г/м </p>
+                <p>▫️ тиснение серебро + белая фольга</p>
             </div>
         </div>
     </div>
@@ -965,9 +981,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -982,9 +999,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -999,9 +1017,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1016,9 +1035,10 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1041,10 +1061,11 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Відео</div>
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитки</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1061,9 +1082,10 @@
                     alt="Бирка"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Бирка</div>
-                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-                <p>350 gsm + Digital White</p>
+                <div class="tag" data-filter="packaging">Упаковка</div>
+                <h3>Бирка</h3>
+                <p>▫️ Sirio Сolor Иruno 290 г/м + </p>
+                <p>▫️ Цифровая печать белым цветом</p>
             </div>
         </div>
     </div>
@@ -1078,9 +1100,10 @@
                     alt="Бирка"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Бирка</div>
-                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-                <p>350 gsm + Digital White</p>
+                <div class="tag" data-filter="packaging">Упаковка</div>
+                <h3>Бирка</h3>
+                <p>▫️ Sirio Сolor Иruno 290 г/м + </p>
+                <p>▫️ Цифровая печать белым цветом</p>
             </div>
         </div>
     </div>
@@ -1095,9 +1118,10 @@
                     alt="Бирка"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Бирка</div>
-                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-                <p>350 gsm + Digital White</p>
+                <div class="tag" data-filter="packaging">Упаковка</div>
+                <h3>Бирка</h3>
+                <p>▫️ Sirio Сolor Иruno 290 г/м + </p>
+                <p>▫️ Цифровая печать белым цветом</p>
             </div>
         </div>
     </div>
@@ -1112,9 +1136,10 @@
                     alt="Бирка"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Бирка</div>
-                <h3 class="text-lg font-semibold mb-1">Цифровий друк білим</h3>
-                <p>350 gsm + Digital White</p>
+                <div class="tag" data-filter="packaging">Упаковка</div>
+                <h3>Бирка</h3>
+                <p>▫️ Sirio Сolor Иruno 290 г/м + </p>
+                <p>▫️ Цифровая печать белым цветом</p>
             </div>
         </div>
     </div>
@@ -1130,9 +1155,10 @@
                     alt="Визитка Your Transfer"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитка</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1147,9 +1173,10 @@
                     alt="Визитка Your Transfer"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитка</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1172,10 +1199,11 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Відео</div>
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Повнокольровий друк</h3>
-                <p>350 gsm + Digital CMYK + Silver foil</p>
+                <div class="tag" data-filter="business-cards">Визитка</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Мелованная бумага 350г/м + цифровая печать</p>
+                <p>▫️ Матовая ламинация + тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1191,9 +1219,10 @@
                     alt="Визитка Your Transfer"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
-                <p>Black plike 330 gsm + Digital White + Gold foil</p>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать белым + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -1208,9 +1237,10 @@
                     alt="Визитка Your Transfer"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
-                <p>Black plike 330 gsm + Digital White + Gold foil</p>
+                <div class="tag" data-filter="business-cards">Визитка</div>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать белым + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -1233,10 +1263,11 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Відео</div>
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">Друк на чорному папері</h3>
-                <p>Black plike 330 gsm + Digital White + Gold foil</p>
+                <div class="tag" data-filter="business-cards">Визитка</div>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать белым + тиснение золото</p>
             </div>
         </div>
     </div>
@@ -1253,13 +1284,11 @@
                     alt="Визитка Яскравий друк"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">
-                    Чорна візитка з фольгуванням
-                </h3>
-                <p>
-                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
-                </p>
+                <div class="tag" data-filter="business-cards">Визитка</div>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1282,9 +1311,11 @@
                 Ваш браузер не поддерживает видео.
             </video>
             <div class="item-caption">
-                <div class="tag">Відео</div>
-                <h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
-                <p>Подивіться на якість нашої роботи</p>
+                <div class="tag" data-filter="video">Видео</div>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1300,12 +1331,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">
-                    Чорна візитка з фольгуванням
-                </h3>
-                <p>
-                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
-                </p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1322,12 +1351,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">
-                    Чорна візитка з фольгуванням
-                </h3>
-                <p>
-                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
-                </p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1344,12 +1371,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">
-                    Чорна візитка з фольгуванням
-                </h3>
-                <p>
-                    330 gsm Black Plike + digital White + digital CMYK + Silver foil
-                </p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1374,8 +1399,10 @@
             <div class="item-caption">
                 <div class="tag">Візитка</div>
                 <div class="tag">Відео</div>
-                <h3 class="text-lg font-semibold mb-1">Візитка з фольгуванням</h3>
-                <p>Black Plike + White + CMYK + Silver</p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1392,10 +1419,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">
-                    Чорна візитка з фольгуванням
-                </h3>
-                <p>Black Plike + White + CMYK + Silver</p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1412,10 +1439,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">
-                    Чорна візитка з фольгуванням
-                </h3>
-                <p>Black Plike + White + CMYK + Silver</p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1433,8 +1460,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Пакування</div>
-                <h3 class="text-lg font-semibold mb-1">Преміум пакування</h3>
-                <p>Дизайнерський картон, фольгування</p>
+                <h3>Визитка</h3>
+                <p>▫️ Plike black 330г/м</p>
+                <p>▫️ Цифровая печать WHITE + CMYK + цифровой лак</p>
+                <p>▫️ Тиснение серебро</p>
             </div>
         </div>
     </div>
@@ -1451,8 +1480,10 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Пакування</div>
-                <h3 class="text-lg font-semibold mb-1">Елегантне пакування</h3>
-                <p>Дизайнерський картон, УФ-друк</p>
+                <h3>Упаковка</h3>
+                <p>▫️ Creative Board mint 270г/м</p>
+                <p>▫️ Цифровая печать CMYK + цифровой лак</p>
+                <p>▫️ Фигурная высечка</p>
             </div>
         </div>
     </div>
@@ -1468,9 +1499,11 @@
                     alt="Фото"
                     class="w-full"/>
             <div class="item-caption">
-                <div class="tag">Пакування</div>
-                <h3 class="text-lg font-semibold mb-1">Стильне пакування</h3>
-                <p>Дизайнерський картон, тиснення</p>
+                <div class="tag">Листовка</div>
+                <h3>Листовка "Thank you"</h3>
+                <p>▫️ Мелованная бумага 300г/м</p>
+                <p>▫️ Цифровая печать</p>
+                <p>▫️ SoftTouch ламинация</p>
             </div>
         </div>
     </div>
@@ -1495,8 +1528,8 @@
             </video>
             <div class="item-caption">
                 <div class="tag">Відео</div>
-                <h3 class="text-lg font-semibold mb-1">Thank You Card</h3>
-                <p>Особливе доповнення до вашого замовлення</p>
+                <h3>Комплект "Thank you"</h3>
+                <p>▫️ Конверт, листовка, визитка</p>
             </div>
         </div>
     </div>
@@ -1513,7 +1546,7 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Візитка</div>
-                <h3 class="text-lg font-semibold mb-1">CheBar - Преміум візитка</h3>
+                <h3>CheBar - Преміум візитка</h3>
                 <p>Дизайнерський картон, фольгування</p>
             </div>
         </div>
@@ -1539,7 +1572,7 @@
             <div class="item-caption">
                 <div class="tag">Візитка</div>
                 <div class="tag">Відео</div>
-                <h3 class="text-lg font-semibold mb-1">
+                <h3>
                     CheBar - Елегантна візитка
                 </h3>
                 <p>Black Plike + White + CMYK + Silver</p>
@@ -1567,7 +1600,7 @@
             </video>
             <div class="item-caption">
                 <div class="tag">Відео</div>
-                <h3 class="text-lg font-semibold mb-1">Процес виготовлення</h3>
+                <h3>Процес виготовлення</h3>
                 <p>Зазирніть за лаштунки нашого виробництва</p>
             </div>
         </div>
@@ -1585,7 +1618,7 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Пакування</div>
-                <h3 class="text-lg font-semibold mb-1">Beauty Packaging</h3>
+                <h3>Beauty Packaging</h3>
                 <p>Елегантне пакування для косметики</p>
             </div>
         </div>
@@ -1604,7 +1637,7 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Пакування</div>
-                <h3 class="text-lg font-semibold mb-1">Преміум пакування</h3>
+                <h3>Преміум пакування</h3>
                 <p>Дизайнерські матеріали, тиснення золотом</p>
             </div>
         </div>
@@ -1622,7 +1655,7 @@
                     class="w-full"/>
             <div class="item-caption">
                 <div class="tag">Пакування</div>
-                <h3 class="text-lg font-semibold mb-1">Новорічне пакування</h3>
+                <h3>Новорічне пакування</h3>
                 <p>Спеціальне святкове оформлення</p>
             </div>
         </div>
@@ -1648,7 +1681,7 @@
             </video>
             <div class="item-caption">
                 <div class="tag">Відео</div>
-                <h3 class="text-lg font-semibold mb-1">Друк і обробка</h3>
+                <h3>Друк і обробка</h3>
                 <p>Подивіться на якість нашої роботи</p>
             </div>
         </div>
@@ -1710,8 +1743,41 @@
     // Initialize GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
+    function filterItems(filterValue) {
+        const items = document.querySelectorAll('.item');
+
+        // Show/hide items based on category
+        items.forEach((item) => {
+            const categories = item.getAttribute('data-category').split(',');
+
+            if (filterValue === 'all' || categories.includes(filterValue)) {
+                gsap.to(item, {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    delay: Math.random() * 0.2,
+                    onStart: () => {
+                        item.style.display = 'block';
+                    },
+                });
+            } else {
+                gsap.to(item, {
+                    opacity: 0,
+                    y: 20,
+                    scale: 0.6,
+                    duration: 0.8,
+                    onComplete: () => {
+                        item.style.display = 'none';
+                    },
+                });
+            }
+        });
+    }
+
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
+        const items = document.querySelectorAll('.item');
         // Preloader
         window.addEventListener('load', function () {
             const loader = document.querySelector('.loader');
@@ -1790,10 +1856,9 @@
 
         // Initialize scroll animations for gallery items
         function initScrollAnimations() {
-            const items = document.querySelectorAll('.item');
             const windowHeight = window.innerHeight;
             const offsetPercentage = Math.min(
-                Math.max(windowHeight * 0.2, 100),
+                Math.max(windowHeight * 0.15, 100),
                 200
             );
             console.log('offsetPercentage', offsetPercentage);
@@ -1805,16 +1870,16 @@
                 gsap.to(item, {
                     opacity: 1,
                     y: 0,
-                    duration: 1.8, // Увеличиваем с 0.8 до 1.2 для большей плавности
-                    ease: 'power2.out', // Меняем на более плавную кривую анимации
+                    duration: 1.8,
+                    ease: 'power2.out',
                     scrollTrigger: {
                         trigger: item,
                         start: `top bottom-=${offsetPercentage}`,
-                        end: 'top center', // Добавляем конечную точку
-                        scrub: 0.5, // Добавляем эффект "scrub" для более плавного появления при прокрутке
+                        end: 'top center',
+                        scrub: 0.5,
                         toggleClass: 'is-visible',
                     },
-                    delay: (index % 4) * 0.15, // Увеличиваем задержку между элементами
+                    delay: (index % 4) * 0.15,
                 });
             });
         }
@@ -1827,7 +1892,6 @@
         // Custom cursor
         const cursor = document.querySelector('.cursor');
         const cursorText = document.querySelector('.cursor-text');
-        const items = document.querySelectorAll('.item');
 
         if (cursor) {
             document.addEventListener('mousemove', function (e) {
@@ -1838,17 +1902,23 @@
                 });
             });
 
-            // Add hover effect for items
+            // Улучшенная обработка наведения для изображений и видео
             items.forEach((item) => {
-                item.addEventListener('mouseenter', function () {
-                    cursor.classList.add('cursor-hover');
-                    cursorText.textContent =
-                        this.dataset.type === 'video' ? 'Play' : 'View';
-                });
+                const mediaElement = item.querySelector('img, video');
+                const itemType = item.dataset.type;
 
-                item.addEventListener('mouseleave', function () {
-                    cursor.classList.remove('cursor-hover');
-                });
+                // Наведение только на медиа-элементы (изображения или видео)
+                if (mediaElement) {
+                    mediaElement.addEventListener('mouseenter', function () {
+                        cursor.classList.add('cursor-hover');
+                        cursorText.textContent = itemType === 'video' ? 'Play' : 'View';
+                    });
+
+                    mediaElement.addEventListener('mouseleave', function () {
+                        cursor.classList.remove('cursor-hover');
+                        cursorText.textContent = '';
+                    });
+                }
             });
         }
 
@@ -1882,36 +1952,33 @@
                 this.classList.add('active');
 
                 const filterValue = this.getAttribute('data-filter');
-                const items = document.querySelectorAll('.item');
-
-                // Show/hide items based on category
-                items.forEach((item) => {
-                    const categories = item.getAttribute('data-category').split(',');
-
-                    if (filterValue === 'all' || categories.includes(filterValue)) {
-                        gsap.to(item, {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            duration: 0.8,
-                            delay: Math.random() * 0.2,
-                            onStart: () => {
-                                item.style.display = 'block';
-                            },
-                        });
-                    } else {
-                        gsap.to(item, {
-                            opacity: 0,
-                            y: 20,
-                            scale: 0.6,
-                            duration: 0.8,
-                            onComplete: () => {
-                                item.style.display = 'none';
-                            },
-                        });
-                    }
-                });
+                filterItems(filterValue);
             });
+        });
+
+        // Обработчик клика для тегов (с высоким приоритетом)
+        document.querySelectorAll('.tag').forEach((tag) => {
+            tag.addEventListener('click', function (e) {
+                e.stopPropagation(); // Останавливаем всплытие
+                e.preventDefault();
+
+                const filterValue = this.getAttribute('data-filter');
+                if (filterValue) {
+                    console.log("Фильтрация по:", filterValue);
+                    filterItems(filterValue);
+
+                    // Обновление активной кнопки фильтра
+                    filterButtons.forEach((btn) => btn.classList.remove('active'));
+                    const matchingButton = Array.from(filterButtons).find(
+                        btn => btn.getAttribute('data-filter').toLowerCase() === filterValue
+                    );
+                    if (matchingButton) {
+                        matchingButton.classList.add('active');
+                    }
+                }
+
+                return false; // Дополнительная защита
+            }, true); // Используем фазу захвата
         });
 
         // Hide scroll indicator when user scrolls down
@@ -1960,11 +2027,16 @@
         let currentIndex = 0;
         const itemsArray = Array.from(document.querySelectorAll('.item'));
 
-        // Open lightbox when clicking on an item
         itemsArray.forEach((item, index) => {
-            item.addEventListener('click', function () {
-                currentIndex = index;
-                openLightbox(this);
+            item.addEventListener('click', function (e) {
+                // Проверка, был ли клик непосредственно на медиа-элементе
+                const isMediaClick = e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO';
+                const isTagClick = e.target.closest('.tag') !== null;
+
+                if (isMediaClick && !isTagClick) {
+                    currentIndex = index;
+                    openLightbox(this);
+                }
             });
         });
 
@@ -2069,19 +2141,19 @@
         });
 
         // Random floating animation for some items
-        const applyFloatingAnimation = () => {
-            if (window.innerWidth < 760) return;
-            const items = document.querySelectorAll('.item');
-            const randomItems = Array.from(items)
-                .sort(() => 0.5 - Math.random())
-                .slice(0, Math.floor(items.length / 5));
-
-            randomItems.forEach((item) => {
-                item.classList.add('floating');
-            });
-        };
-
-        setTimeout(applyFloatingAnimation, 2000);
+        // const applyFloatingAnimation = () => {
+        //     if (window.innerWidth < 760) return;
+        //     const items = document.querySelectorAll('.item');
+        //     const randomItems = Array.from(items)
+        //         .sort(() => 0.5 - Math.random())
+        //         .slice(0, Math.floor(items.length / 5));
+        //
+        //     randomItems.forEach((item) => {
+        //         item.classList.add('floating');
+        //     });
+        // };
+        //
+        // setTimeout(applyFloatingAnimation, 2000);
     });
 </script>
 </body>
