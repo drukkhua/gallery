@@ -23,8 +23,8 @@ A responsive portfolio gallery showcasing print production works using a masonry
 ## Preview
 
 <p align="center">
-  <img src="images/gallery_prev_01.jpg" width="45%" alt="Portfolio Screenshot"/>
-  <img src="images/gallery_prev_02.jpg" width="45%" alt="Portfolio Screenshot"/>
+  <img src="images/gallery_prev_01.jpg" width="45%" height="500px" alt="Portfolio Screenshot"/>
+  <img src="images/gallery_prev_02.jpg" width="45%" height="500px" alt="Portfolio Screenshot"/>
 </p>
 
 ## Usage
