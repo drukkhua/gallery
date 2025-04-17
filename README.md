@@ -19,6 +19,14 @@ A responsive portfolio gallery showcasing print production works using a masonry
 - imagesLoaded for optimized image loading
 - Responsive design without external frameworks
 
+
+## Preview
+
+<p align="center">
+  <img src="images/gallery_prev_01.jpg" width="45%" alt="Portfolio Screenshot"/>
+  <img src="images/gallery_prev_02.jpg" width="45%" alt="Portfolio Screenshot"/>
+</p>
+
 ## Usage
 
 ### Basic Structure
