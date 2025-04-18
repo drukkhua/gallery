@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="robots" content="noindex, nofollow">
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"/>
@@ -731,8 +732,8 @@
                     autoplay
                     playsinline
                     title="Подарочный сертификат A6 с золотым тиснением и ламинацией SoftTouch"
-                    aria-label="Видео подарочного сертификата A6 с цифровой печатью, золотым тиснением и ламинацией SoftTouch">
-                preload="metadata">
+                    aria-label="Видео подарочного сертификата A6 с цифровой печатью, золотым тиснением и ламинацией SoftTouch"
+                    preload="metadata">
                 <source
                         src="images/certificate/thumbs/gift-certificate-softtouch-goldfoil-duplex-video-prev.mp4"
                         type="video/mp4"/>
@@ -1673,7 +1674,7 @@
             class="item"
             data-category="video,notebooks"
             data-type="video"
-            data-src="images/notebooks/wedo_video.mp4">
+            data-src="images/notebooks/notebook-a5-plike-black-white-print-glossy-varnish-video.mp4">
         <div class="p-0 md:p-4 relative color-filter">
             <video
                     class="w-full video-element"
@@ -1681,9 +1682,11 @@
                     loop
                     autoplay
                     playsinline
+                    title="Блокнот A5 с белой цифровой печатью и глянцевым лаком на чёрной обложке Plike"
+                    aria-label="Видео блокнота A5 с обложкой из чёрного картона Plike, белой цифровой печатью и глянцевым лаком"
                     preload="metadata">
                 <source
-                        src="images/notebooks/thumbs/wedo_video.mp4"
+                        src="images/notebooks/thumbs/notebook-a5-plike-black-white-print-glossy-varnish-video-prev.mp4"
                         type="video/mp4"/>
                 Ваш браузер не поддерживает видео.
             </video>
@@ -2465,9 +2468,8 @@
             const windowHeight = window.innerHeight;
             const offsetPercentage = Math.min(
                 Math.max(windowHeight * 0.15, 100),
-                200
+                180
             );
-            console.log('offsetPercentage', offsetPercentage);
             // Set initial state for all items
             gsap.set(items, {opacity: 0, y: 50});
 
