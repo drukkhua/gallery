@@ -241,13 +241,11 @@
 
       .hero-text h1 span {
         display: inline-block;
-        /*transform: translateY(100%);*/
         opacity: 1;
       }
 
       .hero-text p span {
         display: inline-block;
-        /*transform: translateY(20px);*/
         opacity: 1;
       }
 
@@ -381,8 +379,6 @@
         flex-wrap: wrap;
         margin: 2rem 0;
         gap: 0.5rem;
-        /*animation: scroll-indicator 2s infinite;*/
-        /*transition: opacity 0.6s ease;*/
       }
 
       .filter-btn {
@@ -422,23 +418,6 @@
       .item-zoom-effect:hover img,
       .item-zoom-effect:hover video {
         transform: scale(1.1);
-      }
-
-      /* Floating animation for certain items */
-      .floating {
-        animation: floating 3s ease-in-out infinite;
-      }
-
-      @keyframes floating {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-15px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
       }
 
       /* Custom scrollbar */
@@ -2573,77 +2552,14 @@
             const loader = document.querySelector('.loader');
             gsap.to(loader, {
                 opacity: 0,
-                duration: 0.8,
+                duration: 0.2,
                 onComplete: () => {
                     loader.style.display = 'none';
-                    // Start hero animations after preloader is gone
                     // animateHero();
                     animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
                 },
             });
         });
-
-        // Hero section animation
-        // function animateHero() {
-        //     const heroTimeline = gsap.timeline();
-        //
-        //     // Animate hero text
-        //     heroTimeline
-        //         .to('.hero-text h1 span', {
-        //             y: 0,
-        //             opacity: 1,
-        //             duration: 1.2,
-        //             stagger: 0.2,
-        //             ease: 'power4.out',
-        //         })
-        //         .to(
-        //             '.hero-text p span',
-        //             {
-        //                 y: 0,
-        //                 opacity: 1,
-        //                 duration: 0.8,
-        //                 ease: 'power3.out',
-        //             },
-        //             '-=0.5'
-        //         )
-        //         .to(
-        //             '.hero-text a',
-        //             {
-        //                 opacity: 1,
-        //                 duration: 0.8,
-        //                 ease: 'power3.out',
-        //             },
-        //             '-=0.3'
-        //         )
-        //         .to(
-        //             '.category-filter',
-        //             {
-        //                 opacity: 1,
-        //                 duration: 0.8,
-        //                 ease: 'power3.out',
-        //             },
-        //             '-=0.3'
-        //         )
-        //         .to(
-        //             '.scroll-indicator',
-        //             {
-        //                 opacity: 1,
-        //                 duration: 0.5,
-        //             },
-        //             '-=0.5'
-        //         );
-        //
-        //     // Parallax effect for hero background
-        //     gsap.to('.parallax-bg', {
-        //         y: 100,
-        //         scrollTrigger: {
-        //             trigger: 'section',
-        //             start: 'top top',
-        //             end: 'bottom top',
-        //             scrub: true,
-        //         },
-        //     });
-        // }
 
         // Initialize scroll animations for gallery items
         function initScrollAnimations() {
@@ -2778,35 +2694,6 @@
                 gsap.to(scrollIndicator, {opacity: 0, duration: 0.3});
             }
         });
-
-        // Video autoplay on hover
-        // const videoItems = document.querySelectorAll('.video-element');
-        // videoItems.forEach((video) => {
-        // 	// Play video on mouseenter
-        // 	video.parentElement.parentElement.addEventListener(
-        // 		'mouseenter',
-        // 		() => {
-        // 			video.play();
-        // 			gsap.to(video, {
-        // 				scale: 1.05,
-        // 				duration: 0.5,
-        // 				ease: 'power2.out',
-        // 			});
-        // 		}
-        // 	);
-
-        // 	// Pause and reset video on mouseleave
-        // 	video.parentElement.parentElement.addEventListener(
-        // 		'mouseleave',
-        // 		() => {
-        // 			video.pause();
-        // 			if (!video.classList.contains('lightbox-active')) {
-        // 				video.currentTime = 0;
-        // 			}
-        // 			gsap.to(video, { scale: 1, duration: 0.5, ease: 'power2.out' });
-        // 		}
-        // 	);
-        // });
 
         // Lightbox functionality
         const lightbox = document.querySelector('.lightbox');
@@ -2953,21 +2840,6 @@
                 }
             });
         });
-
-        // Random floating animation for some items
-        // const applyFloatingAnimation = () => {
-        //     if (window.innerWidth < 760) return;
-        //     const items = document.querySelectorAll('.item');
-        //     const randomItems = Array.from(items)
-        //         .sort(() => 0.5 - Math.random())
-        //         .slice(0, Math.floor(items.length / 5));
-        //
-        //     randomItems.forEach((item) => {
-        //         item.classList.add('floating');
-        //     });
-        // };
-        //
-        // setTimeout(applyFloatingAnimation, 2000);
     });
 </script>
 </body>
