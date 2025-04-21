@@ -2423,14 +2423,14 @@
         heroTimeline
             .to(".hero-text h1", {
                 opacity: 1,
-                duration: 0.4,
+                duration: 0.6,
                 ease: "power3.out",
             })
             .to(
                 ".hero-text p",
                 {
                     opacity: 1,
-                    duration: 0.8,
+                    duration: 1.0,
                     ease: "power3.out",
                 },
                 "+=0.2"
@@ -2439,7 +2439,7 @@
                 ".hero-text a",
                 {
                     opacity: 1,
-                    duration: 0.8,
+                    duration: 1.0,
                     ease: "power3.out",
                 },
                 "+=0.2"
@@ -2458,10 +2458,10 @@
             if (firstLineChars.length > 0) {
                 firstLineCurrentText += firstLineChars.shift();
                 firstLine.textContent = firstLineCurrentText;
-                setTimeout(typeFirstLine, 50); // Adjust speed as needed
+                setTimeout(typeFirstLine, 60); // Adjust speed as needed
             } else {
                 // When first line is complete, start typing the second line
-                setTimeout(typeSecondLine, 300);
+                setTimeout(typeSecondLine, 400);
             }
         }
 
@@ -2475,10 +2475,10 @@
                 if (secondLineChars.length > 0) {
                     secondLineCurrentText += secondLineChars.shift();
                     secondLine.textContent = secondLineCurrentText;
-                    setTimeout(typeChar, 50);
+                    setTimeout(typeChar, 60);
                 } else {
                     // When second line is complete, start the word replacement cycle
-                    setTimeout(() => startWordCycle(baseSecondLine, replacementWords), 1000);
+                    setTimeout(() => startWordCycle(baseSecondLine, replacementWords), 1200);
                 }
             }
 
@@ -2502,11 +2502,11 @@
                         // Word completely deleted
                         isDeleting = false;
                         currentWordIndex = (currentWordIndex + 1) % wordsList.length;
-                        setTimeout(updateText, 500); // Pause before typing new word
+                        setTimeout(updateText, 600); // Pause before typing new word
                     } else {
                         // Continue deleting
                         secondLine.textContent = currentText;
-                        setTimeout(updateText, 50);
+                        setTimeout(updateText, 60);
                     }
                 } else {
                     // Add characters to form the new word
@@ -2516,13 +2516,13 @@
                         // Continue typing
                         currentText = targetText.substring(0, currentText.length + 1);
                         secondLine.textContent = currentText;
-                        setTimeout(updateText, 100);
+                        setTimeout(updateText, 120);
                     } else {
                         // Word completely typed
                         setTimeout(() => {
                             isDeleting = true;
                             updateText();
-                        }, 1500); // Pause at complete word
+                        }, 1800); // Pause at complete word
                     }
                 }
             }
@@ -2532,7 +2532,7 @@
         }
 
         // Start the animation
-        setTimeout(typeFirstLine, 500);
+        setTimeout(typeFirstLine, 800);
 
         // Parallax effect for hero background
         gsap.to(".parallax-bg", {
