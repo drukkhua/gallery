@@ -236,19 +236,19 @@
 
 
       .hero-text h1 {
-        overflow: hidden;
+        /*overflow: hidden;*/
       }
 
       .hero-text h1 span {
         display: inline-block;
-        transform: translateY(100%);
-        opacity: 0;
+        /*transform: translateY(100%);*/
+        opacity: 1;
       }
 
       .hero-text p span {
         display: inline-block;
-        transform: translateY(20px);
-        opacity: 0;
+        /*transform: translateY(20px);*/
+        opacity: 1;
       }
 
       .color-filter::before {
@@ -2405,6 +2405,147 @@
         scrollToGallery();
     }
 
+    // Hero section animation with typing effect for two lines
+    function animateHero(replacementWords = ["деталей", "идей", "решений", "технологий"]) {
+        const heroTimeline = gsap.timeline();
+
+        // Get the text elements
+        const firstLine = document.querySelector(".hero-text h1 span:first-child");
+        const secondLine = document.querySelector(".hero-text h1 span:last-child");
+        const originalFirstLineText = firstLine.textContent;
+        const originalSecondLineText = secondLine.textContent;
+
+        // Clear the text initially to prepare for typing effect
+        firstLine.textContent = "";
+        secondLine.textContent = "";
+
+        // Show the container elements
+        heroTimeline
+            .to(".hero-text h1", {
+                opacity: 1,
+                duration: 0.4,
+                ease: "power3.out",
+            })
+            .to(
+                ".hero-text p",
+                {
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power3.out",
+                },
+                "+=0.2"
+            )
+            .to(
+                ".hero-text a",
+                {
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power3.out",
+                },
+                "+=0.2"
+            );
+
+        // Extract the base part and last word from the second line
+        const secondLineWords = originalSecondLineText.trim().split(" ");
+        const lastWord = secondLineWords.pop();
+        const baseSecondLine = secondLineWords.join(" ") + " ";
+
+        // Type the first line character by character
+        let firstLineChars = originalFirstLineText.split("");
+        let firstLineCurrentText = "";
+
+        function typeFirstLine() {
+            if (firstLineChars.length > 0) {
+                firstLineCurrentText += firstLineChars.shift();
+                firstLine.textContent = firstLineCurrentText;
+                setTimeout(typeFirstLine, 50); // Adjust speed as needed
+            } else {
+                // When first line is complete, start typing the second line
+                setTimeout(typeSecondLine, 300);
+            }
+        }
+
+        // Type the second line character by character
+        function typeSecondLine() {
+            let secondLineToType = baseSecondLine + replacementWords[0];
+            let secondLineChars = secondLineToType.split("");
+            let secondLineCurrentText = "";
+
+            function typeChar() {
+                if (secondLineChars.length > 0) {
+                    secondLineCurrentText += secondLineChars.shift();
+                    secondLine.textContent = secondLineCurrentText;
+                    setTimeout(typeChar, 50);
+                } else {
+                    // When second line is complete, start the word replacement cycle
+                    setTimeout(() => startWordCycle(baseSecondLine, replacementWords), 1000);
+                }
+            }
+
+            typeChar();
+        }
+
+        // Function to handle the word replacement cycling
+        function startWordCycle(baseText, wordsList) {
+            let currentWordIndex = 0;
+            let isDeleting = false;
+            let currentText = baseText + wordsList[currentWordIndex];
+
+            function updateText() {
+                const currentWord = wordsList[currentWordIndex];
+
+                if (isDeleting) {
+                    // Remove characters from the current word
+                    currentText = currentText.substring(0, currentText.length - 1);
+
+                    if (currentText === baseText) {
+                        // Word completely deleted
+                        isDeleting = false;
+                        currentWordIndex = (currentWordIndex + 1) % wordsList.length;
+                        setTimeout(updateText, 500); // Pause before typing new word
+                    } else {
+                        // Continue deleting
+                        secondLine.textContent = currentText;
+                        setTimeout(updateText, 50);
+                    }
+                } else {
+                    // Add characters to form the new word
+                    const targetText = baseText + currentWord;
+
+                    if (currentText.length < targetText.length) {
+                        // Continue typing
+                        currentText = targetText.substring(0, currentText.length + 1);
+                        secondLine.textContent = currentText;
+                        setTimeout(updateText, 100);
+                    } else {
+                        // Word completely typed
+                        setTimeout(() => {
+                            isDeleting = true;
+                            updateText();
+                        }, 1500); // Pause at complete word
+                    }
+                }
+            }
+
+            // Start the cycle
+            updateText();
+        }
+
+        // Start the animation
+        setTimeout(typeFirstLine, 500);
+
+        // Parallax effect for hero background
+        gsap.to(".parallax-bg", {
+            y: 100,
+            scrollTrigger: {
+                trigger: "section",
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+            },
+        });
+    }
+
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
@@ -2417,72 +2558,73 @@
                 onComplete: () => {
                     loader.style.display = 'none';
                     // Start hero animations after preloader is gone
-                    animateHero();
+                    // animateHero();
+                    animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
                 },
             });
         });
 
         // Hero section animation
-        function animateHero() {
-            const heroTimeline = gsap.timeline();
-
-            // Animate hero text
-            heroTimeline
-                .to('.hero-text h1 span', {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1.2,
-                    stagger: 0.2,
-                    ease: 'power4.out',
-                })
-                .to(
-                    '.hero-text p span',
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.8,
-                        ease: 'power3.out',
-                    },
-                    '-=0.5'
-                )
-                .to(
-                    '.hero-text a',
-                    {
-                        opacity: 1,
-                        duration: 0.8,
-                        ease: 'power3.out',
-                    },
-                    '-=0.3'
-                )
-                .to(
-                    '.category-filter',
-                    {
-                        opacity: 1,
-                        duration: 0.8,
-                        ease: 'power3.out',
-                    },
-                    '-=0.3'
-                )
-                .to(
-                    '.scroll-indicator',
-                    {
-                        opacity: 1,
-                        duration: 0.5,
-                    },
-                    '-=0.5'
-                );
-
-            // Parallax effect for hero background
-            gsap.to('.parallax-bg', {
-                y: 100,
-                scrollTrigger: {
-                    trigger: 'section',
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: true,
-                },
-            });
-        }
+        // function animateHero() {
+        //     const heroTimeline = gsap.timeline();
+        //
+        //     // Animate hero text
+        //     heroTimeline
+        //         .to('.hero-text h1 span', {
+        //             y: 0,
+        //             opacity: 1,
+        //             duration: 1.2,
+        //             stagger: 0.2,
+        //             ease: 'power4.out',
+        //         })
+        //         .to(
+        //             '.hero-text p span',
+        //             {
+        //                 y: 0,
+        //                 opacity: 1,
+        //                 duration: 0.8,
+        //                 ease: 'power3.out',
+        //             },
+        //             '-=0.5'
+        //         )
+        //         .to(
+        //             '.hero-text a',
+        //             {
+        //                 opacity: 1,
+        //                 duration: 0.8,
+        //                 ease: 'power3.out',
+        //             },
+        //             '-=0.3'
+        //         )
+        //         .to(
+        //             '.category-filter',
+        //             {
+        //                 opacity: 1,
+        //                 duration: 0.8,
+        //                 ease: 'power3.out',
+        //             },
+        //             '-=0.3'
+        //         )
+        //         .to(
+        //             '.scroll-indicator',
+        //             {
+        //                 opacity: 1,
+        //                 duration: 0.5,
+        //             },
+        //             '-=0.5'
+        //         );
+        //
+        //     // Parallax effect for hero background
+        //     gsap.to('.parallax-bg', {
+        //         y: 100,
+        //         scrollTrigger: {
+        //             trigger: 'section',
+        //             start: 'top top',
+        //             end: 'bottom top',
+        //             scrub: true,
+        //         },
+        //     });
+        // }
 
         // Initialize scroll animations for gallery items
         function initScrollAnimations() {
