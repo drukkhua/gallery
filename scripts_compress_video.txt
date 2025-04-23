@@ -1,0 +1,59 @@
+# Все файлы mp4 сжимаем до среднего качества картинки (26) + поднимаем контрастность + насыщенность + чуть опускаем гамму
+for f in *.mp4; do
+  ffmpeg -i "$f" -vcodec libx264 -crf 26 -preset slow -an \
+  -vf "eq=contrast=1.05:brightness=0.0:saturation=1.05:gamma=0.95" \
+  "${f%.*}_prev.mp4";
+done
+
+# как и первый скрипт, но меняет разрешение на 640х360px)
+for f in *.mp4; do
+  # Получаем размеры и длительность оригинального видео
+  dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,duration -of csv=p=0 "$f")
+  width=$(echo "$dims" | cut -d',' -f1)
+  height=$(echo "$dims" | cut -d',' -f2)
+  duration=$(echo "$dims" | cut -d',' -f3)
+
+  # Определяем масштаб в зависимости от ориентации
+  if [ "$width" -gt "$height" ]; then
+    scale="640:360"
+  else
+    scale="360:640"
+  fi
+
+  # Создаем оптимизированную версию за один проход
+  if (( $(echo "$duration > 10" | bc -l) )); then
+    # Если видео длиннее 10 секунд, обрезаем его
+    ffmpeg -t 10 -i "$f" -vcodec libx264 -crf 28 -preset slow -an \
+    -vf "scale=${scale},eq=contrast=1.05:brightness=0.0:saturation=1.05:gamma=0.95" \
+    "${f%.*}_prev.mp4"
+  else
+    # Если видео короче 10 секунд, просто масштабируем
+    ffmpeg -i "$f" -vcodec libx264 -crf 28 -preset slow -an \
+    -vf "scale=${scale},eq=contrast=1.05:brightness=0.0:saturation=1.05:gamma=0.95" \
+    "${f%.*}_prev.mp4"
+  fi
+
+  echo "Обработано: $f"
+done
+
+echo "Все файлы обработаны!"
+
+echo "Все файлы обработаны!"
+
+# Все файлы mp4 сжимаем до среднего качества картинки (26) + поднимаем контрастность + насыщенность + чуть опускаем гамму
+for f in *.mp4; do
+  ffmpeg -i "$f" -vcodec libx264 -crf 26 -preset slow -an \
+  -vf "eq=contrast=1.05:brightness=0.0:saturation=1.05:gamma=0.95" \
+  "${f%.*}_1.mp4";
+done
+
+# автоматическое конвертирование jpg в webp
+for f in *.jpg; do
+  # Проверка, что файл существует и не является шаблоном
+  [ -f "$f" ] || continue
+
+  # Конвертация в WebP с качеством 80%
+  cwebp -q 80 "$f" -o "${f%.*}.webp"
+
+  echo "Конвертировано: $f -> ${f%.*}.webp"
+done
