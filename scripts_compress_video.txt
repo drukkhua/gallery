@@ -6,7 +6,7 @@ for f in *.mp4; do
 done
 
 # как и первый скрипт, но меняет разрешение на 640х360px)
-for f in *.mp4; do
+for f in *.{mp4,mov}; do
   # Получаем размеры и длительность оригинального видео
   dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,duration -of csv=p=0 "$f")
   width=$(echo "$dims" | cut -d',' -f1)
@@ -19,9 +19,14 @@ for f in *.mp4; do
   else
     scale="360:640"
   fi
-  # Создаем превью с указанным масштабом
+
   # Создаем превью в формате WebP с указанным масштабом
   ffmpeg -i "$f" -ss 00:00:01 -vframes 1 -vf "scale=${scale},eq=contrast=1.05:brightness=0.0:saturation=1.05" -c:v libwebp -quality 70 "${f%.*}_thumb.webp"
+
+  # сохраняем первое видео в нормальном качестве не меняя масштаб
+   ffmpeg -i "$f" -vcodec libx264 -crf 26 -preset slow -an \
+  -vf "eq=contrast=1.05:brightness=0.0:saturation=1.05:gamma=0.95" \
+  "${f%.*}_01.mp4";
 
   # Создаем оптимизированную версию за один проход
   if (( $(echo "$duration > 10" | bc -l) )); then

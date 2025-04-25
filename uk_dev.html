@@ -8,6 +8,8 @@
     <meta name="description"
           content="Портфоліо типографії «Яскравий друк»: приклади візиток, упаковки, листівок, буклетів, блокнотів та інших поліграфічних виробів. Унікальні дизайни, вибір паперу, друку та фінішної обробки.">
     <title>Портфоліо типографії «Яскравий друк» — візитки, упаковка, листівки, дизайн</title>
+    <link rel="preload" href="gallery/druk/business-card-plike-black-cmyk-white-foil-silver-detail-video.mp4"
+          as="fetch" type="video/mp4" crossorigin>
     <link rel="canonical" href="[[~[[*id]]? &scheme=`https`]]"/>
     <link rel="alternate" hreflang="ru" href="[[~[[BabelTranslation? &contextKey=`web`]]? &scheme=`https`]]"/>
     <link rel="alternate" hreflang="uk" href="[[~[[BabelTranslation? &contextKey=`ukr`]]? &scheme=`https`]]"/>
@@ -48,6 +50,14 @@
         contain: style layout;
         width: 100%;
         padding: 2rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .masonry.show {
+        opacity: 1;
+        visibility: visible;
       }
 
       @media (min-width: 380px) {
@@ -546,10 +556,14 @@
 </head>
 <body class="bg-gray-50 min-w-[380px]">
 <!-- Preloader -->
-<div class="loader">
-    <div class="loader-circle"></div>
-    <h3 style="font-size: 24px; color: #1a1a1a; margin-top: 20px; font-weight: 500; letter-spacing: 1px; text-align: center;">
-        Loading... please wait</h3>
+<div class="loader px-4">
+ <div class="loader-circle mb-5"></div>
+    <h3 class="text-xl md:text-2xl text-[#1a1a1a] mb-3 font-medium tracking-wide text-center">
+        Завантажуємо галерею високоякісної поліграфії</h3>
+    <p class="text-sm md:text-base text-[#555] mb-2 leading-relaxed text-center">
+        Ми завантажуємо деталізовані фото та відео нашої продукції (близько 10МБ).</p>
+    <p class="text-sm md:text-base text-[#555] mb-2 leading-relaxed text-center">
+        Це займе лише кілька секунд, але результат того вартий!</p>
 </div>
 
 <!-- Custom cursor -->
@@ -713,7 +727,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/certificate/thumbs/gift-certificate-softtouch-goldfoil-duplex-prev-03.jpg"
+                    poster="gallery/certificate/thumbs/gift-certificate-softtouch-goldfoil-duplex-video_thumb.webp"
                     title="Подарунковий сертифікат A6 із золотим тисненням та ламінацією SoftTouch"
                     aria-label="Відео подарункового сертифікату A6 з цифровим друком, золотим тисненням та ламінацією SoftTouch"
                     width="360"
@@ -887,7 +901,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/cards/thumbs/lash_room_03.jpg"
+                    poster="gallery/cards/thumbs/lash_room_video_thumb.webp"
                     title="Візитка салону краси з об'ємним золотом, SoftTouch ламінацією та друком з двох сторін"
                     aria-label="Відео візитки салону краси: крейдований папір 350г/м, цифровий друк, об'ємне тиснення золотом, SoftTouch ламінація"
                     width="360"
@@ -921,7 +935,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/cards/thumbs/beauty_09.jpg"
+                    poster="gallery/cards/thumbs/beauty_video_thumb.webp"
                     title="Візитка салону краси: Stardream anthracite зі срібним тисненням та білою фольгою"
                     aria-label="Відео візитки для салону краси: темно-сірий картон Stardream anthracite зі срібним тисненням та білою фольгою"
                     width="360"
@@ -1071,7 +1085,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/cards/thumbs/vizitka_virtuoz_03.jpg"
+                    poster="gallery/cards/thumbs/virtuoz_video_thumb.webp"
                     title="Корпоративна візитка на крейдованому папері з цифровим друком, матовою ламінацією, глянцевим лаком та тисненням сріблом"
                     aria-label="Відео корпоративної візитки Virtuoz з цифровим друком, матовою ламінацією, глянцевим лаком та тисненням сріблом"
                     width="360"
@@ -1293,7 +1307,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/cards/thumbs/vizitka_transfer_02.jpg"
+                    poster="gallery/cards/thumbs/video_transfer_thumb.webp"
                     title="Відео корпоративної візитки з цифровим друком, матовою ламінацією та тисненням логотипу сріблом"
                     aria-label="Відео корпоративної візитки на крейдованому папері 350 г/м² з цифровим друком, матовою ламінацією та срібним тисненням логотипу"
                     width="360"
@@ -1374,7 +1388,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/cards/thumbs/vizitki_advokat_02.jpg"
+                    poster="gallery/cards/thumbs/business-card-lawyer-plike-black-white-foil-gold-video_thumb.webp"
                     title="Візитка для адвоката з друком білим тонером та золотим тисненням на чорному картоні Plike"
                     aria-label="Відео візитки для адвоката: лицьовий і зворотний боки з друком білим тонером та золотим тисненням логотипу на чорному картоні Plike"
                     width="360"
@@ -1455,7 +1469,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/druk/thumbs/yaskravyi-druk-business-cards-front-back-prev-04.jpg"
+                    poster="gallery/druk/thumbs/business-card-plike-black-cmyk-white-foil-silver-detail-video_thumb.webp"
                     title="Візитка на чорному Plike з друком CMYK, білим тонером та срібним тисненням"
                     aria-label="Відео візитки типографії Яскравий друк: чорний папір Plike 330 г/м², друк CMYK і білим тонером, тиснення сріблом підпису під логотипом"
                     width="640"
@@ -1489,7 +1503,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/druk/thumbs/yaskravyi-druk-business-cards-front-back-prev-06.jpg"
+                    poster="gallery/druk/thumbs/business-card-backside-white-print-glossy-pattern-video_thumb.webp"
                     title="Зворот візитки з цитатами та глянцевим лаком на чорному папері"
                     aria-label="Відео зворотного боку візитки: цитати надруковані білим кольором на чорному папері Plike, фоновий малюнок покритий глянцевим лаком"
                     width="360"
@@ -1523,7 +1537,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/druk/thumbs/yaskravyi-druk-business-cards-front-back-prev-02.jpg"
+                    poster="gallery/druk/thumbs/business-card-full-view-black-white-glossy-foil-video_thumb.webp"
                     title="Візитка на чорному папері: лицьовий і зворотний боки з тисненням та глянцевим лаком"
                     aria-label="Відео візитки типографії Яскравий друк: лицьовий бік CMYK, білим друком та срібним тисненням, зворотний — з цитатами та глянцевим малюнком"
                     width="428"
@@ -1727,7 +1741,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/druk/thumbs/thank-you-envelope-creative-board-mint-print-flyer-partial-prev.jpg"
+                    poster="gallery/druk/thumbs/thank-you-kit-mint-envelope-softtouch-card-video_thumb.webp"
                     title="Комплект Thank you: конверт на дизайнерському картоні, листівка з ламінацією та візитка"
                     aria-label="Відео комплекту Thank you: конверт з м'ятного дизайнерського картону Creative Board 270 г/м² з CMYK-друком та фігурною висічкою, листівка з софт-тач ламінацією на двох мовах та фірмова візитка типографії"
                     width="360"
@@ -1805,6 +1819,7 @@
                     loop
                     autoplay
                     playsinline
+                    poster="gallery/notebooks/thumbs/notebook-a5-plike-black-white-print-glossy-varnish-video_thumb.webp"
                     title="Блокнот A5 з білим цифровим друком та глянцевим лаком на чорній обкладинці Plike"
                     aria-label="Відео блокнота A5 з обкладинкою з чорного картону Plike, білим цифровим друком та глянцевим лаком"
                     preload="none"
@@ -1838,7 +1853,7 @@
                     loop
                     autoplay
                     playsinline
-                    poster="gallery/notebooks/thumbs/note_prom_a5_cover_black_foil_prev_01.jpg"
+                    poster="gallery/notebooks/thumbs/notebook-black-matte-foil-debossing-video_thumb.webp"
                     title="Блокноти з чорною матовою обкладинкою та тисненням чорною фольгою"
                     aria-label="Відео з блокнотами з чорною матовою обкладинкою та тисненням чорною фольгою"
                     preload="none"
@@ -2284,7 +2299,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/cards/thumbs/vizitka_chebar_01.jpg"
+                    poster="gallery/cards/thumbs/chebar-restaurant-business-card-plike-bronze-gold-foil-video_thumb.webp"
                     title="Візитка ресторану на чорному картоні Plike з шовкодруком бронза та тисненням золотою фольгою"
                     aria-label="Візитка ресторану на чорному картоні Plike з шовкодруком бронза та тисненням золотою фольгою"
                     width="360"
@@ -2343,7 +2358,7 @@
                     autoplay
                     playsinline
                     preload="none"
-                    poster="gallery/gifts/thumbs/postcard-new-year-softtouch-spotgloss-colotech-prev-01.jpg"
+                    poster="gallery/gifts/thumbs/postcard-new-year-softtouch-spotgloss-colotech-video_thumb.webp"
                     title="Демонстрація глянцевого лаку на новорічній листівці з ламінацією SoftTouch"
                     aria-label="Відео з ефектом глянцевого лаку на новорічній листівці з SoftTouch ламінацією"
                     width="360"
@@ -2480,6 +2495,158 @@
 </button>
 
 <script>
+    function showMasonry() {
+        const masonryElement = document.querySelector('.masonry');
+        if (masonryElement) {
+            masonryElement.classList.add('show');
+        }
+    }
+
+    // Функция для отложенной загрузки видео в галерее
+    function setupLazyGalleryVideos() {
+        // Проверяем поддержку Intersection Observer
+        if (!("IntersectionObserver" in window)) {
+            // Для старых браузеров просто загружаем все видео
+            document.querySelectorAll(".video-element").forEach((video) => {
+                if (video.querySelector("source")) {
+                    video.load();
+                }
+            });
+            return;
+        }
+
+        // Определяем параметры в зависимости от типа устройства
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isLowPerformance = window.navigator.hardwareConcurrency <= 4;
+        const rootMargin = isMobile ? "100px 0px" : "200px 0px";
+
+        // Опции для Intersection Observer
+        const options = {
+            root: null,
+            rootMargin: rootMargin,
+            threshold: 0,
+        };
+
+        // Обработчик пересечения
+        const handleIntersection = (entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+
+                    // Загружаем видео, если оно еще не загружено
+                    if (!video.dataset.loaded) {
+                        // Отмечаем, что видео загружается
+                        video.dataset.loaded = "true";
+
+                        // Устанавливаем preload для загрузки метаданных
+                        video.setAttribute("preload", "metadata");
+
+                        // Добавляем обработчик ошибок
+                        video.addEventListener("error", (e) => {
+                            console.warn("Ошибка загрузки видео:", video.querySelector("source")?.src, e);
+                        }, {once: true});
+
+                        // Загружаем видео
+                        video.load();
+
+                        // Если у видео есть атрибут autoplay, пытаемся его воспроизвести
+                        if (video.hasAttribute("autoplay")) {
+                            // Используем requestAnimationFrame для более плавного воспроизведения
+                            requestAnimationFrame(() => {
+                                const playPromise = video.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(() => {
+                                        // Если автовоспроизведение не разрешено, пробуем с отключенным звуком
+                                        video.muted = true;
+                                        video.play().catch(() => {
+                                            console.warn("Не удалось воспроизвести видео даже с отключенным звуком");
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+                    // Прекращаем наблюдение за этим элементом
+                    observer.unobserve(video);
+                }
+            });
+        };
+
+        // Создаем Intersection Observer
+        const observer = new IntersectionObserver(handleIntersection, options);
+
+        // Кэшируем коллекцию для минимизации запросов к DOM
+        const videoElements = document.querySelectorAll(".video-element");
+
+        // Начинаем наблюдение за всеми видео в галерее
+        videoElements.forEach((video) => {
+            // Оптимизируем атрибуты видео
+            video.setAttribute("loading", "lazy");
+
+            // Проверяем, видно ли видео уже при загрузке
+            if (isElementInViewport(video) && !isLowPerformance) {
+                // Эти видео загружаем сразу
+                video.dataset.loaded = "true";
+                video.setAttribute("preload", "metadata");
+
+                // Добавляем обработчик ошибок
+                video.addEventListener("error", (e) => {
+                    console.warn("Ошибка загрузки видео:", video.querySelector("source")?.src, e);
+                }, {once: true});
+
+                video.load();
+
+                if (video.hasAttribute("autoplay")) {
+                    requestAnimationFrame(() => {
+                        video.play().catch(() => {
+                            video.muted = true;
+                            video.play().catch(() => {
+                            });
+                        });
+                    });
+                }
+            } else {
+                // Остальные через observer
+                observer.observe(video);
+            }
+        });
+    }
+
+    // Оптимизация работы с видео при переключении вкладок
+    function setupVisibilityHandling() {
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "hidden") {
+                // Приостанавливаем все видео, когда страница не видна
+                document.querySelectorAll(".video-element").forEach((video) => {
+                    if (!video.paused) {
+                        video.pause();
+                    }
+                });
+            } else if (document.visibilityState === "visible") {
+                // Возобновляем только видео с autoplay, которые находятся в области видимости
+                document.querySelectorAll(".video-element[autoplay]").forEach((video) => {
+                    if (video.paused && isElementInViewport(video)) {
+                        video.play().catch(() => {
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // Вспомогательная функция для определения, находится ли элемент в области видимости
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        // Добавляем буфер в 50px, чтобы начать загрузку чуть раньше
+        return (
+            rect.bottom >= -50 &&
+            rect.right >= -50 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 50 &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth) + 50
+        );
+    }
+
     // Initialize GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
@@ -2690,6 +2857,19 @@
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
+        document.querySelectorAll('.video-element').forEach(video => {
+            const width = video.getAttribute('width');
+            const height = video.getAttribute('height');
+            if (width && height) {
+                video.style.aspectRatio = `${width}/${height}`;
+            }
+        });
+        setTimeout(showMasonry, 2000);
+        // async lazy load for videos
+        setTimeout(() => {
+            setupLazyGalleryVideos();
+            setupVisibilityHandling();
+        }, 2800);
         // Preloader
         window.addEventListener('load', function () {
             const loader = document.querySelector('.loader');
