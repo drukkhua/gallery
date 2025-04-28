@@ -1,12 +1,12 @@
 # Все файлы mp4 сжимаем до среднего качества картинки (26) + поднимаем контрастность + насыщенность + чуть опускаем гамму
 for f in *.mp4; do
   ffmpeg -i "$f" -vcodec libx264 -crf 26 -preset slow -an \
-  -vf "eq=contrast=1.05:brightness=0.0:saturation=1.05:gamma=0.95" \
+  -vf "eq=contrast=1.00:brightness=0.1:saturation=1.05:gamma=0.95" \
   "${f%.*}_01.mp4";
 done
 
 # как и первый скрипт, но меняет разрешение на 640х360px)
-for f in *.mp4; do
+for f in *.mov; do
   # Получаем размеры и длительность оригинального видео
   dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,duration -of csv=p=0 "$f")
   width=$(echo "$dims" | cut -d',' -f1)
@@ -21,23 +21,23 @@ for f in *.mp4; do
   fi
 
   # Создаем превью в формате WebP с указанным масштабом
-  ffmpeg -i "$f" -ss 00:00:01 -vframes 1 -vf "scale=${scale},eq=contrast=1.15:brightness=-0.03:saturation=1.05" -c:v libwebp -quality 70 "${f%.*}_thumb.webp"
+  ffmpeg -i "$f" -ss 00:00:02 -vframes 1 -vf "scale=${scale},eq=contrast=1.02:brightness=0.00:saturation=1.00" -c:v libwebp -quality 70 "${f%.*}_thumb.webp"
 
   # сохраняем первое видео в нормальном качестве не меняя масштаб
    ffmpeg -i "$f" -vcodec libx264 -crf 26 -preset slow -an \
-  -vf "eq=contrast=1.15:brightness=-0.03:saturation=1.05:gamma=0.95" \
+  -vf "eq=contrast=1.02:brightness=0.00:saturation=1.00:gamma=1.00" \
   "${f%.*}_01.mp4";
 
   # Создаем оптимизированную версию за один проход
   if (( $(echo "$duration > 10" | bc -l) )); then
     # Если видео длиннее 10 секунд, обрезаем его
     ffmpeg -t 10 -i "$f" -vcodec libx264 -crf 28 -preset slow -an \
-    -vf "scale=${scale},eq=contrast=1.15:brightness=-0.03:saturation=1.05:gamma=0.95" \
+    -vf "scale=${scale},eq=contrast=1.02:brightness=0.00:saturation=1.00:gamma=1.00" \
     "${f%.*}_prev.mp4"
   else
     # Если видео короче 10 секунд, просто масштабируем
     ffmpeg -i "$f" -vcodec libx264 -crf 28 -preset slow -an \
-    -vf "scale=${scale},eq=contrast=1.15:brightness=-0.03:saturation=1.05:gamma=0.95" \
+    -vf "scale=${scale},eq=contrast=1.02:brightness=0.00:saturation=1.00:gamma=1.00" \
     "${f%.*}_prev.mp4"
   fi
 
