@@ -1,12 +1,12 @@
-# Все файлы mp4 сжимаем до среднего качества картинки (26) + поднимаем контрастность + насыщенность + чуть опускаем гамму
-for f in *.mp4; do
-  ffmpeg -i "$f" -vcodec libx264 -crf 26 -preset slow -an \
-  -vf "eq=contrast=1.00:brightness=0.1:saturation=1.05:gamma=0.95" \
+# Все файлы mp4 сжимаем до среднего качества картинки (20) + поднимаем контрастность + насыщенность + чуть опускаем гамму
+for f in *.mov; do
+  ffmpeg -i "$f" -vcodec libx264 -crf 20 -preset slow -an \
+  -vf "eq=contrast=1.00:brightness=0.0:saturation=1.00:gamma=1.00" \
   "${f%.*}_01.mp4";
 done
 
 # как и первый скрипт, но меняет разрешение на 640х360px)
-for f in *.mov; do
+for f in *.mp4; do
   # Получаем размеры и длительность оригинального видео
   dims=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height,duration -of csv=p=0 "$f")
   width=$(echo "$dims" | cut -d',' -f1)

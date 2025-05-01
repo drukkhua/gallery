@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/certificate/thumbs/gift-certificate-softtouch-goldfoil-duplex-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Подарочный сертификат A6</video:title>
+            <video:description>Цифровая печать, золотое тиснение и ламинация SoftTouch на мелованной бумаге.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/certificate/gift-certificate-softtouch-goldfoil-duplex-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>https://druk.kh.ua/gallery/dtf/thumbs/eco_bag_video_thumb.webp</video:thumbnail_loc>
+            <video:title>Эко-сумка A_Sho</video:title>
+            <video:description>DTF печать на хлопковой сумке 380×400 мм. Светлый лен, чёткий принт.</video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/dtf/eco_bag_video_01.mp4</video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>https://druk.kh.ua/gallery/cards/thumbs/lash_room_video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Визитка Lash Room</video:title>
+            <video:description>Мелованная бумага 350 г/м, SoftTouch ламинация, цифровая печать, золотое тиснение.
+            </video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/cards/lash_room_video.mp4</video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>https://druk.kh.ua/gallery/cards/thumbs/beauty_video_thumb.webp</video:thumbnail_loc>
+            <video:title>Визитка салона красоты</video:title>
+            <video:description>Stardream Anthracite 285 г/м, серебро и белая фольга, дизайнерская печать.
+            </video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/cards/beauty_video.mp4</video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/packaging/thumbs/custom-black-envelope-embossed-logo-prev.webp
+            </video:thumbnail_loc>
+            <video:title>Конверт для сертификата</video:title>
+            <video:description>Черный дизайнерский картон, конгрев-тиснение логотипа. A6 формат.</video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/packaging/custom-black-envelope-embossed-logo-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>https://druk.kh.ua/gallery/cards/thumbs/virtuoz_video_thumb.webp</video:thumbnail_loc>
+            <video:title>Визитка Virtuoz</video:title>
+            <video:description>Цифровая печать, матовая ламинация, выборочный лак и серебряное тиснение.
+            </video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/cards/virtuoz_video.mp4</video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/packaging/thumbs/luxury-black-envelope-gold-logo-bronze-pattern-prev.webp
+            </video:thumbnail_loc>
+            <video:title>Конверт-упаковка CheBar</video:title>
+            <video:description>Plike black 330 г/м, тиснение золотой фольгой и шелкография бронзой для дисконтной карты
+                ресторана.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/packaging/luxury-black-envelope-gold-logo-bronze-pattern-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>https://druk.kh.ua/gallery/cards/thumbs/video_transfer_thumb.webp</video:thumbnail_loc>
+            <video:title>Корпоративная визитка с серебряным тиснением</video:title>
+            <video:description>Мелованная бумага 350 г/м, цифровая печать, матовая ламинация и тиснение логотипа
+                серебром.
+            </video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/cards/video_transfer_01.mp4</video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/cards/thumbs/business-card-lawyer-plike-black-white-foil-gold-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Визитка для адвоката</video:title>
+            <video:description>Печать белым тонером и тиснение золотом на черном картоне Plike 330 г/м.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/cards/business-card-lawyer-plike-black-white-foil-gold-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/druk/thumbs/business-card-plike-black-cmyk-white-foil-silver-detail-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Визитка типографии Яскравий друк (фронт)</video:title>
+            <video:description>Plike black 330 г/м, печать CMYK и белым тонером, тиснение серебром подписи.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/druk/business-card-plike-black-cmyk-white-foil-silver-detail-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/druk/thumbs/business-card-backside-white-print-glossy-pattern-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Визитка типографии Яскравий друк (оборот)</video:title>
+            <video:description>Печать белым цветом на черной бумаге и цифровой глянцевый лак для фонового узора.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/druk/business-card-backside-white-print-glossy-pattern-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/druk/thumbs/business-card-full-view-black-white-glossy-foil-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Визитка типографии Яскравий друк (полный вид)</video:title>
+            <video:description>Лицевая сторона: белая печать и CMYK + тиснение серебром, оборот — цитаты и лак.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/druk/business-card-full-view-black-white-glossy-foil-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/druk/thumbs/thank-you-kit-mint-envelope-softtouch-card-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Комплект "Thank you"</video:title>
+            <video:description>Мятный конверт с фигурной вырубкой, листовка с ламинацией и фирменная визитка
+                типографии.
+            </video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/druk/thank-you-kit-mint-envelope-softtouch-card-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/notebooks/thumbs/notebook-a5-plike-black-white-print-glossy-varnish-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Блокнот A5 с белой печатью и лаком</video:title>
+            <video:description>Печать белым тонером и цифровой глянцевый лак на черной обложке Plike 330 г/м, блок —
+                Munken белый 90 г/м.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/notebooks/notebook-a5-plike-black-white-print-glossy-varnish-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/notebooks/thumbs/notebook-black-matte-foil-debossing-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Блокнот с тиснением черной фольгой</video:title>
+            <video:description>Обложка Dali Nero 285 г/м, тиснение черной фольгой, блок — Munken кремовый 90 г/м.
+            </video:description>
+            <video:content_loc>https://druk.kh.ua/gallery/notebooks/notebook-black-matte-foil-debossing-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/cards/thumbs/chebar-restaurant-business-card-plike-bronze-gold-foil-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Визитка ресторана CheBar</video:title>
+            <video:description>Печать бронзовой краской (шелкография) и тиснение золотой фольгой на черной бумаге Plike
+                330 г/м.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/cards/chebar-restaurant-business-card-plike-bronze-gold-foil-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/gifts/thumbs/postcard-new-year-softtouch-spotgloss-colotech-video_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Новогодняя открытка с лаком и SoftTouch</video:title>
+            <video:description>Цифровая печать на Colotech+ 350 г/м, ламинация SoftTouch и выборочный цифровой лак.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/gifts/postcard-new-year-softtouch-spotgloss-colotech-video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+    <url>
+        <loc>https://druk.kh.ua/portfolio-gallery</loc>
+        <video:video>
+            <video:thumbnail_loc>
+                https://druk.kh.ua/gallery/diary/thumbs/A5-diary-planner-with-deep-embossing_thumb.webp
+            </video:thumbnail_loc>
+            <video:title>Ежедневник A5 с глубоким слепым тиснением без фольги</video:title>
+            <video:description>
+                Датированный ежедневник формата A5 в обложке из эко-кожи с глубоким слепым тиснением логотипа без
+                фольги. Внутренний блок — кремовая бумага 80 г/м². Идеально подходит для корпоративной полиграфии и
+                премиум-блокнотов.
+            </video:description>
+            <video:content_loc>
+                https://druk.kh.ua/gallery/diary/A5-diary-planner-with-deep-embossing_video.mp4
+            </video:content_loc>
+        </video:video>
+    </url>
+
+</urlset>
