@@ -2996,6 +2996,158 @@
 </footer>
 
 <script>
+    function showMasonry() {
+        const masonryElement = document.querySelector('.masonry');
+        if (masonryElement) {
+            masonryElement.classList.add('show');
+        }
+    }
+
+    // Функция для отложенной загрузки видео в галерее
+    function setupLazyGalleryVideos() {
+        // Проверяем поддержку Intersection Observer
+        if (!("IntersectionObserver" in window)) {
+            // Для старых браузеров просто загружаем все видео
+            document.querySelectorAll(".video-element").forEach((video) => {
+                if (video.querySelector("source")) {
+                    video.load();
+                }
+            });
+            return;
+        }
+
+        // Определяем параметры в зависимости от типа устройства
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isLowPerformance = window.navigator.hardwareConcurrency <= 4;
+        const rootMargin = isMobile ? "100px 0px" : "200px 0px";
+
+        // Опции для Intersection Observer
+        const options = {
+            root: null,
+            rootMargin: rootMargin,
+            threshold: 0,
+        };
+
+        // Обработчик пересечения
+        const handleIntersection = (entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+
+                    // Загружаем видео, если оно еще не загружено
+                    if (!video.dataset.loaded) {
+                        // Отмечаем, что видео загружается
+                        video.dataset.loaded = "true";
+
+                        // Устанавливаем preload для загрузки метаданных
+                        video.setAttribute("preload", "metadata");
+
+                        // Добавляем обработчик ошибок
+                        video.addEventListener("error", (e) => {
+                            console.warn("Ошибка загрузки видео:", video.querySelector("source")?.src, e);
+                        }, {once: true});
+
+                        // Загружаем видео
+                        video.load();
+
+                        // Если у видео есть атрибут autoplay, пытаемся его воспроизвести
+                        if (video.hasAttribute("autoplay")) {
+                            // Используем requestAnimationFrame для более плавного воспроизведения
+                            requestAnimationFrame(() => {
+                                const playPromise = video.play();
+                                if (playPromise !== undefined) {
+                                    playPromise.catch(() => {
+                                        // Если автовоспроизведение не разрешено, пробуем с отключенным звуком
+                                        video.muted = true;
+                                        video.play().catch(() => {
+                                            console.warn("Не удалось воспроизвести видео даже с отключенным звуком");
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+                    // Прекращаем наблюдение за этим элементом
+                    observer.unobserve(video);
+                }
+            });
+        };
+
+        // Создаем Intersection Observer
+        const observer = new IntersectionObserver(handleIntersection, options);
+
+        // Кэшируем коллекцию для минимизации запросов к DOM
+        const videoElements = document.querySelectorAll(".video-element");
+
+        // Начинаем наблюдение за всеми видео в галерее
+        videoElements.forEach((video) => {
+            // Оптимизируем атрибуты видео
+            video.setAttribute("loading", "lazy");
+
+            // Проверяем, видно ли видео уже при загрузке
+            if (isElementInViewport(video) && !isLowPerformance) {
+                // Эти видео загружаем сразу
+                video.dataset.loaded = "true";
+                video.setAttribute("preload", "metadata");
+
+                // Добавляем обработчик ошибок
+                video.addEventListener("error", (e) => {
+                    console.warn("Ошибка загрузки видео:", video.querySelector("source")?.src, e);
+                }, {once: true});
+
+                video.load();
+
+                if (video.hasAttribute("autoplay")) {
+                    requestAnimationFrame(() => {
+                        video.play().catch(() => {
+                            video.muted = true;
+                            video.play().catch(() => {
+                            });
+                        });
+                    });
+                }
+            } else {
+                // Остальные через observer
+                observer.observe(video);
+            }
+        });
+    }
+
+    // Оптимизация работы с видео при переключении вкладок
+    function setupVisibilityHandling() {
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "hidden") {
+                // Приостанавливаем все видео, когда страница не видна
+                document.querySelectorAll(".video-element").forEach((video) => {
+                    if (!video.paused) {
+                        video.pause();
+                    }
+                });
+            } else if (document.visibilityState === "visible") {
+                // Возобновляем только видео с autoplay, которые находятся в области видимости
+                document.querySelectorAll(".video-element[autoplay]").forEach((video) => {
+                    if (video.paused && isElementInViewport(video)) {
+                        video.play().catch(() => {
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // Вспомогательная функция для определения, находится ли элемент в области видимости
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        // Добавляем буфер в 50px, чтобы начать загрузку чуть раньше
+        return (
+            rect.bottom >= -50 &&
+            rect.right >= -50 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 50 &&
+            rect.left <= (window.innerWidth || document.documentElement.clientWidth) + 50
+        );
+    }
+
     // Initialize GSAP and ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
@@ -3206,6 +3358,20 @@
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
+        document.querySelectorAll('.video-element').forEach(video => {
+            const width = video.getAttribute('width');
+            const height = video.getAttribute('height');
+            if (width && height) {
+                video.style.aspectRatio = `${width}/${height}`;
+            }
+        });
+
+        setTimeout(showMasonry, 2000);
+        // async lazy load for videos
+        setTimeout(() => {
+            setupLazyGalleryVideos();
+            setupVisibilityHandling();
+        }, 2800);
         // Preloader
         window.addEventListener('load', function () {
             const loader = document.querySelector('.loader');
@@ -3292,7 +3458,7 @@
 
         window.addEventListener('scroll', function () {
             if (window.pageYOffset > 500) {
-                gsap.to(backToTopButton, {opacity: 1, duration: 0.3});
+                gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
             } else {
                 gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
             }
