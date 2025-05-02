@@ -37,24 +37,23 @@
       }
 
       body {
-        overflow-x: hidden;
+        overflow-x: hidden !important;
       }
 
       .masonry {
         column-count: 1;
         column-gap: 1.5rem;
+        contain: style layout;
         width: 100%;
         padding: 2rem;
-        contain: layout;
-        will-change: contents;
-        min-height: 500px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
       }
 
-      .masonry > * {
-        break-inside: avoid;
-        page-break-inside: avoid;
-        display: inline-block;
-        width: 100%; /* Фиксируем ширину элементов */
+      .masonry.show {
+        opacity: 1;
+        visibility: visible;
       }
 
       @media (min-width: 380px) {
@@ -62,21 +61,18 @@
           column-count: 2;
           column-gap: 0.75rem;
           padding: 0.75rem;
-          min-height: 700px;
         }
       }
 
       @media (min-width: 900px) {
         .masonry {
           column-count: 3;
-          min-height: 900px;
         }
       }
 
       @media (min-width: 1600px) {
         .masonry {
           column-count: 4;
-          min-height: 1100px;
         }
       }
 
@@ -92,7 +88,7 @@
         background: #fff;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         will-change: transform, opacity;
-        z-index: 10;
+        z-index: 0;
       }
 
       .item.is-visible {
@@ -265,8 +261,8 @@
 
 
       .hero-text h1 {
-        overflow: hidden;
         color: var(--secondary-color);
+        overflow: hidden;
       }
 
       .hero-text h1 span {
@@ -381,6 +377,7 @@
         pointer-events: none;
         z-index: 100;
         opacity: 0.7;
+
       }
 
       .scroll-indicator::before {
@@ -434,7 +431,7 @@
         left: 0;
         width: 100%;
         height: 120%;
-        z-index: -1;
+        z-index: 0;
       }
 
       .item-zoom-effect {
