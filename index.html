@@ -2,17 +2,23 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots"
+          content="noindex, nofollow">
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"/>
     <meta name="description"
           content="Портфолио типографии «Яскравий друк»: примеры визиток, упаковки, открыток, листовок, блокнотов и других полиграфических изделий. Уникальные дизайны, выбор бумаги, печати и финишной отделки.">
     <title>Портфолио типографии «Яскравий друк» — визитки, упаковка, открытки, дизайн</title>
-    <link rel="preload" as="image" href="gallery/druk/yaskravyi-druk-business-cards-front-back-04.webp"
+    <link rel="preload"
+          as="image"
+          href="gallery/druk/yaskravyi-druk-business-cards-front-back-04.webp"
           imagesrcset="gallery/druk/yaskravyi-druk-business-cards-front-back-04.webp">
-    <link rel="preload" href="gallery/druk/business-card-plike-black-cmyk-white-foil-silver-detail-video.mp4"
-          as="fetch" type="video/mp4" crossorigin>
+    <link rel="preload"
+          href="gallery/druk/business-card-plike-black-cmyk-white-foil-silver-detail-video.mp4"
+          as="fetch"
+          type="video/mp4"
+          crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
@@ -258,7 +264,6 @@
           transform: translateY(0);
         }
       }
-
 
       .hero-text h1 {
         color: var(--secondary-color);
@@ -629,7 +634,7 @@
                 type="video/mp4"/>
     </video>
 
-     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
     <div
             class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 hero-text">
@@ -3050,23 +3055,18 @@
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     const video = entry.target;
-
                     // Загружаем видео, если оно еще не загружено
                     if (!video.dataset.loaded) {
                         // Отмечаем, что видео загружается
                         video.dataset.loaded = "true";
-
                         // Устанавливаем preload для загрузки метаданных
                         video.setAttribute("preload", "metadata");
-
                         // Добавляем обработчик ошибок
                         video.addEventListener("error", (e) => {
                             console.warn("Ошибка загрузки видео:", video.querySelector("source")?.src, e);
                         }, {once: true});
-
                         // Загружаем видео
                         video.load();
-
                         // Если у видео есть атрибут autoplay, пытаемся его воспроизвести
                         if (video.hasAttribute("autoplay")) {
                             // Используем requestAnimationFrame для более плавного воспроизведения
@@ -3084,7 +3084,6 @@
                             });
                         }
                     }
-
                     // Прекращаем наблюдение за этим элементом
                     observer.unobserve(video);
                 }
@@ -3101,20 +3100,16 @@
         videoElements.forEach((video) => {
             // Оптимизируем атрибуты видео
             video.setAttribute("loading", "lazy");
-
             // Проверяем, видно ли видео уже при загрузке
             if (isElementInViewport(video) && !isLowPerformance) {
                 // Эти видео загружаем сразу
                 video.dataset.loaded = "true";
                 video.setAttribute("preload", "metadata");
-
                 // Добавляем обработчик ошибок
                 video.addEventListener("error", (e) => {
                     console.warn("Ошибка загрузки видео:", video.querySelector("source")?.src, e);
                 }, {once: true});
-
                 video.load();
-
                 if (video.hasAttribute("autoplay")) {
                     requestAnimationFrame(() => {
                         video.play().catch(() => {
@@ -3173,7 +3168,6 @@
         // Если галерея найдена, прокручиваем к ней
         if (gallery) {
             const galleryPosition = gallery.offsetTop;
-
             window.scrollTo({
                 top: galleryPosition,
                 behavior: 'smooth'
@@ -3230,46 +3224,46 @@
 
         // Show the container elements
         heroTimeline
-            .to(".hero-text h1", {
+        .to(".hero-text h1", {
+            opacity: 1,
+            duration: 0.6,
+            ease: "power3.out",
+        })
+        .to(
+            ".hero-text p",
+            {
                 opacity: 1,
-                duration: 0.6,
+                duration: 1.0,
                 ease: "power3.out",
-            })
-            .to(
-                ".hero-text p",
-                {
-                    opacity: 1,
-                    duration: 1.0,
-                    ease: "power3.out",
-                },
-                "+=0.2"
-            )
-            .to(
-                ".hero-text a",
-                {
-                    opacity: 1,
-                    duration: 1.0,
-                    ease: "power3.out",
-                },
-                "+=0.2"
-            )
-            .to(
-                ".category-filter",
-                {
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: "power3.out",
-                },
-                "-=0.3"
-            )
-            .to(
-                ".scroll-indicator",
-                {
-                    opacity: 1,
-                    duration: 0.5,
-                },
-                "-=0.5"
-            );
+            },
+            "+=0.2"
+        )
+        .to(
+            ".hero-text a",
+            {
+                opacity: 1,
+                duration: 1.0,
+                ease: "power3.out",
+            },
+            "+=0.2"
+        )
+        .to(
+            ".category-filter",
+            {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power3.out",
+            },
+            "-=0.3"
+        )
+        .to(
+            ".scroll-indicator",
+            {
+                opacity: 1,
+                duration: 0.5,
+            },
+            "-=0.5"
+        );
 
         // Extract the base part and last word from the second line
         const secondLineWords = originalSecondLineText.trim().split(" ");
@@ -3372,99 +3366,9 @@
         });
     }
 
-    const waitForVideoToPlay = (video) => {
-        return new Promise((resolve) => {
-            const tryPlay = () => {
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise
-                        .then(() => resolve())
-                        .catch(() => {
-                            // пробуем повторно, иногда с задержкой срабатывает
-                            video.muted = true;
-                            setTimeout(() => {
-                                video.play().then(resolve).catch(resolve);
-                            }, 200);
-                        });
-                } else {
-                    resolve(); // если браузер не поддерживает промис
-                }
-            };
-
-            // Сначала ждём загрузку постера и данных
-            video.onloadeddata = () => {
-                tryPlay();
-            };
-
-            // на всякий случай, если событие не сработает
-            setTimeout(() => {
-                tryPlay();
-            }, 3000);
-        });
-    };
-
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
-        // const loader = document.querySelector('.loader');
-        // gsap.to(loader, {
-        //     opacity: 0,
-        //     duration: 0.2,
-        //     onComplete: () => {
-        //         loader.style.display = 'none';
-        //         // animateHero();
-        //         animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
-        //     },
-        // });
-        // Отображаем masonry layout с задержкой
-        // setTimeout(showMasonry, 2000);
-
-        // ⚠️ Ждем загрузку главного видео и постера, затем запускаем ленивую загрузку галереи
-        const heroVideo = document.getElementById("hero-video");
-
-        const posterLoaded = new Promise((resolve) => {
-            const posterSrc = heroVideo.getAttribute("poster");
-            if (!posterSrc) return resolve();
-            const img = new Image();
-            img.src = posterSrc;
-            img.onload = resolve;
-            img.onerror = resolve;
-        });
-
-        // 💡 Вместо просто video.onloadeddata — ждём и воспроизведение
-        const videoReady = waitForVideoToPlay(heroVideo);
-
-        // Promise.all([posterLoaded, videoReady]).then(() => {
-        //     console.log("✅ Главное видео и постер загружены и воспроизведение началось");
-        //
-        //     const loader = document.querySelector('.loader');
-        //     gsap.to(loader, {
-        //         opacity: 0,
-        //         duration: 0.2,
-        //         onComplete: () => {
-        //             loader.style.display = 'none';
-        //             animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
-        //
-        //             // только теперь запускаем остальное
-        //             showMasonry();
-        //             setupLazyGalleryVideos();
-        //             setupVisibilityHandling();
-        //         },
-        //     });
-        // });
-        posterLoaded.then(() => {
-            console.log("✅ Постер загружен");
-            const loader = document.querySelector('.loader');
-            const onLoaderHidden = () => {
-                loader.style.display = 'none';
-                animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
-                showMasonry();
-                setupLazyGalleryVideos();
-                setupVisibilityHandling();
-            };
-            gsap.to(loader, {opacity: 0, duration: 0.2, onComplete: onLoaderHidden});
-        });
-        // Устанавливаем правильное aspect-ratio для видео
         document.querySelectorAll('.video-element').forEach(video => {
             const width = video.getAttribute('width');
             const height = video.getAttribute('height');
@@ -3473,19 +3377,25 @@
             }
         });
 
-
-        // Прелоадер и анимация героя
-        // window.addEventListener('load', function () {
-        //     const loader = document.querySelector('.loader');
-        //     gsap.to(loader, {
-        //         opacity: 0,
-        //         duration: 0.2,
-        //         onComplete: () => {
-        //             loader.style.display = 'none';
-        //             animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
-        //         },
-        //     });
-        // });
+        setTimeout(showMasonry, 2000);
+        // async lazy load for videos
+        setTimeout(() => {
+            setupLazyGalleryVideos();
+            setupVisibilityHandling();
+        }, 2800);
+        // Preloader
+        window.addEventListener('load', function () {
+            const loader = document.querySelector('.loader');
+            gsap.to(loader, {
+                opacity: 0,
+                duration: 0.2,
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    // animateHero();
+                    animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
+                },
+            });
+        });
 
         // Initialize scroll animations for gallery items
         function initScrollAnimations() {
