@@ -552,10 +552,14 @@
 </head>
 <body class="bg-gray-50 min-w-[380px]">
 <!-- Preloader -->
-<div class="loader">
-    <div class="loader-circle"></div>
-    <h3 style="font-size: 24px; color: #1a1a1a; margin-top: 20px; font-weight: 500; letter-spacing: 1px; text-align: center;">
-        Loading... please wait</h3>
+<div class="loader px-4">
+    <div class="loader-circle mb-5"></div>
+    <h3 class="text-xl md:text-2xl text-[#1a1a1a] mb-3 font-medium tracking-wide text-center">
+        Загружаем галерею высококачественной полиграфии</h3>
+    <p class="text-sm md:text-base text-[#555] mb-2 leading-relaxed text-center">
+        Мы загружаем детализированные фото и видео нашей продукции (около 10МБ).</p>
+    <p class="text-sm md:text-base text-[#555] mb-2 leading-relaxed text-center">
+        Это займет всего несколько секунд, но результат того стоит!</p>
 </div>
 
 <!-- Custom cursor -->
@@ -604,6 +608,7 @@
 
 <!-- Hero Section -->
 <section class="relative w-full h-[100vh] overflow-hidden">
+
     <video
             id="hero-video"
             autoplay
@@ -624,7 +629,7 @@
                 type="video/mp4"/>
     </video>
 
-    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
 
     <div
             class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 hero-text">
@@ -3401,7 +3406,16 @@
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
-
+        // const loader = document.querySelector('.loader');
+        // gsap.to(loader, {
+        //     opacity: 0,
+        //     duration: 0.2,
+        //     onComplete: () => {
+        //         loader.style.display = 'none';
+        //         // animateHero();
+        //         animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
+        //     },
+        // });
         // Отображаем masonry layout с задержкой
         // setTimeout(showMasonry, 2000);
 
@@ -3438,19 +3452,18 @@
         //         },
         //     });
         // });
-        Promise.all([posterLoaded, videoReady])
-            .then(() => {
-                console.log("✅ Главное видео и постер загружены и воспроизведение началось");
-                const loader = document.querySelector('.loader');
-                const onLoaderHidden = () => {
-                    loader.style.display = 'none';
-                    animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
-                    showMasonry();
-                    setupLazyGalleryVideos();
-                    setupVisibilityHandling();
-                };
-                gsap.to(loader, {opacity: 0, duration: 0.2, onComplete: onLoaderHidden});
-            });
+        posterLoaded.then(() => {
+            console.log("✅ Постер загружен");
+            const loader = document.querySelector('.loader');
+            const onLoaderHidden = () => {
+                loader.style.display = 'none';
+                animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
+                showMasonry();
+                setupLazyGalleryVideos();
+                setupVisibilityHandling();
+            };
+            gsap.to(loader, {opacity: 0, duration: 0.2, onComplete: onLoaderHidden});
+        });
         // Устанавливаем правильное aspect-ratio для видео
         document.querySelectorAll('.video-element').forEach(video => {
             const width = video.getAttribute('width');

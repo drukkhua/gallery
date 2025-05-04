@@ -626,6 +626,12 @@
 
 <!-- Hero Section -->
 <section class="relative w-full h-[100vh] overflow-hidden">
+    <img
+            id="hero-poster"
+            src="gallery/druk/yaskravyi-druk-business-cards-front-back-04.webp"
+            alt="Превью к видео визитки типографии Яскравий друк: чёрная бумага Plike 330 г/м, печать CMYK и белым тонером, тиснение серебром подписи под логотипом"
+            class="absolute inset-0 w-full h-full object-cover object-center parallax-bg"
+            style="width: 100%; display: block;">
     <video
             id="hero-video"
             autoplay
@@ -636,17 +642,13 @@
             title="Визитка на чёрном Plike с печатью CMYK, белым тонером и серебряным тиснением"
             aria-label="Видео визитки типографии Яскравий друк: чёрная бумага Plike 330 г/м, печать CMYK и белым тонером, тиснение серебром подписи под логотипом"
             class="absolute inset-0 w-full h-full object-cover object-center parallax-bg"
-            poster="gallery/druk/yaskravyi-druk-business-cards-front-back-04.webp"
             style="object-position: 35% center">
-        <source
-                src="gallery/druk/business-card-plike-black-cmyk-white-foil-silver-detail-video.webm"
-                type="video/webm"/>
         <source
                 src="gallery/druk/business-card-plike-black-cmyk-white-foil-silver-detail-video.mp4"
                 type="video/mp4"/>
     </video>
 
-    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
     <div
             class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 hero-text">
@@ -3172,36 +3174,59 @@
 
     function filterItems(filterValue) {
         const items = document.querySelectorAll('.item');
-
-        // Show/hide items based on category
         items.forEach((item) => {
             const categories = item.getAttribute('data-category').split(',');
-
-            if (filterValue === 'all' || categories.includes(filterValue)) {
-                gsap.to(item, {
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    duration: 0.8,
-                    delay: Math.random() * 0.2,
-                    onStart: () => {
-                        item.style.display = 'block';
-                    },
-                });
-            } else {
-                gsap.to(item, {
-                    opacity: 0,
-                    y: 20,
-                    scale: 0.6,
-                    duration: 0.8,
-                    onComplete: () => {
-                        item.style.display = 'none';
-                    },
-                });
-            }
+            const shouldShow = filterValue === 'all' || categories.includes(filterValue);
+            gsap.to(item, {
+                opacity: shouldShow ? 1 : 0,
+                y: shouldShow ? 0 : 20,
+                scale: shouldShow ? 1 : 0.6,
+                duration: 0.8,
+                delay: shouldShow ? Math.random() * 0.2 : 0,
+                display: shouldShow ? 'block' : 'none',
+                onStart: shouldShow ? () => {
+                } : null,
+                onComplete: shouldShow ? null : () => {
+                    item.style.display = 'none';
+                }
+            });
         });
         scrollToGallery();
     }
+
+    // старый вариант
+    // function filterItems(filterValue) {
+    //     const items = document.querySelectorAll('.item');
+    //
+    //     // Show/hide items based on category
+    //     items.forEach((item) => {
+    //         const categories = item.getAttribute('data-category').split(',');
+    //
+    //         if (filterValue === 'all' || categories.includes(filterValue)) {
+    //             gsap.to(item, {
+    //                 opacity: 1,
+    //                 y: 0,
+    //                 scale: 1,
+    //                 duration: 0.8,
+    //                 delay: Math.random() * 0.2,
+    //                 onStart: () => {
+    //                     item.style.display = 'block';
+    //                 },
+    //             });
+    //         } else {
+    //             gsap.to(item, {
+    //                 opacity: 0,
+    //                 y: 20,
+    //                 scale: 0.6,
+    //                 duration: 0.8,
+    //                 onComplete: () => {
+    //                     item.style.display = 'none';
+    //                 },
+    //             });
+    //         }
+    //     });
+    //     scrollToGallery();
+    // }
 
     // Hero section animation with typing effect for two lines
     function animateHero(replacementWords = ["деталей", "идей", "решений", "технологий"]) {
@@ -3216,7 +3241,12 @@
         // Clear the text initially to prepare for typing effect
         firstLine.textContent = "";
         secondLine.textContent = "";
-
+        // heroTimeline
+        //     .to(".hero-text h1", {opacity: 1, duration: 0.6, ease: "power3.out"})
+        //     .to(".hero-text p", {opacity: 1, duration: 1.0, ease: "power3.out"}, "+=0.2")
+        //     .to(".hero-text a", {opacity: 1, duration: 1.0, ease: "power3.out"}, "+=0.2")
+        //     .to(".category-filter", {opacity: 1, duration: 0.5, ease: "power3.out"}, "-=0.3")
+        //     .to(".scroll-indicator", {opacity: 1, duration: 0.5}, "-=0.5");
         // Show the container elements
         heroTimeline
             .to(".hero-text h1", {
@@ -3364,32 +3394,104 @@
     // Wait for images to load before initializing animations
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
+        const heroPoster = document.getElementById('hero-poster');
+        const heroVideo = document.getElementById('hero-video');
+        const loader = document.querySelector('.loader');
+        const heroVideoContainer = document.querySelector('.hero-video-container');
+
+        console.log("DOMContentLoaded сработал.");
+
+        // После загрузки постера показываем контент и начинаем загрузку видео
+        heroPoster.onload = () => {
+            console.log("Событие heroPoster.onload сработало.");
+            clearTimeout(loaderTimeout); // Очищаем таймаут, если загрузка прошла успешно
+            gsap.to(loader, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    console.warn("ПОСТЕР загружен корретно.");
+                    loader.style.display = 'none';
+                    showMasonry();
+                    setupLazyGalleryVideos();
+                    setupVisibilityHandling();
+                    animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
+
+                    // Начинаем загрузку видео после отображения основного контента
+                    heroVideo.style.display = 'block';
+                    heroVideo.load();
+
+                    // Пытаемся воспроизвести видео после загрузки метаданных
+                    heroVideo.addEventListener('loadedmetadata', () => {
+                        const playPromise = heroVideo.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                heroVideo.muted = true;
+                                heroVideo.play().catch(() => {
+                                    console.warn("Не удалось воспроизвести видео даже с отключенным звуком на старте.");
+                                });
+                            });
+                        }
+                    });
+                },
+            });
+        };
+
+        // Обработка ошибки загрузки постера (чтобы не завис лоадер)
+        heroPoster.onerror = () => {
+            console.warn("Событие heroPoster.onerror сработало.");
+            clearTimeout(loaderTimeout); // Очищаем таймаут, если загрузка прошла успешно
+            gsap.to(loader, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
+                    showMasonry();
+                    setupLazyGalleryVideos();
+                    setupVisibilityHandling();
+
+                    // Пытаемся загрузить видео даже без постера
+                    heroVideo.style.display = 'block';
+                    heroVideo.load();
+                    heroVideo.addEventListener('loadedmetadata', () => {
+                        const playPromise = heroVideo.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                heroVideo.muted = true;
+                                heroVideo.play().catch(() => {
+                                    console.warn("Не удалось воспроизвести видео даже с отключенным звуком.");
+                                });
+                            });
+                        }
+                    });
+                },
+            });
+        };
+        console.log("URL постера:", heroPoster.src);
+        // Добавляем таймаут на случай, если постер зависнет при загрузке
+        const loaderTimeout = setTimeout(() => {
+            if (loader && getComputedStyle(loader).display !== 'none') {
+                console.warn("ТАЙМАУТ: Лоадер не был скрыт вовремя. Принудительное скрытие.");
+                gsap.to(loader, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        loader.style.display = 'none';
+                        // Даже если постер не загрузился, пытаемся запустить остальной функционал
+                        animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
+                        showMasonry();
+                        setupLazyGalleryVideos();
+                        setupVisibilityHandling();
+                    },
+                });
+            }
+        }, 5000);
         document.querySelectorAll('.video-element').forEach(video => {
             const width = video.getAttribute('width');
             const height = video.getAttribute('height');
             if (width && height) {
-                video.style.aspectRatio = `${width}/${height}`;
+                video.style.aspectRatio = `<span class="math-inline">\{width\}/</span>{height}`;
             }
-        });
-
-        setTimeout(showMasonry, 2000);
-        // async lazy load for videos
-        setTimeout(() => {
-            setupLazyGalleryVideos();
-            setupVisibilityHandling();
-        }, 2800);
-        // Preloader
-        window.addEventListener('load', function () {
-            const loader = document.querySelector('.loader');
-            gsap.to(loader, {
-                opacity: 0,
-                duration: 0.2,
-                onComplete: () => {
-                    loader.style.display = 'none';
-                    // animateHero();
-                    animateHero(["деталей", "идей", "решений", "технологий", "качества"]);
-                },
-            });
         });
 
         // Initialize scroll animations for gallery items
@@ -3674,3 +3776,6 @@
     });
 </script>
 [[$footer]]
+
+</body>
+</html>
