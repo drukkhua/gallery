@@ -1,5 +1,8 @@
 # форматирование
 npx prettier --write .
+# минимизация всего проекта
+html-minifier --remove-comments --collapse-whitespace --minify-css --input-dir ./ --output-dir ./minimized --file-ext html  # работает но мобильная версия 54%
+find . -type f -name "*.html" ! -path "./minimized/*" -exec html-minifier --remove-comments --collapse-whitespace --minify-css -o minimized/{} {} \;
 
 # Все файлы mp4 сжимаем до среднего качества картинки (20) + поднимаем контрастность + насыщенность + чуть опускаем гамму
 for f in *.mov; do
