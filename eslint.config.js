@@ -3,15 +3,12 @@ import html from 'eslint-plugin-html';
 import prettier from 'eslint-plugin-prettier';
 
 export default defineConfig([
-  {
-    ignores: ['minimized/**', '**/minimized/**', 'node_modules/**', '**/node_modules/**']
-  },
+  { ignores: ['minimized/**', '**/minimized/**', 'node_modules/**', '**/node_modules/**'] },
   // Настройки для JS файлов
   {
     files: ['**/*.js'],
-    plugins: {
-      prettier: prettier
-    },
+    plugins: { prettier: prettier },
+    linterOptions: { reportUnusedDisableDirectives: 'warn' },
     rules: {
       'prettier/prettier': [
         'error',
@@ -21,22 +18,29 @@ export default defineConfig([
           trailingComma: 'none',
           bracketSpacing: true,
           arrowParens: 'avoid',
-          bracketSameLine: false
+          bracketSameLine: true
         }
       ],
-      'newline-per-chained-call': ['off'], // Отключаем, так как Prettier будет форматировать цепочки
+      'newline-per-chained-call': ['off'],
       'max-len': ['off'],
       'arrow-body-style': ['error', 'as-needed'],
-      'prefer-arrow-callback': ['off']
+      'prefer-arrow-callback': ['off'],
+      // 'object-curly-newline': 'off',
+      // 'object-curly-newline': [
+      //   'error',
+      //   {
+      //     ObjectExpression: { multiline: false, minProperties: 99 },
+      //     ObjectPattern: { multiline: false, minProperties: 99 }
+      //   }
+      // ],
+      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }]
     }
   },
   // Настройки для HTML файлов
   {
     files: ['**/*.html'],
-    plugins: {
-      html: html,
-      prettier: prettier
-    },
+    plugins: { html: html, prettier: prettier },
+    linterOptions: { reportUnusedDisableDirectives: 'warn' },
     rules: {
       'prettier/prettier': [
         'error',
@@ -46,14 +50,23 @@ export default defineConfig([
           trailingComma: 'none',
           bracketSpacing: true,
           arrowParens: 'avoid',
-          bracketSameLine: false,
-          embeddedLanguageFormatting: 'auto'
+          bracketSameLine: true,
+          embeddedLanguageFormatting: 'auto',
+          htmlWhitespaceSensitivity: 'ignore'
         }
       ],
-      'newline-per-chained-call': ['off'], // Отключаем, так как Prettier будет форматировать цепочки
+      'newline-per-chained-call': ['off'],
       'max-len': ['off'],
       'arrow-body-style': ['error', 'as-needed'],
-      'prefer-arrow-callback': ['off']
+      'prefer-arrow-callback': ['off'],
+      'object-curly-newline': [
+        'error',
+        {
+          ObjectExpression: { multiline: false, minProperties: 99 },
+          ObjectPattern: { multiline: false, minProperties: 99 }
+        }
+      ],
+      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }]
     }
   }
 ]);
