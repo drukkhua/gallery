@@ -19,7 +19,6 @@ A responsive portfolio gallery showcasing print production works using a masonry
 - imagesLoaded for optimized image loading
 - Responsive design without external frameworks
 
-
 ## Preview
 
 <p align="center">
@@ -33,18 +32,18 @@ A responsive portfolio gallery showcasing print production works using a masonry
 
 ```html
 <div class="masonry">
-    <div class="item" data-category="certificate,foil" data-type="image" data-src="path/to/image.jpg">
-        <div class="item-zoom-effect relative color-filter">
-            <img src="path/to/image.jpg" alt="Description" class="w-full"/>
-            <div class="item-caption">
-                <div class="tag" data-filter="certificate">Certificate</div>
-                <div class="tag" data-filter="foil">Foil Stamping</div>
-                <h3>Item Title</h3>
-                <p>Description details</p>
-            </div>
-        </div>
+  <div class="item" data-category="certificate,foil" data-type="image" data-src="path/to/image.jpg">
+    <div class="item-zoom-effect relative color-filter">
+      <img src="path/to/image.jpg" alt="Description" class="w-full" />
+      <div class="item-caption">
+        <div class="tag" data-filter="certificate">Certificate</div>
+        <div class="tag" data-filter="foil">Foil Stamping</div>
+        <h3>Item Title</h3>
+        <p>Description details</p>
+      </div>
     </div>
-    <!-- More items... -->
+  </div>
+  <!-- More items... -->
 </div>
 ```
 
@@ -52,10 +51,10 @@ A responsive portfolio gallery showcasing print production works using a masonry
 
 ```html
 <div class="category-filter">
-    <button class="filter-btn active" data-filter="all">All Works</button>
-    <button class="filter-btn" data-filter="certificate">Certificates</button>
-    <button class="filter-btn" data-filter="foil">Foil Stamping</button>
-    <!-- More filter buttons... -->
+  <button class="filter-btn active" data-filter="all">All Works</button>
+  <button class="filter-btn" data-filter="certificate">Certificates</button>
+  <button class="filter-btn" data-filter="foil">Foil Stamping</button>
+  <!-- More filter buttons... -->
 </div>
 ```
 
