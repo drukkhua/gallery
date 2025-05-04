@@ -2,9 +2,13 @@
   "name": "my-project",
   "version": "1.0.0",
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js",
+    "fix": "eslint . --ext .js --fix"
   },
   "devDependencies": {
-    "prettier": "^3.0.0"
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.2",
+    "prettier": "^3.5.3"
   }
 }
