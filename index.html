@@ -23,6 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <!-- eslint-disable -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -2876,7 +2877,7 @@
         // Проверяем поддержку Intersection Observer
         if (!('IntersectionObserver' in window)) {
           // Для старых браузеров просто загружаем все видео
-          document.querySelectorAll('.video-element').forEach((video) => {
+          document.querySelectorAll('.video-element').forEach(video => {
             if (video.querySelector('source')) {
               video.load();
             }
@@ -2898,7 +2899,7 @@
 
         // Обработчик пересечения
         const handleIntersection = (entries, observer) => {
-          entries.forEach((entry) => {
+          entries.forEach(entry => {
             if (entry.isIntersecting) {
               const video = entry.target;
               // Загружаем видео, если оно еще не загружено
@@ -2910,7 +2911,7 @@
                 // Добавляем обработчик ошибок
                 video.addEventListener(
                   'error',
-                  (e) => {
+                  e => {
                     console.warn('Ошибка загрузки видео:', video.querySelector('source')?.src, e);
                   },
                   { once: true }
@@ -2947,7 +2948,7 @@
         const videoElements = document.querySelectorAll('.video-element');
 
         // Начинаем наблюдение за всеми видео в галерее
-        videoElements.forEach((video) => {
+        videoElements.forEach(video => {
           // Оптимизируем атрибуты видео
           video.setAttribute('loading', 'lazy');
           // Проверяем, видно ли видео уже при загрузке
@@ -2958,7 +2959,7 @@
             // Добавляем обработчик ошибок
             video.addEventListener(
               'error',
-              (e) => {
+              e => {
                 console.warn('Ошибка загрузки видео:', video.querySelector('source')?.src, e);
               },
               { once: true }
@@ -2984,14 +2985,14 @@
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState === 'hidden') {
             // Приостанавливаем все видео, когда страница не видна
-            document.querySelectorAll('.video-element').forEach((video) => {
+            document.querySelectorAll('.video-element').forEach(video => {
               if (!video.paused) {
                 video.pause();
               }
             });
           } else if (document.visibilityState === 'visible') {
             // Возобновляем только видео с autoplay, которые находятся в области видимости
-            document.querySelectorAll('.video-element[autoplay]').forEach((video) => {
+            document.querySelectorAll('.video-element[autoplay]').forEach(video => {
               if (video.paused && isElementInViewport(video)) {
                 video.play().catch(() => {});
               }
@@ -3031,7 +3032,7 @@
         const items = document.querySelectorAll('.item');
 
         // Show/hide items based on category
-        items.forEach((item) => {
+        items.forEach(item => {
           const categories = item.getAttribute('data-category').split(',');
 
           if (filterValue === 'all' || categories.includes(filterValue)) {
@@ -3076,46 +3077,11 @@
 
         // Show the container elements
         heroTimeline
-          .to('.hero-text h1', {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power3.out'
-          })
-          .to(
-            '.hero-text p',
-            {
-              opacity: 1,
-              duration: 1.0,
-              ease: 'power3.out'
-            },
-            '+=0.2'
-          )
-          .to(
-            '.hero-text a',
-            {
-              opacity: 1,
-              duration: 1.0,
-              ease: 'power3.out'
-            },
-            '+=0.2'
-          )
-          .to(
-            '.category-filter',
-            {
-              opacity: 1,
-              duration: 0.5,
-              ease: 'power3.out'
-            },
-            '-=0.3'
-          )
-          .to(
-            '.scroll-indicator',
-            {
-              opacity: 1,
-              duration: 0.5
-            },
-            '-=0.5'
-          );
+          .to('.hero-text h1', { opacity: 1, duration: 0.6, ease: 'power3.out' })
+          .to('.hero-text p', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
+          .to('.hero-text a', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
+          .to('.category-filter', { opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+          .to('.scroll-indicator', { opacity: 1, duration: 0.5 }, '-=0.5');
 
         // Extract the base part and last word from the second line
         const secondLineWords = originalSecondLineText.trim().split(' ');
@@ -3221,7 +3187,7 @@
       // Wait for images to load before initializing animations
       document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
-        document.querySelectorAll('.video-element').forEach((video) => {
+        document.querySelectorAll('.video-element').forEach(video => {
           const width = video.getAttribute('width');
           const height = video.getAttribute('height');
           if (width && height) {
@@ -3294,7 +3260,7 @@
           });
 
           // Улучшенная обработка наведения для изображений и видео
-          items.forEach((item) => {
+          items.forEach(item => {
             const mediaElement = item.querySelector('img, video');
             const itemType = item.dataset.type;
 
@@ -3334,10 +3300,10 @@
         // Category filter functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
 
-        filterButtons.forEach((button) => {
+        filterButtons.forEach(button => {
           button.addEventListener('click', function () {
             // Remove active class from all buttons
-            filterButtons.forEach((btn) => btn.classList.remove('active'));
+            filterButtons.forEach(btn => btn.classList.remove('active'));
 
             // Add active class to clicked button
             this.classList.add('active');
@@ -3348,7 +3314,7 @@
         });
 
         // Обработчик клика для тегов (с высоким приоритетом)
-        document.querySelectorAll('.tag').forEach((tag) => {
+        document.querySelectorAll('.tag').forEach(tag => {
           tag.addEventListener(
             'click',
             function (e) {
@@ -3361,9 +3327,9 @@
                 filterItems(filterValue);
 
                 // Обновление активной кнопки фильтра
-                filterButtons.forEach((btn) => btn.classList.remove('active'));
+                filterButtons.forEach(btn => btn.classList.remove('active'));
                 const matchingButton = Array.from(filterButtons).find(
-                  (btn) => btn.getAttribute('data-filter').toLowerCase() === filterValue
+                  btn => btn.getAttribute('data-filter').toLowerCase() === filterValue
                 );
                 if (matchingButton) {
                   matchingButton.classList.add('active');
@@ -3513,7 +3479,7 @@
         }
 
         // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener('click', function (e) {
             e.preventDefault();
 

@@ -1,14 +1,27 @@
 {
-  "name": "my-project",
+  "name": "gallery",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "format": "prettier --write .",
-    "lint": "eslint . --ext .js",
-    "fix": "eslint . --ext .js --fix"
+    "format": "prettier --write \"**/*.{js,html,css,json}\"",
+    "lint:js": "eslint . --ext .js",
+    "lint:html": "eslint . --ext .html",
+    "lint": "npm run lint:js && npm run lint:html",
+    "fix:js": "eslint . --ext .js --fix",
+    "fix:html": "eslint . --ext .html --fix",
+    "fix": "npm run fix:js && npm run fix:html",
+    "all": "npm run format && npm run fix",
+    "check": "prettier --check \"**/*.{js,html,css,json}\"",
+    "format:gsap": "prettier --write \"**/*.html\" --print-width 120 --single-quote --bracket-spacing --no-bracket-same-line --embedded-language-formatting auto",
+    "prepare": "npm run all"
   },
   "devDependencies": {
+    "@eslint/js": "^9.26.0",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
-    "prettier": "^3.5.3"
+    "eslint-plugin-html": "^8.1.2",
+    "eslint-plugin-prettier": "^5.3.1",
+    "prettier": "^3.5.3",
+    "prettier-eslint": "^16.4.1"
   }
 }

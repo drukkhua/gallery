@@ -2884,7 +2884,7 @@
         // Проверяем поддержку Intersection Observer
         if (!('IntersectionObserver' in window)) {
           // Для старых браузеров просто загружаем все видео
-          document.querySelectorAll('.video-element').forEach((video) => {
+          document.querySelectorAll('.video-element').forEach(video => {
             if (video.querySelector('source')) {
               video.load();
             }
@@ -2898,15 +2898,11 @@
         const rootMargin = isMobile ? '100px 0px' : '200px 0px';
 
         // Опции для Intersection Observer
-        const options = {
-          root: null,
-          rootMargin: rootMargin,
-          threshold: 0
-        };
+        const options = { root: null, rootMargin: rootMargin, threshold: 0 };
 
         // Обработчик пересечения
         const handleIntersection = (entries, observer) => {
-          entries.forEach((entry) => {
+          entries.forEach(entry => {
             if (entry.isIntersecting) {
               const video = entry.target;
 
@@ -2921,7 +2917,7 @@
                 // Добавляем обработчик ошибок
                 video.addEventListener(
                   'error',
-                  (e) => {
+                  e => {
                     console.warn('Ошибка загрузки видео:', video.querySelector('source')?.src, e);
                   },
                   { once: true }
@@ -2961,7 +2957,7 @@
         const videoElements = document.querySelectorAll('.video-element');
 
         // Начинаем наблюдение за всеми видео в галерее
-        videoElements.forEach((video) => {
+        videoElements.forEach(video => {
           // Оптимизируем атрибуты видео
           video.setAttribute('loading', 'lazy');
 
@@ -2974,7 +2970,7 @@
             // Добавляем обработчик ошибок
             video.addEventListener(
               'error',
-              (e) => {
+              e => {
                 console.warn('Ошибка загрузки видео:', video.querySelector('source')?.src, e);
               },
               { once: true }
@@ -3002,14 +2998,14 @@
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState === 'hidden') {
             // Приостанавливаем все видео, когда страница не видна
-            document.querySelectorAll('.video-element').forEach((video) => {
+            document.querySelectorAll('.video-element').forEach(video => {
               if (!video.paused) {
                 video.pause();
               }
             });
           } else if (document.visibilityState === 'visible') {
             // Возобновляем только видео с autoplay, которые находятся в области видимости
-            document.querySelectorAll('.video-element[autoplay]').forEach((video) => {
+            document.querySelectorAll('.video-element[autoplay]').forEach(video => {
               if (video.paused && isElementInViewport(video)) {
                 video.play().catch(() => {});
               }
@@ -3039,16 +3035,13 @@
         if (gallery) {
           const galleryPosition = gallery.offsetTop;
 
-          window.scrollTo({
-            top: galleryPosition,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: galleryPosition, behavior: 'smooth' });
         }
       }
 
       function filterItems(filterValue) {
         const items = document.querySelectorAll('.item');
-        items.forEach((item) => {
+        items.forEach(item => {
           const categories = item.getAttribute('data-category').split(',');
           const shouldShow = filterValue === 'all' || categories.includes(filterValue);
           gsap.to(item, {
@@ -3123,47 +3116,12 @@
         //     .to(".category-filter", {opacity: 1, duration: 0.5, ease: "power3.out"}, "-=0.3")
         //     .to(".scroll-indicator", {opacity: 1, duration: 0.5}, "-=0.5");
         // Show the container elements
-        heroTimeline
-          .to('.hero-text h1', {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power3.out'
-          })
-          .to(
-            '.hero-text p',
-            {
-              opacity: 1,
-              duration: 1.0,
-              ease: 'power3.out'
-            },
-            '+=0.2'
-          )
-          .to(
-            '.hero-text a',
-            {
-              opacity: 1,
-              duration: 1.0,
-              ease: 'power3.out'
-            },
-            '+=0.2'
-          )
-          .to(
-            '.category-filter',
-            {
-              opacity: 1,
-              duration: 0.5,
-              ease: 'power3.out'
-            },
-            '-=0.3'
-          )
-          .to(
-            '.scroll-indicator',
-            {
-              opacity: 1,
-              duration: 0.5
-            },
-            '-=0.5'
-          );
+        heroTimeline;
+        to('.hero-text h1', { opacity: 1, duration: 0.6, ease: 'power3.out' })
+          .to('.hero-text p', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
+          .to('.hero-text a', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
+          .to('.category-filter', { opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+          .to('.scroll-indicator', { opacity: 1, duration: 0.5 }, '-=0.5');
 
         // Extract the base part and last word from the second line
         const secondLineWords = originalSecondLineText.trim().split(' ');
@@ -3257,12 +3215,7 @@
         // Parallax effect for hero background
         gsap.to('.parallax-bg', {
           y: 100,
-          scrollTrigger: {
-            trigger: 'section',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-          }
+          scrollTrigger: { trigger: 'section', start: 'top top', end: 'bottom top', scrub: true }
         });
       }
 
@@ -3361,7 +3314,7 @@
             });
           }
         }, 5000);
-        document.querySelectorAll('.video-element').forEach((video) => {
+        document.querySelectorAll('.video-element').forEach(video => {
           const width = video.getAttribute('width');
           const height = video.getAttribute('height');
           if (width && height) {
@@ -3406,15 +3359,11 @@
 
         if (cursor) {
           document.addEventListener('mousemove', function (e) {
-            gsap.to(cursor, {
-              x: e.clientX,
-              y: e.clientY,
-              duration: 0.1
-            });
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
           });
 
           // Улучшенная обработка наведения для изображений и видео
-          items.forEach((item) => {
+          items.forEach(item => {
             const mediaElement = item.querySelector('img, video');
             const itemType = item.dataset.type;
 
@@ -3445,19 +3394,16 @@
         });
 
         backToTopButton.addEventListener('click', function () {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Category filter functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
 
-        filterButtons.forEach((button) => {
+        filterButtons.forEach(button => {
           button.addEventListener('click', function () {
             // Remove active class from all buttons
-            filterButtons.forEach((btn) => btn.classList.remove('active'));
+            filterButtons.forEach(btn => btn.classList.remove('active'));
 
             // Add active class to clicked button
             this.classList.add('active');
@@ -3468,7 +3414,7 @@
         });
 
         // Обработчик клика для тегов (с высоким приоритетом)
-        document.querySelectorAll('.tag').forEach((tag) => {
+        document.querySelectorAll('.tag').forEach(tag => {
           tag.addEventListener(
             'click',
             function (e) {
@@ -3481,9 +3427,9 @@
                 filterItems(filterValue);
 
                 // Обновление активной кнопки фильтра
-                filterButtons.forEach((btn) => btn.classList.remove('active'));
+                filterButtons.forEach(btn => btn.classList.remove('active'));
                 const matchingButton = Array.from(filterButtons).find(
-                  (btn) => btn.getAttribute('data-filter').toLowerCase() === filterValue
+                  btn => btn.getAttribute('data-filter').toLowerCase() === filterValue
                 );
                 if (matchingButton) {
                   matchingButton.classList.add('active');
@@ -3633,7 +3579,7 @@
         }
 
         // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -3641,10 +3587,7 @@
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
-              window.scrollTo({
-                top: targetElement.offsetTop,
-                behavior: 'smooth'
-              });
+              window.scrollTo({ top: targetElement.offsetTop, behavior: 'smooth' });
             }
           });
         });

@@ -7,7 +7,22 @@
     "arrow-body-style": ["error", "as-needed"],
     "max-len": ["error", { "code": 120 }],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
-    "newline-after-var": ["error", "never"]
+    "newline-after-var": ["error", "never"],
+    "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 4 }],
+    "dot-location": ["error", "property"],
+    "comma-dangle": ["error", "never"],
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "tabWidth": 2,
+        "singleQuote": true,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "arrowParens": "avoid"
+      }
+    ]
   },
-  "ignorePatterns": ["node_modules/", "**/node_modules/", "/**/node_modules/*", "minimized/"]
+  "plugins": ["prettier"],
+  "ignorePatterns": ["node_modules/", "**/node_modules/", "/**/node_modules/*", "minimized/**", "**/minimized/**"]
 }

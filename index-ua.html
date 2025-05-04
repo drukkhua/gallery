@@ -2212,10 +2212,7 @@
         if (gallery) {
           const galleryPosition = gallery.offsetTop;
 
-          window.scrollTo({
-            top: galleryPosition,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: galleryPosition, behavior: 'smooth' });
         }
       }
 
@@ -2223,7 +2220,7 @@
         const items = document.querySelectorAll('.item');
 
         // Show/hide items based on category
-        items.forEach((item) => {
+        items.forEach(item => {
           const categories = item.getAttribute('data-category').split(',');
 
           if (filterValue === 'all' || categories.includes(filterValue)) {
@@ -2267,47 +2264,12 @@
         secondLine.textContent = '';
 
         // Show the container elements
-        heroTimeline
-          .to('.hero-text h1', {
-            opacity: 1,
-            duration: 0.6,
-            ease: 'power3.out'
-          })
-          .to(
-            '.hero-text p',
-            {
-              opacity: 1,
-              duration: 1.0,
-              ease: 'power3.out'
-            },
-            '+=0.2'
-          )
-          .to(
-            '.hero-text a',
-            {
-              opacity: 1,
-              duration: 1.0,
-              ease: 'power3.out'
-            },
-            '+=0.2'
-          )
-          .to(
-            '.category-filter',
-            {
-              opacity: 1,
-              duration: 0.5,
-              ease: 'power3.out'
-            },
-            '-=0.3'
-          )
-          .to(
-            '.scroll-indicator',
-            {
-              opacity: 1,
-              duration: 0.5
-            },
-            '-=0.5'
-          );
+        heroTimeline;
+        to('.hero-text h1', { opacity: 1, duration: 0.6, ease: 'power3.out' })
+          .to('.hero-text p', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
+          .to('.hero-text a', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
+          .to('.category-filter', { opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+          .to('.scroll-indicator', { opacity: 1, duration: 0.5 }, '-=0.5');
 
         // Extract the base part and last word from the second line
         const secondLineWords = originalSecondLineText.trim().split(' ');
@@ -2401,12 +2363,7 @@
         // Parallax effect for hero background
         gsap.to('.parallax-bg', {
           y: 100,
-          scrollTrigger: {
-            trigger: 'section',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-          }
+          scrollTrigger: { trigger: 'section', start: 'top top', end: 'bottom top', scrub: true }
         });
       }
 
@@ -2464,15 +2421,11 @@
 
         if (cursor) {
           document.addEventListener('mousemove', function (e) {
-            gsap.to(cursor, {
-              x: e.clientX,
-              y: e.clientY,
-              duration: 0.1
-            });
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
           });
 
           // Улучшенная обработка наведения для изображений и видео
-          items.forEach((item) => {
+          items.forEach(item => {
             const mediaElement = item.querySelector('img, video');
             const itemType = item.dataset.type;
 
@@ -2503,19 +2456,16 @@
         });
 
         backToTopButton.addEventListener('click', function () {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Category filter functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
 
-        filterButtons.forEach((button) => {
+        filterButtons.forEach(button => {
           button.addEventListener('click', function () {
             // Remove active class from all buttons
-            filterButtons.forEach((btn) => btn.classList.remove('active'));
+            filterButtons.forEach(btn => btn.classList.remove('active'));
 
             // Add active class to clicked button
             this.classList.add('active');
@@ -2526,7 +2476,7 @@
         });
 
         // Обработчик клика для тегов (с высоким приоритетом)
-        document.querySelectorAll('.tag').forEach((tag) => {
+        document.querySelectorAll('.tag').forEach(tag => {
           tag.addEventListener(
             'click',
             function (e) {
@@ -2539,9 +2489,9 @@
                 filterItems(filterValue);
 
                 // Обновление активной кнопки фильтра
-                filterButtons.forEach((btn) => btn.classList.remove('active'));
+                filterButtons.forEach(btn => btn.classList.remove('active'));
                 const matchingButton = Array.from(filterButtons).find(
-                  (btn) => btn.getAttribute('data-filter').toLowerCase() === filterValue
+                  btn => btn.getAttribute('data-filter').toLowerCase() === filterValue
                 );
                 if (matchingButton) {
                   matchingButton.classList.add('active');
@@ -2691,7 +2641,7 @@
         }
 
         // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -2699,10 +2649,7 @@
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
-              window.scrollTo({
-                top: targetElement.offsetTop,
-                behavior: 'smooth'
-              });
+              window.scrollTo({ top: targetElement.offsetTop, behavior: 'smooth' });
             }
           });
         });
