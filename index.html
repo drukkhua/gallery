@@ -42,11 +42,9 @@
         --secondary-color: #fff;
         --accent-color: #42bc0e;
       }
-
       body {
         overflow-x: hidden !important;
       }
-
       .masonry {
         column-count: 1;
         column-gap: 1.5rem;
@@ -59,12 +57,10 @@
           opacity 0.5s ease,
           visibility 0.5s ease;
       }
-
       .masonry.show {
         opacity: 1;
         visibility: visible;
       }
-
       @media (min-width: 380px) {
         .masonry {
           column-count: 2;
@@ -72,19 +68,16 @@
           padding: 0.75rem;
         }
       }
-
       @media (min-width: 900px) {
         .masonry {
           column-count: 3;
         }
       }
-
       @media (min-width: 1600px) {
         .masonry {
           column-count: 4;
         }
       }
-
       .item {
         position: relative;
         break-inside: avoid;
@@ -100,18 +93,15 @@
         will-change: transform, opacity;
         z-index: 0;
       }
-
       .item.is-visible {
         opacity: 1;
         transform: translateY(0);
       }
-
       .item:hover {
         transform: scale(1.1);
         box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
         z-index: 10;
       }
-
       .item img,
       .item video {
         width: 100%;
@@ -122,12 +112,10 @@
         cursor: pointer;
         pointer-events: auto;
       }
-
       .item:hover img,
       .item:hover video {
         transform: scale(1.1);
       }
-
       .item-caption {
         position: absolute;
         bottom: 0;
@@ -140,21 +128,17 @@
         transition: transform 0.3s ease;
         backdrop-filter: blur(5px);
       }
-
       .item-caption h3 {
         font-size: 1.2rem;
         font-weight: 600;
         margin-bottom: 0.25rem;
       }
-
       .item-caption p {
         font-size: 0.75rem;
       }
-
       .item:hover .item-caption {
         transform: translateY(0);
       }
-
       .tag {
         display: inline-block;
         padding: 0.25rem 0.75rem;
@@ -166,12 +150,10 @@
         cursor: pointer;
         pointer-events: auto;
       }
-
       .item:hover .tag {
         transform: translateY(0);
         opacity: 1;
       }
-
       @media (max-width: 700px) {
         /* 2 cols */
         .tag {
@@ -181,20 +163,16 @@
           padding: 0.2rem 0.5rem;
           font-size: 0.7rem;
         }
-
         .item-caption h3 {
           font-size: 1rem;
         }
-
         .item-caption p {
           font-size: 0.7rem;
         }
-
         .item:hover .tag {
           transform: none !important;
           opacity: 1 !important;
         }
-
         .item-caption {
           color: var(--primary-color);
           position: relative;
@@ -203,36 +181,29 @@
           padding: 0.65rem;
           pointer-events: none;
         }
-
         .item-caption .tag {
           pointer-events: auto;
         }
-
         .item:hover .item-caption {
           transform: translateY(0);
         }
       }
-
       @media (max-width: 380px) {
         /* 1 column */
         .tag {
           font-size: 0.9rem;
           padding: 0.2rem 0.5rem;
         }
-
         .item-caption {
           padding: 1rem;
         }
-
         .item-caption h3 {
           font-size: 1.25rem;
         }
-
         .item-caption p {
           font-size: 0.9rem;
         }
       }
-
       @media (min-width: 701px) {
         /* 2 columns */
         .tag {
@@ -241,47 +212,38 @@
           transition: all 0.3s ease 0.1s;
           pointer-events: auto !important;
         }
-
         .item:hover .tag {
           transform: translateY(0);
           opacity: 1;
         }
-
         .item-caption {
           position: absolute;
           bottom: 0;
           transform: translateY(100%);
           background: rgba(0, 0, 0, 0.7);
         }
-
         .item-caption h3 {
           font-size: 1.1rem;
         }
-
         .item-caption p {
           font-size: 0.7rem;
         }
-
         .item:hover .item-caption {
           transform: translateY(0);
         }
       }
-
       .hero-text h1 {
         color: var(--secondary-color);
         overflow: hidden;
       }
-
       .hero-text h1 span {
         display: inline-block;
         opacity: 1;
       }
-
       .hero-text p span {
         display: inline-block;
         opacity: 1;
       }
-
       .color-filter::before {
         content: '';
         position: absolute;
@@ -296,11 +258,9 @@
         z-index: 1;
         pointer-events: none;
       }
-
       .item:hover .color-filter::before {
         opacity: 1;
       }
-
       .loader {
         position: fixed;
         top: 0;
@@ -314,7 +274,6 @@
         z-index: 9999;
         flex-direction: column;
       }
-
       .loader-circle {
         width: 60px;
         height: 60px;
@@ -323,13 +282,11 @@
         border-radius: 50%;
         animation: loader-spin 1s infinite linear;
       }
-
       @keyframes loader-spin {
         100% {
           transform: rotate(360deg);
         }
       }
-
       .cursor {
         position: fixed;
         width: 40px;
@@ -346,14 +303,12 @@
           width 0.3s ease,
           height 0.3s ease;
       }
-
       .cursor-hover {
         width: 80px;
         height: 80px;
         background: rgba(255, 255, 255, 0.1);
         mix-blend-mode: difference;
       }
-
       .cursor-text {
         position: absolute;
         top: 50%;
@@ -364,11 +319,9 @@
         opacity: 0;
         transition: opacity 0.3s ease;
       }
-
       .cursor-hover .cursor-text {
         opacity: 1;
       }
-
       .scroll-indicator {
         position: fixed;
         bottom: 30px;
@@ -384,7 +337,6 @@
         z-index: 100;
         opacity: 0.7;
       }
-
       .scroll-indicator::before {
         content: '';
         width: 6px;
@@ -394,7 +346,6 @@
         margin-top: 8px;
         animation: scroll-indicator 2s infinite;
       }
-
       @keyframes scroll-indicator {
         0% {
           transform: translateY(0);
@@ -405,7 +356,6 @@
           opacity: 0;
         }
       }
-
       .category-filter {
         display: flex;
         justify-content: center;
@@ -413,7 +363,6 @@
         margin: 2rem 0;
         gap: 0.5rem;
       }
-
       .filter-btn {
         padding: 0.5rem 1.5rem;
         background: transparent;
@@ -423,13 +372,11 @@
         cursor: pointer;
         transition: all 0.3s ease;
       }
-
       .filter-btn:hover,
       .filter-btn.active {
         background: var(--accent-color);
         color: white;
       }
-
       .parallax-bg {
         position: absolute;
         top: 0;
@@ -438,40 +385,31 @@
         height: 120%;
         z-index: 0;
       }
-
       .item-zoom-effect {
         overflow: hidden;
       }
-
       .item-zoom-effect img,
       .item-zoom-effect video {
         transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
-
       .item-zoom-effect:hover img,
       .item-zoom-effect:hover video {
         transform: scale(1.1);
       }
-
       /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 10px;
       }
-
       ::-webkit-scrollbar-track {
         background: #f1f1f1;
       }
-
       ::-webkit-scrollbar-thumb {
         background: var(--accent-color);
         border-radius: 5px;
       }
-
       ::-webkit-scrollbar-thumb:hover {
         background: #2563eb;
       }
-
-      /* Lightbox styles */
       .lightbox {
         position: fixed;
         top: 0;
@@ -487,12 +425,10 @@
         pointer-events: none;
         transition: opacity 0.3s ease;
       }
-
       .lightbox.active {
         opacity: 1;
         pointer-events: auto;
       }
-
       .lightbox-content {
         max-width: 90%;
         max-height: 90%;
@@ -500,11 +436,9 @@
         transition: transform 0.3s ease;
         position: relative;
       }
-
       .lightbox.active .lightbox-content {
         transform: scale(1);
       }
-
       .lightbox-close {
         position: absolute;
         top: 20px;
@@ -516,7 +450,6 @@
         cursor: pointer;
         z-index: 10000;
       }
-
       .lightbox-nav {
         position: absolute;
         top: 50%;
@@ -527,7 +460,6 @@
         transform: translateY(-50%);
         z-index: 10000;
       }
-
       .lightbox-nav button {
         background: rgba(255, 255, 255, 0.2);
         border: none;
@@ -541,16 +473,13 @@
         cursor: pointer;
         transition: background 0.3s ease;
       }
-
       .lightbox-nav button:hover {
         background: rgba(255, 255, 255, 0.4);
       }
-
       .lightbox-image,
       .lightbox-video {
         max-width: 100%;
         max-height: 90vh;
-        /* border-radius: 4px; */
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       }
     </style>
@@ -2871,12 +2800,8 @@
           masonryElement.classList.add('show');
         }
       }
-
-      // Функция для отложенной загрузки видео в галерее
       function setupLazyGalleryVideos() {
-        // Проверяем поддержку Intersection Observer
         if (!('IntersectionObserver' in window)) {
-          // Для старых браузеров просто загружаем все видео
           document.querySelectorAll('.video-element').forEach(video => {
             if (video.querySelector('source')) {
               video.load();
@@ -2884,31 +2809,23 @@
           });
           return;
         }
-
-        // Определяем параметры в зависимости от типа устройства
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         const isLowPerformance = window.navigator.hardwareConcurrency <= 4;
         const rootMargin = isMobile ? '100px 0px' : '200px 0px';
 
-        // Опции для Intersection Observer
         const options = {
           root: null,
           rootMargin: rootMargin,
           threshold: 0
         };
 
-        // Обработчик пересечения
         const handleIntersection = (entries, observer) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               const video = entry.target;
-              // Загружаем видео, если оно еще не загружено
               if (!video.dataset.loaded) {
-                // Отмечаем, что видео загружается
                 video.dataset.loaded = 'true';
-                // Устанавливаем preload для загрузки метаданных
                 video.setAttribute('preload', 'metadata');
-                // Добавляем обработчик ошибок
                 video.addEventListener(
                   'error',
                   e => {
@@ -2916,16 +2833,12 @@
                   },
                   {once: true}
                 );
-                // Загружаем видео
                 video.load();
-                // Если у видео есть атрибут autoplay, пытаемся его воспроизвести
                 if (video.hasAttribute('autoplay')) {
-                  // Используем requestAnimationFrame для более плавного воспроизведения
                   requestAnimationFrame(() => {
                     const playPromise = video.play();
                     if (playPromise !== undefined) {
                       playPromise.catch(() => {
-                        // Если автовоспроизведение не разрешено, пробуем с отключенным звуком
                         video.muted = true;
                         video.play().catch(() => {
                           console.warn('Не удалось воспроизвести видео даже с отключенным звуком');
@@ -2935,28 +2848,19 @@
                   });
                 }
               }
-              // Прекращаем наблюдение за этим элементом
               observer.unobserve(video);
             }
           });
         };
-
-        // Создаем Intersection Observer
         const observer = new IntersectionObserver(handleIntersection, options);
-
-        // Кэшируем коллекцию для минимизации запросов к DOM
         const videoElements = document.querySelectorAll('.video-element');
-
-        // Начинаем наблюдение за всеми видео в галерее
         videoElements.forEach(video => {
           // Оптимизируем атрибуты видео
           video.setAttribute('loading', 'lazy');
-          // Проверяем, видно ли видео уже при загрузке
           if (isElementInViewport(video) && !isLowPerformance) {
             // Эти видео загружаем сразу
             video.dataset.loaded = 'true';
             video.setAttribute('preload', 'metadata');
-            // Добавляем обработчик ошибок
             video.addEventListener(
               'error',
               e => {
@@ -2974,24 +2878,19 @@
               });
             }
           } else {
-            // Остальные через observer
             observer.observe(video);
           }
         });
       }
-
-      // Оптимизация работы с видео при переключении вкладок
       function setupVisibilityHandling() {
         document.addEventListener('visibilitychange', () => {
           if (document.visibilityState === 'hidden') {
-            // Приостанавливаем все видео, когда страница не видна
             document.querySelectorAll('.video-element').forEach(video => {
               if (!video.paused) {
                 video.pause();
               }
             });
           } else if (document.visibilityState === 'visible') {
-            // Возобновляем только видео с autoplay, которые находятся в области видимости
             document.querySelectorAll('.video-element[autoplay]').forEach(video => {
               if (video.paused && isElementInViewport(video)) {
                 video.play().catch(() => {});
@@ -3000,11 +2899,8 @@
           }
         });
       }
-
-      // Вспомогательная функция для определения, находится ли элемент в области видимости
       function isElementInViewport(el) {
         const rect = el.getBoundingClientRect();
-        // Добавляем буфер в 50px, чтобы начать загрузку чуть раньше
         return (
           rect.bottom >= -50 &&
           rect.right >= -50 &&
@@ -3012,13 +2908,9 @@
           rect.left <= (window.innerWidth || document.documentElement.clientWidth) + 50
         );
       }
-
-      // Initialize GSAP and ScrollTrigger
       gsap.registerPlugin(ScrollTrigger);
-
       function scrollToGallery() {
         const gallery = document.querySelector('#gallery');
-        // Если галерея найдена, прокручиваем к ней
         if (gallery) {
           const galleryPosition = gallery.offsetTop;
           window.scrollTo({
@@ -3027,14 +2919,10 @@
           });
         }
       }
-
       function filterItems(filterValue) {
         const items = document.querySelectorAll('.item');
-
-        // Show/hide items based on category
         items.forEach(item => {
           const categories = item.getAttribute('data-category').split(',');
-
           if (filterValue === 'all' || categories.includes(filterValue)) {
             gsap.to(item, {
               opacity: 1,
@@ -3061,21 +2949,14 @@
         scrollToGallery();
       }
 
-      // Hero section animation with typing effect for two lines
       function animateHero(replacementWords = ['деталей', 'идей', 'решений', 'технологий']) {
         const heroTimeline = gsap.timeline();
-
-        // Get the text elements
         const firstLine = document.querySelector('.hero-text h1 span:first-child');
         const secondLine = document.querySelector('.hero-text h1 span:last-child');
         const originalFirstLineText = firstLine.textContent;
         const originalSecondLineText = secondLine.textContent;
-
-        // Clear the text initially to prepare for typing effect
         firstLine.textContent = '';
         secondLine.textContent = '';
-
-        // Show the container elements
         heroTimeline
           .to('.hero-text h1', {opacity: 1, duration: 0.6, ease: 'power3.out'})
           .to('.hero-text p', {opacity: 1, duration: 1.0, ease: 'power3.out'}, '+=0.2')
@@ -3083,12 +2964,10 @@
           .to('.category-filter', {opacity: 1, duration: 0.5, ease: 'power3.out'}, '-=0.3')
           .to('.scroll-indicator', {opacity: 1, duration: 0.5}, '-=0.5');
 
-        // Extract the base part and last word from the second line
         const secondLineWords = originalSecondLineText.trim().split(' ');
         const lastWord = secondLineWords.pop();
         const baseSecondLine = secondLineWords.join(' ') + ' ';
 
-        // Type the first line character by character
         let firstLineChars = originalFirstLineText.split('');
         let firstLineCurrentText = '';
 
@@ -3096,34 +2975,28 @@
           if (firstLineChars.length > 0) {
             firstLineCurrentText += firstLineChars.shift();
             firstLine.textContent = firstLineCurrentText;
-            setTimeout(typeFirstLine, 60); // Adjust speed as needed
+            setTimeout(typeFirstLine, 60);
           } else {
-            // When first line is complete, start typing the second line
             setTimeout(typeSecondLine, 400);
           }
         }
 
-        // Type the second line character by character
         function typeSecondLine() {
           let secondLineToType = baseSecondLine + replacementWords[0];
           let secondLineChars = secondLineToType.split('');
           let secondLineCurrentText = '';
-
           function typeChar() {
             if (secondLineChars.length > 0) {
               secondLineCurrentText += secondLineChars.shift();
               secondLine.textContent = secondLineCurrentText;
               setTimeout(typeChar, 60);
             } else {
-              // When second line is complete, start the word replacement cycle
               setTimeout(() => startWordCycle(baseSecondLine, replacementWords), 1200);
             }
           }
 
           typeChar();
         }
-
-        // Function to handle the word replacement cycling
         function startWordCycle(baseText, wordsList) {
           let currentWordIndex = 0;
           let isDeleting = false;
@@ -3133,46 +3006,33 @@
             const currentWord = wordsList[currentWordIndex];
 
             if (isDeleting) {
-              // Remove characters from the current word
               currentText = currentText.substring(0, currentText.length - 1);
 
               if (currentText === baseText) {
-                // Word completely deleted
                 isDeleting = false;
                 currentWordIndex = (currentWordIndex + 1) % wordsList.length;
-                setTimeout(updateText, 600); // Pause before typing new word
+                setTimeout(updateText, 600);
               } else {
-                // Continue deleting
                 secondLine.textContent = currentText;
                 setTimeout(updateText, 60);
               }
             } else {
-              // Add characters to form the new word
               const targetText = baseText + currentWord;
-
               if (currentText.length < targetText.length) {
-                // Continue typing
                 currentText = targetText.substring(0, currentText.length + 1);
                 secondLine.textContent = currentText;
                 setTimeout(updateText, 120);
               } else {
-                // Word completely typed
                 setTimeout(() => {
                   isDeleting = true;
                   updateText();
-                }, 1800); // Pause at complete word
+                }, 1800);
               }
             }
           }
-
-          // Start the cycle
           updateText();
         }
-
-        // Start the animation
         setTimeout(typeFirstLine, 800);
-
-        // Parallax effect for hero background
         gsap.to('.parallax-bg', {
           y: 100,
           scrollTrigger: {
@@ -3183,8 +3043,6 @@
           }
         });
       }
-
-      // Wait for images to load before initializing animations
       document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.item');
         document.querySelectorAll('.video-element').forEach(video => {
@@ -3196,12 +3054,10 @@
         });
 
         setTimeout(showMasonry, 2000);
-        // async lazy load for videos
         setTimeout(() => {
           setupLazyGalleryVideos();
           setupVisibilityHandling();
         }, 2800);
-        // Preloader
         window.addEventListener('load', function () {
           const loader = document.querySelector('.loader');
           gsap.to(loader, {
@@ -3209,20 +3065,14 @@
             duration: 0.2,
             onComplete: () => {
               loader.style.display = 'none';
-              // animateHero();
               animateHero(['деталей', 'идей', 'решений', 'технологий', 'качества']);
             }
           });
         });
-
-        // Initialize scroll animations for gallery items
         function initScrollAnimations() {
           const windowHeight = window.innerHeight;
           const offsetPercentage = Math.min(Math.max(windowHeight * 0.15, 100), 180);
-          // Set initial state for all items
           gsap.set(items, {opacity: 0, y: 50});
-
-          // Create scroll triggers for each item
           items.forEach((item, index) => {
             gsap.to(item, {
               opacity: 1,
@@ -3240,16 +3090,11 @@
             });
           });
         }
-
-        // Apply animations after images are loaded
         imagesLoaded(document.querySelector('.masonry'), function () {
           initScrollAnimations();
         });
-
-        // Custom cursor
         const cursor = document.querySelector('.cursor');
         const cursorText = document.querySelector('.cursor-text');
-
         if (cursor) {
           document.addEventListener('mousemove', function (e) {
             gsap.to(cursor, {
@@ -3258,19 +3103,14 @@
               duration: 0.1
             });
           });
-
-          // Улучшенная обработка наведения для изображений и видео
           items.forEach(item => {
             const mediaElement = item.querySelector('img, video');
             const itemType = item.dataset.type;
-
-            // Наведение только на медиа-элементы (изображения или видео)
             if (mediaElement) {
               mediaElement.addEventListener('mouseenter', function () {
                 cursor.classList.add('cursor-hover');
                 cursorText.textContent = itemType === 'video' ? 'Play' : 'View';
               });
-
               mediaElement.addEventListener('mouseleave', function () {
                 cursor.classList.remove('cursor-hover');
                 cursorText.textContent = '';
@@ -3278,10 +3118,7 @@
             }
           });
         }
-
-        // Back to top button
         const backToTopButton = document.getElementById('back-to-top');
-
         window.addEventListener('scroll', function () {
           if (window.pageYOffset > 500) {
             gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
@@ -3289,44 +3126,31 @@
             gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
           }
         });
-
         backToTopButton.addEventListener('click', function () {
           window.scrollTo({
             top: 0,
             behavior: 'smooth'
           });
         });
-
-        // Category filter functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
-
         filterButtons.forEach(button => {
           button.addEventListener('click', function () {
-            // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
-
-            // Add active class to clicked button
             this.classList.add('active');
-
             const filterValue = this.getAttribute('data-filter');
             filterItems(filterValue);
           });
         });
-
-        // Обработчик клика для тегов (с высоким приоритетом)
         document.querySelectorAll('.tag').forEach(tag => {
           tag.addEventListener(
             'click',
             function (e) {
-              e.stopPropagation(); // Останавливаем всплытие
+              e.stopPropagation();
               e.preventDefault();
-
               const filterValue = this.getAttribute('data-filter');
               if (filterValue) {
                 console.log('Фильтрация по:', filterValue);
                 filterItems(filterValue);
-
-                // Обновление активной кнопки фильтра
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 const matchingButton = Array.from(filterButtons).find(
                   btn => btn.getAttribute('data-filter').toLowerCase() === filterValue
@@ -3335,22 +3159,17 @@
                   matchingButton.classList.add('active');
                 }
               }
-
-              return false; // Дополнительная защита
+              return false;
             },
             true
-          ); // Используем фазу захвата
+          );
         });
-
-        // Hide scroll indicator when user scrolls down
         window.addEventListener('scroll', function () {
           const scrollIndicator = document.querySelector('.scroll-indicator');
           if (window.pageYOffset > 300 && scrollIndicator) {
             gsap.to(scrollIndicator, {opacity: 0, duration: 0.3});
           }
         });
-
-        // Lightbox functionality
         const lightbox = document.querySelector('.lightbox');
         const lightboxContent = document.querySelector('.lightbox-content');
         const lightboxClose = document.querySelector('.lightbox-close');
@@ -3361,40 +3180,30 @@
 
         itemsArray.forEach((item, index) => {
           item.addEventListener('click', function (e) {
-            // Проверка, был ли клик непосредственно на медиа-элементе
             const isMediaClick = e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO';
             const isTagClick = e.target.closest('.tag') !== null;
-
             if (isMediaClick && !isTagClick) {
               currentIndex = index;
               openLightbox(this);
             }
           });
         });
-
-        // Close lightbox
         lightboxClose.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', function (e) {
           if (e.target === lightbox) {
             closeLightbox();
           }
         });
-
-        // Navigate through items
         lightboxPrev.addEventListener('click', function (e) {
           e.stopPropagation();
           navigate(-1);
         });
-
         lightboxNext.addEventListener('click', function (e) {
           e.stopPropagation();
           navigate(1);
         });
-
-        // Keyboard navigation
         document.addEventListener('keydown', function (e) {
           if (!lightbox.classList.contains('active')) return;
-
           if (e.key === 'Escape') {
             closeLightbox();
           } else if (e.key === 'ArrowLeft') {
@@ -3403,17 +3212,12 @@
             navigate(1);
           }
         });
-
-        // Open lightbox
         function openLightbox(item) {
           const src = item.getAttribute('data-src');
           const type = item.getAttribute('data-type');
-
-          // Получаем alt или title/aria-label
           let alt = '';
           let title = '';
           let aria = '';
-
           const previewImg = item.querySelector('img');
           if (previewImg && previewImg.alt) {
             alt = previewImg.alt;
@@ -3426,10 +3230,7 @@
               aria = previewVideo.getAttribute('aria-label') || '';
             }
           }
-
-          // Очистка предыдущего контента
           lightboxContent.innerHTML = '';
-
           if (type === 'image') {
             const img = document.createElement('img');
             img.src = src;
@@ -3447,20 +3248,13 @@
             video.loop = true;
             video.muted = true;
             video.classList.add('lightbox-active');
-
-            // Добавляем title и aria-label
             if (title) video.title = title;
             if (aria) video.setAttribute('aria-label', aria);
-
             lightboxContent.appendChild(video);
           }
-
-          // Отображение лайтбокса
           lightbox.classList.add('active');
           document.body.style.overflow = 'hidden';
         }
-
-        // Close lightbox
         function closeLightbox() {
           const video = lightboxContent.querySelector('video');
           if (video) {
@@ -3471,21 +3265,15 @@
           lightbox.classList.remove('active');
           document.body.style.overflow = '';
         }
-
-        // Navigate between items
         function navigate(direction) {
           currentIndex = (currentIndex + direction + itemsArray.length) % itemsArray.length;
           openLightbox(itemsArray[currentIndex]);
         }
-
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
           anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-
             if (targetElement) {
               window.scrollTo({
                 top: targetElement.offsetTop,
