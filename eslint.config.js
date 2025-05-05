@@ -48,11 +48,12 @@ export default defineConfig([
           printWidth: 120,
           singleQuote: true,
           trailingComma: 'none',
-          bracketSpacing: true,
+          bracketSpacing: false,
           arrowParens: 'avoid',
           bracketSameLine: true,
           embeddedLanguageFormatting: 'auto',
-          htmlWhitespaceSensitivity: 'ignore'
+          htmlWhitespaceSensitivity: 'strict',
+          embeddedLanguageFormatting: 'auto'
         }
       ],
       'newline-per-chained-call': ['off'],

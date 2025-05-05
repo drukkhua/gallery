@@ -3,10 +3,10 @@
   "tabWidth": 2,
   "singleQuote": true,
   "trailingComma": "none",
-  "bracketSpacing": true,
+  "bracketSpacing": false,
   "arrowParens": "avoid",
   "bracketSameLine": true,
-  "htmlWhitespaceSensitivity": "ignore",
+  "htmlWhitespaceSensitivity": "strict",
   "embeddedLanguageFormatting": "auto",
-  "jsxBracketSameLine": true
+  "cssDeclarationSorterOrder": "concentric-css"
 }

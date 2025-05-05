@@ -2914,7 +2914,7 @@
                   e => {
                     console.warn('Ошибка загрузки видео:', video.querySelector('source')?.src, e);
                   },
-                  { once: true }
+                  {once: true}
                 );
                 // Загружаем видео
                 video.load();
@@ -2962,7 +2962,7 @@
               e => {
                 console.warn('Ошибка загрузки видео:', video.querySelector('source')?.src, e);
               },
-              { once: true }
+              {once: true}
             );
             video.load();
             if (video.hasAttribute('autoplay')) {
@@ -3077,11 +3077,11 @@
 
         // Show the container elements
         heroTimeline
-          .to('.hero-text h1', { opacity: 1, duration: 0.6, ease: 'power3.out' })
-          .to('.hero-text p', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
-          .to('.hero-text a', { opacity: 1, duration: 1.0, ease: 'power3.out' }, '+=0.2')
-          .to('.category-filter', { opacity: 1, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-          .to('.scroll-indicator', { opacity: 1, duration: 0.5 }, '-=0.5');
+          .to('.hero-text h1', {opacity: 1, duration: 0.6, ease: 'power3.out'})
+          .to('.hero-text p', {opacity: 1, duration: 1.0, ease: 'power3.out'}, '+=0.2')
+          .to('.hero-text a', {opacity: 1, duration: 1.0, ease: 'power3.out'}, '+=0.2')
+          .to('.category-filter', {opacity: 1, duration: 0.5, ease: 'power3.out'}, '-=0.3')
+          .to('.scroll-indicator', {opacity: 1, duration: 0.5}, '-=0.5');
 
         // Extract the base part and last word from the second line
         const secondLineWords = originalSecondLineText.trim().split(' ');
@@ -3220,7 +3220,7 @@
           const windowHeight = window.innerHeight;
           const offsetPercentage = Math.min(Math.max(windowHeight * 0.15, 100), 180);
           // Set initial state for all items
-          gsap.set(items, { opacity: 0, y: 50 });
+          gsap.set(items, {opacity: 0, y: 50});
 
           // Create scroll triggers for each item
           items.forEach((item, index) => {
@@ -3284,9 +3284,9 @@
 
         window.addEventListener('scroll', function () {
           if (window.pageYOffset > 500) {
-            gsap.to(backToTopButton, { opacity: 0, duration: 0.3 });
+            gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
           } else {
-            gsap.to(backToTopButton, { opacity: 0, duration: 0.3 });
+            gsap.to(backToTopButton, {opacity: 0, duration: 0.3});
           }
         });
 
@@ -3346,7 +3346,7 @@
         window.addEventListener('scroll', function () {
           const scrollIndicator = document.querySelector('.scroll-indicator');
           if (window.pageYOffset > 300 && scrollIndicator) {
-            gsap.to(scrollIndicator, { opacity: 0, duration: 0.3 });
+            gsap.to(scrollIndicator, {opacity: 0, duration: 0.3});
           }
         });
 
